@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { motion, AnimatePresence } from "framer-motion"; // Добавляем motion
+import { motion, AnimatePresence } from "framer-motion";
 import { FaBiking, FaCheckCircle, FaShieldAlt } from "react-icons/fa";
 import "./UI/Velo.css";
 
@@ -15,12 +15,18 @@ const Velo = () => {
   const bikeModels = [
     {
       id: "speed",
-      name: "Trinx M100",
+      name: "Trinx M100", // можно тоже вынести в t("veloTrinxName") если нужно
       images: [velo1, velo2, velo3, velo4],
-      price: "500,000",
+      monthlyPrice: t("velo_monthly_price"),
+      deposit: t("velo_deposit"),
       desc: t("veloSpeedDesc"),
-      specs: ["21 Speed", "Aluminum Frame", "Mechanical Disc Brakes"],
+      specs: [
+        t("spec_21speed") || "21 Speed",
+        t("spec_aluminum") || "Aluminum Frame",
+        t("spec_discbrakes") || "Mechanical Disc Brakes",
+      ],
     },
+    // если добавишь другие модели — просто дублируй объект и меняй ключи
   ];
 
   const [activeModel, setActiveModel] = useState(bikeModels[0]);
@@ -33,19 +39,12 @@ const Velo = () => {
 
   return (
     <div className="page-wrapper">
-      {/* Заголовок с AOS */}
       <div className="page-header" data-aos="fade-right">
         <FaBiking className="icon-accent" size={50} />
         <h1>{t("bikes")}</h1>
       </div>
 
-      {/* Основной бокс с AOS */}
-      <motion.div
-        className="product-box"
-        data-aos="zoom-in-up"
-        layout // Framer motion автоматически подстроит размеры при смене контента
-      >
-        {/* Миниатюры с Framer Motion hover эффектом */}
+      <motion.div className="product-box" data-aos="zoom-in-up" layout>
         <div className="thumbnails">
           {activeModel.images.map((img, idx) => (
             <motion.div
@@ -60,11 +59,10 @@ const Velo = () => {
           ))}
         </div>
 
-        {/* Главное фото с анимацией смены изображения */}
         <div className="main-photo">
           <AnimatePresence mode="wait">
             <motion.img
-              key={activeImg} // Ключ заставляет motion видеть смену фото
+              key={activeImg}
               src={activeImg}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -75,7 +73,6 @@ const Velo = () => {
           </AnimatePresence>
         </div>
 
-        {/* Информация о продукте */}
         <div className="product-info">
           <motion.h2
             key={activeModel.name}
@@ -104,11 +101,9 @@ const Velo = () => {
           </div>
 
           <div className="price-block">
-            <div className="price">
-              {activeModel.price} UZS / {t("monthly")}
-            </div>
+            <div className="price">{activeModel.monthlyPrice}</div>
             <div className="deposit">
-              <FaShieldAlt /> {t("depositVelo")}
+              <FaShieldAlt /> {activeModel.deposit}
             </div>
           </div>
 
@@ -124,7 +119,6 @@ const Velo = () => {
         </div>
       </motion.div>
 
-      {/* Переключатель моделей */}
       <div className="model-switcher" data-aos="fade-up">
         {bikeModels.map((model) => (
           <motion.button

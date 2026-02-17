@@ -5,12 +5,11 @@ import "aos/dist/aos.css";
 import { ShoppingBag, DollarSign } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-// Импорт картинок (согласно твоей структуре папок)
+// Импорт картинок
 import b1 from "../assets/images/bags-image1.png";
 import b2 from "../assets/images/bags-image2.png";
 import b3 from "../assets/images/bags-image3.png";
 
-// Исправленный путь к стилям (из src/pages/Bags.jsx в src/pages/UI/Bags.css)
 import "./UI/Bags.css";
 
 export default function Bags() {
@@ -18,22 +17,18 @@ export default function Bags() {
   const [activeModel, setActiveModel] = useState(0);
   const [activePhoto, setActivePhoto] = useState(0);
 
-  // ДАННЫЕ ВНУТРИ — ТЕПЕРЬ ОНИ ПЕРЕВОДЯТСЯ
+  // Данные теперь используют переводы из i18n
   const bagsData = [
     {
       thumbnails: [b1, b2, b3],
-      title: "Urban Backpack Waterproof 25L",
-      yearlyPrice: `200 000 ${t("home").replace("Bosh sahifa", "so'm").replace("Главная", "сум").replace("Home", "sum")} / ${t("home").includes("sahifa") ? "yil" : t("home") === "Home" ? "year" : "год"}`,
-      depositNote: t("home").includes("sahifa")
-        ? "Garov 200 000 so'm (qaytarilmaydi)"
-        : t("home") === "Home"
-          ? "Deposit 200 000 sum (non-refundable)"
-          : "Залог 200 000 сум при годовой аренде — не возвращается",
+      title: t("bagUrbanTitle") || "Urban Backpack Waterproof 25L", // можно перевести заголовок
+      yearlyPrice: t("bag_yearly_price"),
+      depositNote: t("bag_deposit_note"),
       descriptionKey: "bagUrbanDesc",
       features: [
-        t("features"), // Используем общий ключ характеристик
-        "25 L",
-        "Waterproof",
+        t("features"),
+        t("volume_25l") || "25 L",
+        t("waterproof") || "Waterproof",
       ],
     },
   ];
@@ -87,7 +82,7 @@ export default function Bags() {
           </AnimatePresence>
         </div>
 
-        {/* Инфо */}
+        {/* Информация о продукте */}
         <div className="product-info">
           <h2 className="product-name">{currentModel.title}</h2>
           <p className="description">{t(currentModel.descriptionKey)}</p>
@@ -119,7 +114,7 @@ export default function Bags() {
         </div>
       </div>
 
-      {/* Переключатель моделей */}
+      {/* Переключатель моделей (пока один, но оставляем на будущее) */}
       {bagsData.length > 1 && (
         <div className="model-switcher" data-aos="fade-up">
           {bagsData.map((bag, idx) => (
