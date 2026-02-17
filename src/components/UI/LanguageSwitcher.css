@@ -1,0 +1,50 @@
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 6px 12px;
+  border-radius: 50px;
+  backdrop-filter: blur(8px);
+}
+
+.lang-icon {
+  color: #ffd700;
+  opacity: 0.85;
+}
+
+.lang-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+}
+
+.lang-btn:hover {
+  background: rgba(255, 215, 0, 0.15);
+  color: #ffd700;
+}
+
+.lang-btn.active {
+  background: #ffd700;
+  color: #000000;
+  font-weight: 700;
+}
+
+/* Для мобильной версии можно сделать чуть крупнее */
+@media (max-width: 640px) {
+  .lang-switcher {
+    gap: 6px;
+    padding: 8px 14px;
+  }
+
+  .lang-btn {
+    font-size: 0.95rem;
+    padding: 8px 12px;
+  }
+}

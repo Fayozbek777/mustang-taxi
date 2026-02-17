@@ -1,0 +1,364 @@
+/* src/UI/Scooters.css */
+
+:root {
+  --bg: #0a0a0f;
+  --box-bg: #111116;
+  --text: #f1f1f6;
+  --muted: #a0a0b0;
+  --accent: #ffd000;
+  --border: #22222a;
+  --radius: 22px;
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+}
+
+.page-wrapper {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  padding: 80px 24px 140px;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 64px;
+}
+
+.page-header h1 {
+  font-size: clamp(2.8rem, 7.5vw, 4.8rem);
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.03em;
+}
+
+.icon-accent {
+  color: var(--accent);
+}
+
+/* Главный контейнер */
+.product-box {
+  background: var(--box-bg);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 48px 40px;
+  display: grid;
+  grid-template-columns: 140px 1fr 400px;
+  gap: 48px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1100px) {
+  .product-box {
+    grid-template-columns: 120px 1fr 360px;
+    gap: 36px;
+    padding: 40px 32px;
+  }
+}
+
+@media (max-width: 900px) {
+  .product-box {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 32px 24px;
+  }
+}
+
+/* Миниатюры слева */
+.thumbnails {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.thumb-wrapper {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.thumb-wrapper:hover,
+.thumb-wrapper.active {
+  border-color: var(--accent);
+  transform: scale(1.08);
+  box-shadow: 0 12px 32px rgba(255, 208, 0, 0.25);
+}
+
+.thumbnail {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Большое фото — стало ОЧЕНЬ большим */
+.main-photo {
+  background: #0c0c15;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  min-height: 620px; /* большая высота */
+  max-height: 80vh; /* не больше высоты экрана */
+}
+
+.main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.8s ease;
+}
+
+.main-photo:hover .main-image {
+  transform: scale(1.08);
+}
+
+/* Правая часть */
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.product-name {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.description {
+  font-size: 1.18rem;
+  line-height: 1.65;
+  color: var(--muted);
+  margin: 0;
+}
+
+.specs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.spec-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 1.2rem;
+}
+
+.spec-icon {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.price-row {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--accent);
+  margin-top: 12px;
+}
+
+.price {
+  font-weight: 800;
+}
+
+.features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 1.12rem;
+  line-height: 1.85;
+}
+
+.features li {
+  margin-bottom: 12px;
+  position: relative;
+  padding-left: 40px;
+}
+
+.features li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+/* Кнопка аренды */
+.rent-btn {
+  background: var(--accent);
+  color: #000;
+  border: none;
+  padding: 18px 40px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-radius: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.35s ease;
+}
+
+.rent-btn:hover {
+  background: #ffdb33;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(255, 208, 0, 0.4);
+}
+
+/* Переключатель моделей */
+.model-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 80px;
+}
+
+.model-btn {
+  background: #181820;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 16px 32px;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: all 0.35s ease;
+}
+
+.model-btn:hover {
+  border-color: var(--accent);
+  background: rgba(255, 208, 0, 0.08);
+}
+
+.model-btn.active {
+  background: var(--accent);
+  color: #000;
+  border-color: var(--accent);
+}
+
+/* Мобильные */
+@media (max-width: 600px) {
+  .product-box {
+    padding: 24px;
+    gap: 32px;
+  }
+  .thumbnail {
+    height: 100px;
+  }
+  .main-photo {
+    min-height: 420px;
+    padding: 16px;
+  }
+  .product-name {
+    font-size: 2.2rem;
+  }
+  .price-row {
+    font-size: 1.6rem;
+  }
+  .rent-btn {
+    padding: 16px 32px;
+    font-size: 1.1rem;
+  }
+}
+
+.thumb-wrapper {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.thumb-wrapper:hover {
+  border-color: var(--accent);
+  transform: scale(1.08);
+  box-shadow: 0 12px 32px rgba(255, 208, 0, 0.25);
+}
+
+.thumb-wrapper.active {
+  border-color: var(--accent);
+  transform: scale(1.12);
+  box-shadow: 0 16px 48px rgba(255, 208, 0, 0.45);
+  position: relative;
+}
+
+.thumb-wrapper.active::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 20px;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 208, 0, 0.3),
+    transparent
+  );
+  pointer-events: none;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Цена с закладом */
+.price-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+.price {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.deposit {
+  font-size: 1.15rem;
+  color: #ff6b6b; /* красноватый оттенок для акцента на залоге */
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+/* Если хочешь сделать заклад менее заметным */
+.deposit {
+  font-size: 1.05rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* Мобильные корректировки */
+@media (max-width: 600px) {
+  .price-block {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: baseline;
+  }
+
+  .price {
+    font-size: 1.6rem;
+  }
+
+  .deposit {
+    font-size: 1rem;
+  }
+}
