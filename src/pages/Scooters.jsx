@@ -27,8 +27,8 @@ export default function Scooters() {
       title: "Skooter H8",
       priceKey: "fromPriceDay", // передаем ключ
       depositKey: "depositScooter", // передаем ключ
-      battery: "85–90%",
-      speed: "25", // только цифра
+      battery: "100%",
+      speed: "130", // только цифра
       descriptionKey: "scooterXiaomiDesc",
       featuresKeys: [
         // массив ключей

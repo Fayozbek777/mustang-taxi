@@ -25,8 +25,8 @@ export default function Drongo() {
       title: "Drongo Model A",
       price: `70 000 ${t("monthly").replace("oyiga", "so'm")} / ${t("daily")}`,
       deposit: t("depositScooter"),
-      battery: "90%",
-      speed: "35 km/h",
+      battery: "100%",
+      speed: "70 km/h",
       descriptionKey: "drongoModelADesc",
       features: [
         t("helmetIncluded"),
