@@ -8,39 +8,41 @@ const Card = ({
   title,
   children,
   className = "",
-  hoverLift = -12,
+  hoverLift = -10,
   ...props
 }) => {
   return (
-    <motion.div
+    <div
       className={`card ${className}`}
       whileHover={{
         y: hoverLift,
-        scale: 1.03,
-        boxShadow: "0 30px 70px rgba(0,0,0,0.65)",
+        boxShadow:
+          "0 32px 80px rgba(0,0,0,0.75), 0 0 60px rgba(201,168,76,0.06)",
       }}
-      whileTap={{ scale: 0.98 }}
-      initial={{ opacity: 0, y: 30 }}
+      whileTap={{ scale: 0.985 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
         type: "spring",
-        stiffness: 300,
-        damping: 25,
+        stiffness: 260,
+        damping: 28,
       }}
       data-aos="fade-up"
-      data-aos-duration="800"
+      data-aos-duration="900"
       data-aos-once="true"
       {...props}
     >
-      <div className="card-image-wrapper">
-        <img src={image} alt={title} loading="lazy" className="card-image" />
-      </div>
+      {image && (
+        <div className="card-image-wrapper">
+          <img src={image} alt={title} loading="lazy" className="card-image" />
+        </div>
+      )}
 
       <div className="card-content">
         {title && <h3 className="card-title">{title}</h3>}
         {children && <div className="card-body">{children}</div>}
       </div>
-    </motion.div>
+    </div>
   );
 };
 

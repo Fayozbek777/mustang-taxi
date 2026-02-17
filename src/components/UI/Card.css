@@ -1,41 +1,113 @@
-/* src/UI/Card.css */
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap");
 
+/* ─── Variables ─────────────────────────────────────── */
 :root {
-  --card-bg: #111115;
-  --card-border: #1f1f28;
-  --text-primary: #f0f0f5;
-  --text-secondary: #9ca3af;
-  --accent: #ffd000;
-  --radius: 18px;
-  --shadow-base: 0 12px 32px rgba(0, 0, 0, 0.45);
-  --shadow-hover: 0 30px 70px rgba(0, 0, 0, 0.65);
-  --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --card-bg: #0e0e0e;
+  --card-border: rgba(255, 255, 255, 0.06);
+  --card-border-hover: rgba(201, 168, 76, 0.35);
+  --card-glow: rgba(201, 168, 76, 0.08);
+  --text-primary: #f0ede8;
+  --text-secondary: #7a7a74;
+  --accent: #c9a84c;
+  --accent-light: #e8d48b;
+  --radius: 2px;
+  --shadow-base: 0 8px 40px rgba(0, 0, 0, 0.5);
+  --shadow-hover:
+    0 32px 80px rgba(0, 0, 0, 0.75), 0 0 60px rgba(201, 168, 76, 0.06);
+  --font-display: "Cormorant Garamond", serif;
+  --font-body: "Montserrat", sans-serif;
+  --transition: all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+/* ─── Card ──────────────────────────────────────────── */
 .card {
   background: var(--card-bg);
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--card-border);
   box-shadow: var(--shadow-base);
-  transition: var(--transition);
   position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+/* Золотая линия сверху — появляется на hover */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent),
+    var(--accent-light),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 2;
+}
+
+/* Едва заметное свечение снизу */
+.card::after {
+  content: "";
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 80px;
+  background: radial-gradient(ellipse, var(--card-glow) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .card:hover {
-  border-color: rgba(255, 208, 0, 0.25);
+  border-color: var(--card-border-hover);
+  box-shadow: var(--shadow-hover);
 }
 
-/* Изображение */
+.card:hover::before {
+  opacity: 1;
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+/* ─── Image ─────────────────────────────────────────── */
 .card-image-wrapper {
   position: relative;
   width: 100%;
-  padding-top: 60%; /* соотношение 5:3 — можно изменить на 75% для квадрата */
+  padding-top: 62%;
   overflow: hidden;
-  background: #0d0d14;
+  background: #080808;
+}
+
+/* Градиентный оверлей поверх фото */
+.card-image-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(10, 10, 10, 0.6) 100%
+  );
+  z-index: 1;
+  transition: opacity 0.4s ease;
+}
+
+.card:hover .card-image-wrapper::after {
+  opacity: 0.7;
 }
 
 .card-image {
@@ -46,75 +118,111 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transition: transform 0.6s ease;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  filter: brightness(0.9) saturate(0.85);
 }
 
 .card:hover .card-image {
-  transform: scale(1.08);
+  transform: scale(1.07);
+  filter: brightness(0.95) saturate(0.9);
 }
 
-/* Контент */
+/* ─── Content ───────────────────────────────────────── */
 .card-content {
-  padding: 24px 20px;
+  padding: 28px 24px 30px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  gap: 12px;
+  gap: 14px;
+  position: relative;
+  z-index: 1;
 }
 
+/* Тонкая золотая линия под заголовком */
 .card-title {
-  font-size: 1.45rem;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 400;
   margin: 0;
   color: var(--text-primary);
-  line-height: 1.25;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  position: relative;
+  padding-bottom: 16px;
+}
+
+.card-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 28px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  transition: width 0.4s ease;
+}
+
+.card:hover .card-title::after {
+  width: 52px;
 }
 
 .card-body {
-  font-size: 1.02rem;
-  line-height: 1.55;
+  font-size: 0.82rem;
+  line-height: 1.7;
   color: var(--text-secondary);
   margin: 0;
   flex-grow: 1;
+  font-weight: 300;
+  letter-spacing: 0.03em;
 }
 
-/* Дополнительные улучшения для использования внутри карточек */
 .card-body p {
-  margin: 0 0 12px 0;
+  margin: 0 0 10px 0;
+}
+
+.card-body p:last-child {
+  margin-bottom: 0;
 }
 
 .card-body strong {
-  color: var(--text-primary);
+  color: #b0aca6;
+  font-weight: 500;
 }
 
+/* ─── Price highlight ───────────────────────────────── */
 .card-body .price-highlight {
-  font-size: 1.4rem;
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 300;
+  font-style: italic;
   color: var(--accent);
-  margin: 12px 0;
+  letter-spacing: 0.04em;
+  margin: 14px 0 4px;
+  display: block;
 }
 
-/* Адаптивность */
+/* ─── Responsive ────────────────────────────────────── */
 @media (max-width: 768px) {
   .card-content {
-    padding: 20px 16px;
+    padding: 22px 18px 24px;
   }
 
   .card-title {
-    font-size: 1.35rem;
+    font-size: 1.45rem;
   }
 
   .card-image-wrapper {
-    padding-top: 65%; /* чуть выше на мобильных */
+    padding-top: 66%;
   }
 }
 
 @media (max-width: 480px) {
   .card-title {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
   }
 
   .card-content {
-    padding: 18px 14px;
+    padding: 18px 16px 22px;
+    gap: 10px;
   }
 }

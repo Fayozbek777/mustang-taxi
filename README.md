@@ -1,17 +1,132 @@
-# React + Vite
+# 🛵 My Mustang — Scooter Rental Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Современный веб-сайт для **аренды скутеров, Drongo-скутеров и сумок доставки**  
+Вдохновлён стилем **Yandex Go** — минимализм, удобство и люкс ✨
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 О проекте
 
-## React Compiler
+**My Mustang** — это React-приложение для сервиса аренды:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🛴 Электроскутеры
+- ⚡ Drongo скутеры
+- 🎒 Сумки (доставка / Yandex-style)
 
-## Expanding the ESLint configuration
+Проект создан с упором на:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# mustang-taxi
+- современный UI/UX
+- анимации
+- мультиязычность
+- адаптивность под все устройства
+
+---
+
+## 🌍 Поддержка языков
+
+Проект поддерживает **5 языков** через `react-i18next`:
+
+- 🇺🇿 Узбекский
+- 🇷🇺 Русский
+- 🇬🇧 Английский
+- 🇵🇰 Урду (Пакистан)
+- 🇮🇳 Хинди (Индия)
+
+---
+
+## 🧩 Используемые технологии
+
+- ⚛️ **React**
+- 🧭 **React Router DOM**
+- 🌐 **react-i18next**
+- 🎞 **Framer Motion**
+- ✨ **AOS (Animate On Scroll)**
+- 🧱 **Lucide React Icons**
+- 🎨 CSS (modern / luxury style)
+
+---
+
+## 📁 Структура проекта
+
+src
+├── assets
+│ └── images
+│ ├── bags-image1.png
+│ ├── drango-image1.png
+│ ├── skooter-image1.png
+│ └── ...
+│
+├── components
+│ ├── UI
+│ │ ├── Card.css
+│ │ ├── Header.css
+│ │ └── Footer.css
+│ ├── Card.jsx
+│ ├── Header.jsx
+│ ├── Footer.jsx
+│ └── LanguageSwitcher.jsx
+│
+├── pages
+│ ├── UI
+│ │ ├── Home.css
+│ │ ├── Scooters.css
+│ │ └── Bags.css
+│ ├── Home.jsx
+│ ├── Scooters.jsx
+│ ├── Drongo.jsx
+│ └── Bags.jsx
+│
+├── i18n
+│ └── index.js
+│
+├── App.jsx
+├── main.jsx
+├── index.css
+└── App.css
+
+---
+
+## 🎨 Дизайн и стиль
+
+- 🎯 Цветовая палитра как **Yandex Go**
+  - Жёлтый — акценты и кнопки
+  - Чёрный / тёмно-серый — текст
+  - Белый / светло-серый — фон
+- 💎 Lux / modern стиль
+- 📱 Полная адаптивность (mobile / tablet / desktop)
+
+---
+
+## 🧠 Карточки товаров
+
+В компонентах оставлены **специальные комментарии**, куда можно легко добавить:
+
+```jsx
+{/* TODO: Цена аренды */}
+{/* TODO: Запас хода / заряд */}
+{/* TODO: Вместимость */}
+{/* TODO: Описание */}
+Это позволяет быстро наполнять сайт реальными данными 🔧
+
+🛠 Установка и запуск
+npm install
+npm run dev
+или
+
+yarn
+yarn dev
+📌 Планы на будущее
+🔐 Авторизация
+
+💳 Онлайн-оплата
+
+📍 Карта скутеров
+
+📊 Админ-панель
+
+👨‍💻 Автор
+My Mustang Project
+Frontend: React / UI / Animations
+
+Если проект был полезен — ⭐️ поставь звезду репозиторию!
+```

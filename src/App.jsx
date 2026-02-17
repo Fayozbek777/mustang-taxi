@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./App.css";
-import "./i18n"; // Убедитесь, что i18n инициализируется
+import "./i18n";
 
 // Components
 import Header from "./components/Header";
@@ -14,7 +14,7 @@ import Home from "./pages/Home";
 import Scooters from "./pages/Scooters";
 import Drongo from "./pages/Drongo";
 import Bags from "./pages/Bags";
-import Velo from "./pages/Velo"; // Файл лежит в src/pages/Velo.jsx
+import Velo from "./pages/Velo";
 
 function App() {
   useEffect(() => {

@@ -288,6 +288,12 @@
   user-select: none;
 }
 
+.about-card-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 .about-badge {
   position: absolute;
   bottom: -20px;
@@ -541,6 +547,10 @@
   .about-heading {
     font-size: 3.2rem;
   }
+  .about-badge {
+    bottom: -55px;
+    left: -16px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -550,5 +560,9 @@
   .about-stats {
     flex-wrap: wrap;
     gap: 20px;
+  }
+  .about-badge {
+    bottom: -65px;
+    left: -16px;
   }
 }

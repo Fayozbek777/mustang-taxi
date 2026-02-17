@@ -14,7 +14,7 @@ const resources = {
       rentScootersAndBagsInTashkent:
         "Toshkent bo'ylab skuter va sumkalarni ijaraga oling",
       aboutUs: "Biz haqimizda",
-      aboutHeading1: "Sening",
+      aboutHeading1: "Sizning",
       aboutHeading2: "Erkin",
       aboutHeading3: "Transportingiz",
       aboutText1:

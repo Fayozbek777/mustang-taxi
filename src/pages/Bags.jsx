@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 import b1 from "../assets/images/bags-image1.png";
 import b2 from "../assets/images/bags-image2.png";
 import b3 from "../assets/images/bags-image3.png";
-import b4 from "../assets/images/bags-image4.png";
 
 // Исправленный путь к стилям (из src/pages/Bags.jsx в src/pages/UI/Bags.css)
 import "./UI/Bags.css";
@@ -36,14 +35,6 @@ export default function Bags() {
         "25 L",
         "Waterproof",
       ],
-    },
-    {
-      thumbnails: [b4, b2, b1],
-      title: "Premium Courier Bag",
-      yearlyPrice: t("price"),
-      depositNote: "",
-      descriptionKey: "bagPremiumDesc",
-      features: [t("features"), "Premium Quality", "Multi-functional"],
     },
   ];
 

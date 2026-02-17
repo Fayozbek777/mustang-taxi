@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { MapPin, Phone, Mail, ExternalLink, Zap } from "lucide-react";
 import "./UI/Home.css";
 import { BsTelegram } from "react-icons/bs";
-
+import collageImg from "../assets/images/collages.png";
 const MAP_URL =
   "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2998.123456789!2d69.2586378!3d41.2870979!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDE3JzEzLjUiTiA2OcKwMTUnMzEuMSJF!5e0!3m2!1sru!2suz!4v1698765432100!5m2!1sru!2suz"; // ← замени на свой реальный embed URL
 const MAP_LINK =
@@ -106,7 +106,9 @@ export default function Home() {
             transition={{ duration: 0.7, delay: 0.15 }}
           >
             <div className="about-card">
-              <div className="about-card-inner">SCOOTER</div>
+              <div className="about-card-inner">
+                <img src={collageImg} alt="Scooter Collage" />
+              </div>
             </div>
             <div className="about-badge">
               <strong>#1</strong>
@@ -140,20 +142,32 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.65, delay: 0.1 }}
           >
-            <div className="contact-item">
+            <div
+              className="contact-item"
+              onClick={() => (window.location.href = "tel:+998990805999")}
+              style={{ cursor: "pointer" }}
+            >
               <div className="contact-icon-wrap">
                 <Phone size={20} />
               </div>
+
               <div className="contact-item-body">
                 <strong>+998 99 080 59 99</strong>
                 <small>{t("callAnytime")}</small>
               </div>
             </div>
 
-            <div className="contact-item">
+            <div
+              className="contact-item"
+              onClick={() =>
+                window.open("https://t.me/YandexMustang", "_blank")
+              }
+              style={{ cursor: "pointer" }}
+            >
               <div className="contact-icon-wrap">
                 <BsTelegram size={20} />
               </div>
+
               <div className="contact-item-body">
                 <strong>@YandexMustang</strong>
                 <small>{t("writeUs")}</small>

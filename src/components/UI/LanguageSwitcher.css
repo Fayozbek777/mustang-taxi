@@ -1,50 +1,176 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@500;600&display=swap");
+
+/* ─── Container ─────────────────────────────────────────── */
 .lang-switcher {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(255, 255, 255, 0.08);
-  padding: 6px 12px;
-  border-radius: 50px;
-  backdrop-filter: blur(8px);
+  gap: 2px;
+  padding: 5px 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(212, 175, 83, 0.2);
+  border-radius: 100px;
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    0 0 0 1px rgba(212, 175, 83, 0.05),
+    0 8px 32px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
-.lang-icon {
-  color: #ffd700;
-  opacity: 0.85;
+/* ─── Divider ────────────────────────────────────────────── */
+.lang-divider {
+  width: 1px;
+  height: 14px;
+  flex-shrink: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(212, 175, 83, 0.25),
+    transparent
+  );
 }
 
+/* ─── Button ─────────────────────────────────────────────── */
 .lang-btn {
+  position: relative;
   background: none;
   border: none;
-  color: white;
-  font-weight: 600;
-  font-size: 0.92rem;
-  padding: 6px 10px;
-  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  padding: 7px 12px;
+  border-radius: 100px;
   cursor: pointer;
-  transition: all 0.22s ease;
+  outline: none;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+/* Hover glow fill */
+.lang-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 100px;
+  background: linear-gradient(
+    135deg,
+    rgba(212, 175, 83, 0.12),
+    rgba(212, 175, 83, 0.04)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .lang-btn:hover {
-  background: rgba(255, 215, 0, 0.15);
-  color: #ffd700;
+  color: rgba(212, 175, 83, 0.85);
 }
 
+.lang-btn:hover::before {
+  opacity: 1;
+}
+
+/* ─── Active state ───────────────────────────────────────── */
 .lang-btn.active {
-  background: #ffd700;
-  color: #000000;
-  font-weight: 700;
+  color: #150e02;
+  font-weight: 600;
+  background: linear-gradient(135deg, #d4af53 0%, #f2d878 45%, #c89b38 100%);
+  box-shadow:
+    0 2px 14px rgba(212, 175, 83, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
 
-/* Для мобильной версии можно сделать чуть крупнее */
-@media (max-width: 640px) {
-  .lang-switcher {
-    gap: 6px;
-    padding: 8px 14px;
-  }
+.lang-btn.active::before {
+  display: none;
+}
 
+/* ─── Tooltip ────────────────────────────────────────────── */
+.lang-tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: rgba(8, 6, 3, 0.97);
+  border: 1px solid rgba(212, 175, 83, 0.22);
+  color: rgba(212, 175, 83, 0.85);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  padding: 4px 11px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 10;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease;
+}
+
+.lang-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: rgba(212, 175, 83, 0.22);
+}
+
+.lang-btn:hover .lang-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ─── Light variant ──────────────────────────────────────── */
+.lang-switcher.light {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(180, 140, 40, 0.25);
+  box-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.lang-switcher.light .lang-btn {
+  color: rgba(60, 40, 10, 0.45);
+}
+
+.lang-switcher.light .lang-btn:hover {
+  color: rgba(160, 100, 10, 0.9);
+}
+
+.lang-switcher.light .lang-btn.active {
+  color: #0f0a01;
+}
+
+.lang-switcher.light .lang-divider {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(160, 120, 40, 0.2),
+    transparent
+  );
+}
+
+.lang-switcher.light .lang-tooltip {
+  background: rgba(255, 252, 245, 0.98);
+  border-color: rgba(180, 140, 40, 0.3);
+  color: rgba(140, 100, 20, 0.9);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.lang-switcher.light .lang-tooltip::after {
+  border-top-color: rgba(180, 140, 40, 0.3);
+}
+
+/* ─── Mobile ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
   .lang-btn {
-    font-size: 0.95rem;
-    padding: 8px 12px;
+    font-size: 0.65rem;
+    padding: 6px 9px;
+    letter-spacing: 0.1em;
   }
 }

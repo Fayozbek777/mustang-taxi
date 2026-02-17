@@ -23,26 +23,11 @@ export default function Drongo() {
     {
       thumbnails: [d1, d2, d3],
       title: "Drongo Model A",
-      price: `70 000 ${t("monthly").replace("oyiga", "so'm")} / ${t("daily")}`,
+      price: `70 000${t("monthly").replace("oyiga", "so'm")} / ${t("daily")}`,
       deposit: t("depositScooter"),
       battery: "100%",
       speed: "70 km/h",
       descriptionKey: "drongoModelADesc",
-      features: [
-        t("helmetIncluded"),
-        t("phoneHolder"),
-        t("freeService"),
-        t("chargerIncluded"),
-      ],
-    },
-    {
-      thumbnails: [d2, d1, d3],
-      title: "Drongo Model B Pro",
-      price: `90 000 ${t("monthly").replace("oyiga", "so'm")} / ${t("daily")}`,
-      deposit: t("depositScooter"),
-      battery: "100%",
-      speed: "50 km/h",
-      descriptionKey: "drongoModelBProDesc",
       features: [
         t("helmetIncluded"),
         t("phoneHolder"),
