@@ -566,3 +566,468 @@
     left: -16px;
   }
 }
+
+/* ═══════════════════════════════════════
+   FORM SECTION
+═══════════════════════════════════════ */
+.form-section {
+  padding: 100px 5%;
+  background: #f5f5f5;
+  position: relative;
+  overflow: hidden;
+}
+
+.form-section::before {
+  content: "";
+  position: absolute;
+  top: -120px;
+  right: -80px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(201, 168, 76, 0.08) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.form-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 80px;
+  align-items: center;
+}
+
+/* ── Left panel ─────────────────────────── */
+.form-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  margin-bottom: 16px;
+}
+
+.form-eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: #c9a84c;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+.form-heading {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(3.2rem, 6vw, 5.5rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 1.5px;
+  color: #000;
+  margin-bottom: 24px;
+}
+
+.form-heading em {
+  font-style: normal;
+  color: #c9a84c;
+}
+
+.form-desc {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 32px;
+  max-width: 340px;
+}
+
+.form-contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #000;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.form-contact-link:hover {
+  color: #c9a84c;
+}
+
+/* ── Right card ─────────────────────────── */
+.form-right {
+  background: #fff;
+  border-radius: 24px;
+  padding: 44px 40px;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    0 16px 48px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+/* ── Form body ──────────────────────────── */
+.form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.form-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #555;
+}
+
+.form-label span {
+  color: #c9a84c;
+}
+
+/* ── Input wrapper ──────────────────────── */
+.form-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form-input-wrap--ta {
+  align-items: flex-start;
+}
+
+.form-input-icon {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aaa;
+  pointer-events: none;
+  transition: color 0.25s ease;
+  z-index: 1;
+}
+
+.form-input-icon--ta {
+  top: 14px;
+  transform: none;
+}
+
+.form-input-check {
+  color: #22c55e;
+}
+
+.form-input {
+  width: 100%;
+  padding: 13px 13px 13px 38px;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 11px;
+  font-family: "Outfit", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #000;
+  background: #fafafa;
+  outline: none;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.form-input::placeholder {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+.form-input:focus {
+  border-color: #c9a84c;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.12);
+}
+
+.form-input:focus ~ .form-input-icon,
+.form-input-wrap:focus-within .form-input-icon {
+  color: #c9a84c;
+}
+
+.form-textarea {
+  padding-top: 13px;
+  resize: vertical;
+  min-height: 110px;
+}
+
+.form-hint {
+  font-size: 0.7rem;
+  color: #aaa;
+  padding-left: 2px;
+}
+
+/* ── Phone row ──────────────────────────── */
+.form-phone-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+/* ── Country selector ───────────────────── */
+.form-country-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.form-country-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px;
+  height: 46px;
+  background: #fafafa;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 11px;
+  font-family: "Outfit", sans-serif;
+  font-size: 1rem;
+  color: #000;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.form-country-btn:hover,
+.form-country-btn:focus {
+  border-color: #c9a84c;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.12);
+  outline: none;
+}
+
+.form-country-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #777;
+}
+
+/* Dropdown */
+.form-country-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #fff;
+  border: 1.5px solid rgba(0, 0, 0, 0.07);
+  border-radius: 14px;
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.08),
+    0 16px 40px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  padding: 6px;
+  z-index: 200;
+  min-width: 152px;
+  overflow: hidden;
+}
+
+.form-country-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 9px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 9px;
+  font-family: "Outfit", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #000;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.form-country-option:hover {
+  background: rgba(201, 168, 76, 0.08);
+}
+
+.form-country-option--active {
+  background: rgba(201, 168, 76, 0.12);
+  color: #c9a84c;
+  font-weight: 700;
+}
+
+.form-country-code {
+  margin-left: auto;
+  font-size: 0.72rem;
+  color: #bbb;
+  font-weight: 400;
+}
+
+/* ── Error ──────────────────────────────── */
+.form-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 14px;
+  background: rgba(239, 68, 68, 0.06);
+  border: 1px solid rgba(239, 68, 68, 0.22);
+  border-radius: 10px;
+  color: #dc2626;
+  font-size: 0.88rem;
+  font-weight: 500;
+  overflow: hidden;
+}
+
+/* ── Submit button ──────────────────────── */
+.form-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #c9a84c 0%, #dfc06a 55%, #b8903c 100%);
+  color: #000;
+  border: none;
+  border-radius: 12px;
+  font-family: "Outfit", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow:
+    0 4px 20px rgba(201, 168, 76, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition:
+    box-shadow 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.form-btn:hover:not(:disabled) {
+  box-shadow:
+    0 10px 32px rgba(201, 168, 76, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.form-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Spinner */
+.form-btn-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid rgba(0, 0, 0, 0.15);
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: formSpin 0.7s linear infinite;
+}
+
+@keyframes formSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Success state ──────────────────────── */
+.form-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 52px 24px;
+  text-align: center;
+}
+
+.form-success svg {
+  color: #22c55e;
+}
+
+.form-success h3 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2.4rem;
+  letter-spacing: 1px;
+  color: #000;
+}
+
+.form-success p {
+  color: #555;
+  font-size: 1rem;
+  max-width: 260px;
+  line-height: 1.6;
+}
+
+.form-success .form-btn {
+  width: auto;
+  padding: 12px 32px;
+  font-size: 0.88rem;
+  margin-top: 8px;
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .form-wrapper {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .form-right {
+    padding: 36px 28px;
+  }
+
+  .form-desc {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .form-section {
+    padding: 72px 5%;
+  }
+
+  .form-right {
+    padding: 28px 20px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-heading {
+    font-size: 3rem;
+  }
+}
