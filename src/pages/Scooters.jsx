@@ -19,19 +19,16 @@ export default function Scooters() {
   useEffect(() => {
     AOS.init({ duration: 800, once: true, easing: "ease-out" });
   }, []);
-
-  // МАССИВ ТЕПЕРЬ ТУТ (ВНУТРИ), ЧТОБЫ t() РАБОТАЛА
   const scootersData = [
     {
       thumbnails: [sk1, sk2, sk3],
       title: "Skooter H8",
-      priceKey: "fromPriceDay", // передаем ключ
-      depositKey: "depositScooter", // передаем ключ
+      priceKey: "fromPriceDay",
+      depositKey: "depositScooter",
       battery: "100%",
-      speed: "130", // только цифра
+      speed: "130",
       descriptionKey: "scooterXiaomiDesc",
       featuresKeys: [
-        // массив ключей
         "helmetIncluded",
         "chargerIncluded",
         "phoneHolder",

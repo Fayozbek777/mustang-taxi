@@ -15,18 +15,14 @@ const Velo = () => {
   const bikeModels = [
     {
       id: "speed",
-      name: "Trinx M100", // можно тоже вынести в t("veloTrinxName") если нужно
+      name: "Trinx M100",
       images: [velo1, velo2, velo3, velo4],
       monthlyPrice: t("velo_monthly_price"),
+      monthlyEquiv: t("velo_monthly_equiv") || "",
       deposit: t("velo_deposit"),
       desc: t("veloSpeedDesc"),
-      specs: [
-        t("spec_21speed") || "21 Speed",
-        t("spec_aluminum") || "Aluminum Frame",
-        t("spec_discbrakes") || "Mechanical Disc Brakes",
-      ],
+      specs: [t("spec_21speed"), t("spec_aluminum"), t("spec_discbrakes")],
     },
-    // если добавишь другие модели — просто дублируй объект и меняй ключи
   ];
 
   const [activeModel, setActiveModel] = useState(bikeModels[0]);
@@ -45,6 +41,7 @@ const Velo = () => {
       </div>
 
       <motion.div className="product-box" data-aos="zoom-in-up" layout>
+        {/* Галерея миниатюр */}
         <div className="thumbnails">
           {activeModel.images.map((img, idx) => (
             <motion.div
@@ -54,11 +51,16 @@ const Velo = () => {
               className={`thumb-wrapper ${activeImg === img ? "active" : ""}`}
               onClick={() => setActiveImg(img)}
             >
-              <img src={img} alt="thumb" className="thumbnail" />
+              <img
+                src={img}
+                alt={`Велосипед Trinx M100 фото ${idx + 1}`}
+                className="thumbnail"
+              />
             </motion.div>
           ))}
         </div>
 
+        {/* Главное фото с анимацией смены */}
         <div className="main-photo">
           <AnimatePresence mode="wait">
             <motion.img
@@ -69,10 +71,12 @@ const Velo = () => {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.4 }}
               className="main-image"
+              alt="Trinx M100 — основной вид"
             />
           </AnimatePresence>
         </div>
 
+        {/* Информация о товаре */}
         <div className="product-info">
           <motion.h2
             key={activeModel.name}
@@ -102,6 +106,11 @@ const Velo = () => {
 
           <div className="price-block">
             <div className="price">{activeModel.monthlyPrice}</div>
+            {activeModel.monthlyEquiv && (
+              <div className="price-equiv small-text">
+                {activeModel.monthlyEquiv}
+              </div>
+            )}
             <div className="deposit">
               <FaShieldAlt /> {activeModel.deposit}
             </div>
@@ -119,6 +128,7 @@ const Velo = () => {
         </div>
       </motion.div>
 
+      {/* Переключатель моделей (пока одна, но оставляем на будущее) */}
       <div className="model-switcher" data-aos="fade-up">
         {bikeModels.map((model) => (
           <motion.button

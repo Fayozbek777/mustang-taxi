@@ -192,11 +192,7 @@ const Header = () => {
     <>
       <CustomCursor />
 
-      {/* ══════════════════════════════════════════════════════
-          HEADER BAR — contains only the sticky nav strip.
-          The drawer lives OUTSIDE this element entirely.
-          ══════════════════════════════════════════════════════ */}
-      <motion.header
+      <header
         className={`header${scrolled ? " header--scrolled" : ""}`}
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -275,14 +271,8 @@ const Header = () => {
             </motion.button>
           </div>
         </div>
-      </motion.header>
-      {/* ══ END OF HEADER BAR ══ */}
+      </header>
 
-      {/* ══════════════════════════════════════════════════════
-          DRAWER + BACKDROP
-          Rendered as siblings to <header>, NOT inside it.
-          position:fixed → zero effect on page layout.
-          ══════════════════════════════════════════════════════ */}
       <AnimatePresence>
         {open && (
           <>
