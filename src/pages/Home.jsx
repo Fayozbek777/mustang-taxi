@@ -238,24 +238,41 @@ export default function Home() {
 💬 Сообщение: ${message || "—"}`;
 
     try {
-      const res = await fetch(
-        `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ chat_id: CHAT_ID, text, parse_mode: "HTML" }),
-        },
-      );
+      // На Vercel (prod) → /api/telegram
+      // Локально → напрямую в Telegram
+      const isProd = import.meta.env.PROD;
+
+      const res = isProd
+        ? await fetch("/api/telegram", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text }),
+          })
+        : await fetch(
+            `https://api.telegram.org/bot${import.meta.env.VITE_BOT_TOKEN}/sendMessage`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                chat_id: import.meta.env.VITE_CHAT_ID,
+                text,
+                parse_mode: "HTML",
+              }),
+            },
+          );
+
       const data = await res.json();
 
-      if (res.ok && data.ok) {
+      if ((res.ok && data.ok) || (res.ok && isProd)) {
         setSent(true);
         setFirstName("");
         setLastName("");
         setPhone(country.code + " ");
         setMessage("");
       } else {
-        setFormError("Ошибка отправки: " + (data.description || "неизвестно"));
+        setFormError(
+          "Ошибка: " + (data.error || data.description || "неизвестно"),
+        );
       }
     } catch {
       setFormError("Ошибка сети. Попробуйте ещё раз.");
