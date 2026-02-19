@@ -2,8 +2,16 @@
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { Send, MessageSquare, CheckCircle2, AlertCircle } from "lucide-react";
-import { MapPin, Phone, ExternalLink, Zap, User } from "lucide-react";
+import {
+  MapPin,
+  Phone,
+  ExternalLink,
+  Zap,
+  User,
+  MessageSquare,
+  Send,
+  CheckCircle2,
+} from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import { BsTelegram } from "react-icons/bs";
 import collageImg from "../assets/images/collages.png";
@@ -465,13 +473,13 @@ export default function Home() {
               data-aos-delay="100"
               data-aos-once="true"
             >
-              <p className="form-eyebrow">{t("formEyebrow")}</p>
+              <p className="form-eyebrow">Admin bilam bog'laning</p>
               <h2 className="form-heading">
-                {t("formHeading1")}
+                Zayavka
                 <br />
-                <em>{t("formHeading2")}</em>
+                <em>qoldiring</em>
               </h2>
-              <p className="form-desc">{t("formDesc")}</p>
+              <p className="form-desc">Tez orada Bog'lanamiz</p>
               <div className="form-contacts">
                 <a href="tel:+998990805999" className="form-contact-link">
                   <Phone size={16} /> +998 99 080 59 99
@@ -487,6 +495,7 @@ export default function Home() {
               </div>
             </div>
 
+            {/* ── Right: form card ── */}
             <motion.div
               className="form-right"
               data-aos="fade-left"
@@ -503,6 +512,7 @@ export default function Home() {
             >
               <AnimatePresence mode="wait">
                 {sent ? (
+                  /* ── Success state ── */
                   <motion.div
                     key="success"
                     className="form-success"
@@ -523,13 +533,14 @@ export default function Home() {
                     >
                       <CheckCircle2 size={52} strokeWidth={1.4} />
                     </motion.div>
-                    <h3>{t("formSuccessTitle")}</h3>
-                    <p>{t("formSuccessText")}</p>
+                    <h3>Zayavka Jo'natildi</h3>
+                    <p>Admin Tez orada Siz bilan bog'lanadi</p>
                     <button className="form-btn" onClick={() => setSent(false)}>
-                      {t("formSendAgain")}
+                      Yana bir bor Jonatish
                     </button>
                   </motion.div>
                 ) : (
+                  /* ── Form ── */
                   <motion.form
                     key="form"
                     className="form-body"
@@ -540,6 +551,7 @@ export default function Home() {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
                   >
+                    {/* Row: first + last */}
                     <div className="form-row">
                       <motion.div
                         className="form-field"
@@ -549,14 +561,14 @@ export default function Home() {
                         transition={{ duration: 0.45, delay: 0.1 }}
                       >
                         <label className="form-label">
-                          {t("formNameLabel")} <span>*</span>
+                          Ismingiz <span>*</span>
                         </label>
                         <div className="form-input-wrap">
                           <User size={15} className="form-input-icon" />
                           <input
                             type="text"
                             className="form-input"
-                            placeholder={t("formNamePlaceholder")}
+                            placeholder="Bobur"
                             value={firstName}
                             onChange={(e) => setFirstName(e.target.value)}
                             autoComplete="given-name"
@@ -571,15 +583,13 @@ export default function Home() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.45, delay: 0.18 }}
                       >
-                        <label className="form-label">
-                          {t("formSurnameLabel")}
-                        </label>
+                        <label className="form-label">Familiya</label>
                         <div className="form-input-wrap">
                           <User size={15} className="form-input-icon" />
                           <input
                             type="text"
                             className="form-input"
-                            placeholder={t("formSurnamePlaceholder")}
+                            placeholder="Baxodirovich"
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
                             autoComplete="family-name"
@@ -596,15 +606,16 @@ export default function Home() {
                       transition={{ duration: 0.45, delay: 0.25 }}
                     >
                       <label className="form-label">
-                        {t("formPhoneLabel")} <span>*</span>
+                        Telefon Raqamingiz <span>*</span>
                       </label>
                       <div className="form-phone-row">
+                        {/* Country selector */}
                         <div className="form-country-wrap">
                           <button
                             type="button"
                             className="form-country-btn"
                             onClick={() => setShowPicker((v) => !v)}
-                            aria-label="Select country"
+                            aria-label="Выбрать страну"
                           >
                             <span>{country.flag}</span>
                             <span className="form-country-label">
@@ -651,6 +662,7 @@ export default function Home() {
                           </AnimatePresence>
                         </div>
 
+                        {/* Phone input */}
                         <div className="form-input-wrap" style={{ flex: 1 }}>
                           <Phone size={15} className="form-input-icon" />
                           <input
@@ -687,11 +699,10 @@ export default function Home() {
                           </AnimatePresence>
                         </div>
                       </div>
-                      <span className="form-hint">
-                        {t("formPhoneHint")}: {country.mask}
-                      </span>
+                      <span className="form-hint">Маска: {country.mask}</span>
                     </motion.div>
 
+                    {/* Message */}
                     <motion.div
                       className="form-field"
                       initial={{ opacity: 0, y: 16 }}
@@ -699,9 +710,7 @@ export default function Home() {
                       viewport={{ once: true }}
                       transition={{ duration: 0.45, delay: 0.32 }}
                     >
-                      <label className="form-label">
-                        {t("formMessageLabel")}
-                      </label>
+                      <label className="form-label">Savol</label>
                       <div className="form-input-wrap form-input-wrap--ta">
                         <MessageSquare
                           size={15}
@@ -709,7 +718,7 @@ export default function Home() {
                         />
                         <textarea
                           className="form-input form-textarea"
-                          placeholder={t("formMessagePlaceholder")}
+                          placeholder="Savolingiz Bormi?"
                           value={message}
                           onChange={(e) => setMessage(e.target.value)}
                           rows={4}
@@ -717,6 +726,7 @@ export default function Home() {
                       </div>
                     </motion.div>
 
+                    {/* Error */}
                     <AnimatePresence>
                       {formError && (
                         <motion.div
@@ -731,6 +741,7 @@ export default function Home() {
                       )}
                     </AnimatePresence>
 
+                    {/* Submit */}
                     <motion.button
                       type="submit"
                       className="form-btn"
@@ -743,7 +754,7 @@ export default function Home() {
                         <span className="form-btn-spinner" />
                       ) : (
                         <>
-                          <Send size={16} /> {t("formSubmit")}
+                          <Send size={16} /> Zayavka Jonatish
                         </>
                       )}
                     </motion.button>
