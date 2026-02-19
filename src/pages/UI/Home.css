@@ -131,25 +131,6 @@
   text-transform: uppercase;
 }
 
-.hero-scroll-line {
-  width: 1px;
-  height: 48px;
-  background: linear-gradient(to bottom, rgba(255, 215, 0, 0.6), transparent);
-  animation: scrollPulse 2s ease-in-out infinite;
-}
-
-@keyframes scrollPulse {
-  0%,
-  100% {
-    opacity: 0.4;
-    transform: scaleY(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scaleY(1.15);
-  }
-}
-
 /* ─────────────────────────────────────────
    DIAGONAL DIVIDER
 ───────────────────────────────────────── */
