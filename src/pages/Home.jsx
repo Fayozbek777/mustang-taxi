@@ -2,16 +2,16 @@
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+
 import {
-  MapPin,
-  Phone,
-  ExternalLink,
-  Zap,
   User,
-  MessageSquare,
+  Phone,
   Send,
+  MessageSquare,
   CheckCircle2,
+  AlertCircle,
 } from "lucide-react";
+import { MapPin, ExternalLink, Zap } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import { BsTelegram } from "react-icons/bs";
 import collageImg from "../assets/images/collages.png";
