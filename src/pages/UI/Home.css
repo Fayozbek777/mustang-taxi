@@ -34,7 +34,7 @@
   font-family: "Outfit", sans-serif;
   background: var(--surface);
   min-height: 100vh;
-  overflow-x: hidden;
+
   color: var(--text);
 }
 
