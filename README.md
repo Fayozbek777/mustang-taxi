@@ -45,12 +45,12 @@ Lucide React — иконки
 ## Структура проекта
 .
 ├── api/
-│   └── telegram.js              # Обработка API запросов для бота
+│   └── telegram.js          # API роут для отправки данных в Telegram
 ├── src/
 │   ├── assets/
 │   │   └── images/
 │   │       ├── bags-image1.png
-│   │       ├── bikes-image1.png     # Новое: Велосипеды
+│   │       ├── bikes-image1.png    # NEW: Категория велосипедов
 │   │       ├── drango-image1.png
 │   │       └── skooter-image1.png
 │   ├── components/
@@ -59,35 +59,32 @@ Lucide React — иконки
 │   │   │   ├── Footer.css
 │   │   │   └── Header.css
 │   │   ├── Card.jsx
-│   │   ├── ContactForm.jsx          # Логика отправки формы в TG
+│   │   ├── ContactForm.jsx     # Интеграция с TG Bot
 │   │   ├── Footer.jsx
 │   │   ├── Header.jsx
 │   │   └── LanguageSwitcher.jsx
 │   ├── i18n/
-│   │   └── index.js
+│   │   └── index.js            # Конфигурация 5 языков
 │   ├── pages/
 │   │   ├── UI/
 │   │   │   ├── Bags.css
-│   │   │   ├── Bikes.css            # Стили для велосипедов
+│   │   │   ├── Bikes.css
 │   │   │   ├── Home.css
 │   │   │   └── Scooters.css
 │   │   ├── Bags.jsx
-│   │   ├── Bikes.jsx               # Страница велосипедов
+│   │   ├── Bikes.jsx          # Страница велосипедов
 │   │   ├── Drongo.jsx
 │   │   ├── Home.jsx
 │   │   └── Scooters.jsx
-│   ├── App.css
 │   ├── App.jsx
-│   ├── index.css
-│   └── main.jsx
-├── .env.example                 # Шаблон токена и Chat ID
-├── .gitignore                   # Исключение .env и node_modules
-├── eslint.config.js
+│   ├── main.jsx
+│   └── index.css
+├── .env.example              # Пример переменных окружения
+├── .gitignore                # Защита приватных данных
 ├── index.html
-├── package-lock.json
 ├── package.json
-├── README.md
 └── vite.config.js
+
 
 
 ---
