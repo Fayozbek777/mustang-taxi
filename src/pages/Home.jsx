@@ -98,10 +98,9 @@ const stagger = {
 
 export default function Home() {
   const { t } = useTranslation();
-
   const handleDownload = () => {
     const link = document.createElement("a");
-    link.href = "/public/mustang pro wb shartnoma.docx"; // <- файл из public
+    link.href = "/mustang-pro-wb-shartnoma.docx";
     link.download = "Mustang_Pro_Shartnoma.docx";
     link.click();
   };
