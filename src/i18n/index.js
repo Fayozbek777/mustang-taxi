@@ -9,6 +9,7 @@ const resources = {
       drongo: "Drongo skuterlar",
       bags: "Sumkalar",
       bikes: "Velosipedlar",
+      download: "Mustang Pro Shartnomasini yuklab oling",
       welcomeTo: "Xush kelibsiz",
       myMustang: "My Mustang",
       spec_21speed: "21 tezlik",
@@ -83,7 +84,7 @@ const resources = {
       bag_deposit_note:
         "Залог 200 000 сум при годовой аренде — не возвращается",
       volume_25l: "25 л",
-
+      download: "Скачать Mustang Pro Шартнома",
       velo_monthly_price: "500 000 сум / в месяц",
       velo_monthly_equiv: "≈ 41 $ / ≈ 11 500 ₽ в месяц", // опционально
       velo_deposit: "Залог: паспорт или 500 000 сум",
@@ -154,6 +155,7 @@ const resources = {
       drongo: "Drongo Scooters",
       bags: "Bags",
       bikes: "Bicycles",
+      download: "Download Mustang Pro contract",
       bag_yearly_price: "200,000 sum / year",
       bag_deposit_note: "Deposit 200,000 sum (non-refundable)",
       volume_25l: "25 L",
@@ -214,6 +216,7 @@ const resources = {
       drongo: "ڈرونگو اسکوٹرز",
       bags: "بیگز",
       bikes: "سائیکلیں",
+      download: "مسٹینگ پرو شرٹنوما ڈاؤن لوڈ کریں",
       bagUrbanTitle: "واٹر پروف شہری بیگ 25 لیٹر",
       drongoModelADesc: "Drongo A — جدید ڈیزائن اور بہترین ڈائنامکس۔",
       bag_yearly_price: "200,000 UZS / سالانہ",
@@ -275,6 +278,7 @@ const resources = {
       drongoModelADesc: "Drongo A — आधुनिक डिज़ाइन और शानदार डायनामिक्स।",
       bag_yearly_price: "200,000 UZS / वर्ष",
       bag_deposit_note: "जमानत 200,000 UZS (गैर वापसी योग्य)",
+      download: "Mustang Pro शर्तनाम डाउनलोड करें",
 
       velo_monthly_price: "5,00,000 UZS / प्रति माह",
       velo_monthly_equiv: "≈ 3,750 ₹ प्रति माह",

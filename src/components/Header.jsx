@@ -169,11 +169,6 @@ const Header = () => {
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
-  /*
-   * Scroll lock — position:fixed trick
-   * Prevents page from jumping when drawer opens.
-   * Page content stays visually in place.
-   */
   useEffect(() => {
     if (open) {
       const y = window.scrollY;

@@ -99,6 +99,13 @@ const stagger = {
 export default function Home() {
   const { t } = useTranslation();
 
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = "/public/mustang pro wb shartnoma.docx"; // <- файл из public
+    link.download = "Mustang_Pro_Shartnoma.docx";
+    link.click();
+  };
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState(COUNTRIES[0].code + " ");
@@ -120,7 +127,6 @@ export default function Home() {
 
   const handlePhone = (e) => {
     const raw = e.target.value;
-    // не даём удалить код страны
     if (!raw.startsWith(country.code)) {
       setPhone(country.code + " ");
       return;
@@ -196,8 +202,8 @@ export default function Home() {
                   lineHeight: 1.3,
                 }}
               >
-                {t("Арендуйте вместе с My Mustang 🚀") ||
-                  "Арендуйте вместе с My Mustang 🚀"}
+                {t("My Mustang Arendaga oling 🚀") ||
+                  "My Mustang Arendaga oling 🚀"}
               </span>
             </div>
           </motion.div>
@@ -470,7 +476,49 @@ export default function Home() {
             </motion.div>
           </div>
         </section>
+        <section className="download-section" data-aos="fade-up">
+          <div className="pattern"></div>
+          <div className="shine"></div>
 
+          {/* Floating decorative elements */}
+          <div className="floating-element"></div>
+          <div className="floating-element"></div>
+          <div className="floating-element"></div>
+
+          <div className="download-content">
+            <div className="download-badge">⚡ Новая версия доступна</div>
+
+            <h2 className="download-title">{t("myMustang")}</h2>
+
+            <p className="download-desc">
+              {t("rentScootersAndBagsInTashkent")}
+            </p>
+
+            <motion.button
+              className="download-btn"
+              onClick={handleDownload}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span>{t("download") || "Yuklab oling"}</span>
+              <svg
+                className="download-icon"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+            </motion.button>
+          </div>
+        </section>
         <section
           className="form-section"
           data-aos="fade-up"

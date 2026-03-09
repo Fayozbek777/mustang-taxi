@@ -5,11 +5,9 @@ import "aos/dist/aos.css";
 import "./App.css";
 import "./i18n";
 
-// Components
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
-// Pages
 import Home from "./pages/Home";
 import Scooters from "./pages/Scooters";
 import Drongo from "./pages/Drongo";
