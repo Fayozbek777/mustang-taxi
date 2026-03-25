@@ -6,9 +6,9 @@ import { ShoppingBag, DollarSign } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 // Импорт картинок
-import b1 from "../assets/images/bags-image1.png";
-import b2 from "../assets/images/bags-image2.png";
-import b3 from "../assets/images/bags-image3.png";
+import b1 from "../assets/images/bags-image1.jpg";
+import b2 from "../assets/images/bags-image2.jpg";
+import b3 from "../assets/images/bags-image3.jpg";
 
 import "./UI/Bags.css";
 
@@ -61,7 +61,12 @@ export default function Bags() {
               className={`thumb-wrapper ${activePhoto === idx ? "active" : ""}`}
               onClick={() => setActivePhoto(idx)}
             >
-              <img src={thumb} alt="variant" className="thumbnail" />
+              <img
+                src={thumb}
+                alt="variant"
+                className="thumbnail"
+                loading="lazy"
+              />
             </div>
           ))}
         </div>
@@ -71,6 +76,7 @@ export default function Bags() {
           <AnimatePresence mode="wait">
             <motion.img
               key={`${activeModel}-${activePhoto}`}
+              loading="lazy"
               src={currentMainImg}
               alt={currentModel.title}
               className="main-image"

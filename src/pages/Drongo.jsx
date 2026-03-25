@@ -6,9 +6,9 @@ import { Battery, Gauge, DollarSign, Zap } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 // Исправленные импорты картинок (в соответствии с твоей структурой папок)
-import d1 from "../assets/images/drango-image1.png";
-import d2 from "../assets/images/drango-image2.png";
-import d3 from "../assets/images/drango-image3.png";
+import d1 from "../assets/images/drango-image1.jpg";
+import d2 from "../assets/images/drango-image2.jpg";
+import d3 from "../assets/images/drango-image3.jpg";
 
 // Исправленный путь к стилям
 import "./UI/Drongo.css";
@@ -65,7 +65,12 @@ export default function Drongo() {
               className={`thumb-wrapper ${activePhoto === idx ? "active" : ""}`}
               onClick={() => setActivePhoto(idx)}
             >
-              <img src={thumb} alt="thumb" className="thumbnail" />
+              <img
+                src={thumb}
+                alt="thumb"
+                className="thumbnail"
+                loading="lazy"
+              />
             </div>
           ))}
         </div>
@@ -76,6 +81,7 @@ export default function Drongo() {
             <motion.img
               key={activePhoto}
               src={currentMainImg}
+              loading="lazy"
               alt={currentModel.title}
               className="main-image"
               initial={{ opacity: 0, scale: 0.95 }}

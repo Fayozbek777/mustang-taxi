@@ -4,10 +4,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaBiking, FaCheckCircle, FaShieldAlt } from "react-icons/fa";
 import "./UI/Velo.css";
 
-import velo1 from "../assets/images/velosiped-image1.png";
-import velo2 from "../assets/images/velosiped-image2.png";
-import velo3 from "../assets/images/velosiped-image3.png";
-import velo4 from "../assets/images/velosidep-image4.png";
+import velo1 from "../assets/images/velosidep-image4.jpg";
+import velo2 from "../assets/images/velosiped-image2.jpg";
+import velo3 from "../assets/images/velosiped-image3.jpg";
+import velo4 from "../assets/images/velosidep-image4.jpg";
 
 const Velo = () => {
   const { t } = useTranslation();
@@ -55,6 +55,7 @@ const Velo = () => {
                 src={img}
                 alt={`Велосипед Trinx M100 фото ${idx + 1}`}
                 className="thumbnail"
+                loading="lazy"
               />
             </motion.div>
           ))}
@@ -69,6 +70,7 @@ const Velo = () => {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
+              loading="lazy"
               transition={{ duration: 0.4 }}
               className="main-image"
               alt="Trinx M100 — основной вид"

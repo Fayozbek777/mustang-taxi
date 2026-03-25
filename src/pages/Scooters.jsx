@@ -5,9 +5,10 @@ import "aos/dist/aos.css";
 import { Battery, Gauge, DollarSign, Zap } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-import sk1 from "../assets/images/skooter-image1.png";
-import sk2 from "../assets/images/skooter-image2.png";
-import sk3 from "../assets/images/skooter-image3.png";
+import sk1 from "../assets/images/skooter-image1.jpg";
+import sk2 from "../assets/images/skooter-image2.jpg";
+import sk3 from "../assets/images/skooter-image3.jpg";
+import sk4 from "../assets/images/skooter-image4.jpg";
 
 import "./UI/Scooters.css";
 
@@ -21,12 +22,12 @@ export default function Scooters() {
   }, []);
   const scootersData = [
     {
-      thumbnails: [sk1, sk2, sk3],
+      thumbnails: [sk1, sk3, sk2, sk4],
       title: "Skooter H8",
       priceKey: "fromPriceDay",
       depositKey: "depositScooter",
       battery: "100%",
-      speed: "130",
+      speed: "60/65",
       descriptionKey: "scooterXiaomiDesc",
       featuresKeys: [
         "helmetIncluded",
@@ -52,7 +53,6 @@ export default function Scooters() {
       </header>
 
       <div className="product-box" data-aos="fade-up">
-        {/* Миниатюры */}
         <div className="thumbnails">
           {currentModel.thumbnails.map((thumb, idx) => (
             <div
@@ -60,12 +60,16 @@ export default function Scooters() {
               className={`thumb-wrapper ${activePhoto === idx ? "active" : ""}`}
               onClick={() => setActivePhoto(idx)}
             >
-              <img src={thumb} alt="thumb" className="thumbnail" />
+              <img
+                src={thumb}
+                alt="thumb"
+                className="thumbnail"
+                loading="lazy"
+              />
             </div>
           ))}
         </div>
 
-        {/* Главное фото */}
         <div className="main-photo">
           <AnimatePresence mode="wait">
             <motion.img
@@ -73,6 +77,7 @@ export default function Scooters() {
               src={currentMainImg}
               alt={currentModel.title}
               className="main-image"
+              loading="lazy"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -80,7 +85,6 @@ export default function Scooters() {
           </AnimatePresence>
         </div>
 
-        {/* Инфо (ОБРАТИ ВНИМАНИЕ НА t() НИЖЕ) */}
         <div className="product-info">
           <h2 className="product-name">{currentModel.title}</h2>
           <p className="description">{t(currentModel.descriptionKey)}</p>
