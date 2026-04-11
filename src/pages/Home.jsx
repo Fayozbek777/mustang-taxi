@@ -14,6 +14,7 @@ import {
 import { MapPin, ExternalLink, Zap } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import { BsTelegram } from "react-icons/bs";
+import deliveryVid from "../assets/videos/deleviry.mp4";
 import collageImg from "../assets/images/collages.png";
 import "./UI/Home.css";
 
@@ -97,7 +98,7 @@ const stagger = {
 };
 
 export default function Home() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const handleDownload = () => {
     const link = document.createElement("a");
     link.href = "/mustang-pro-wb-shartnoma.docx";
@@ -107,13 +108,14 @@ export default function Home() {
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [phone, setPhone] = useState(COUNTRIES[0].code + " ");
   const [country, setCountry] = useState(COUNTRIES[0]);
+  const [phone, setPhone] = useState(COUNTRIES[0].code + " ");
   const [showPicker, setShowPicker] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [formError, setFormError] = useState("");
+  const isRTL = i18n.language === "ar" || i18n.language === "ur";
 
   const BOT_TOKEN = import.meta.env.VITE_BOT_TOKEN;
   const CHAT_ID = import.meta.env.VITE_CHAT_ID;
@@ -243,8 +245,6 @@ export default function Home() {
 💬 Сообщение: ${message || "—"}`;
 
     try {
-      // На Vercel (prod) → /api/telegram
-      // Локально → напрямую в Telegram
       const isProd = import.meta.env.PROD;
 
       const res = isProd
@@ -301,16 +301,35 @@ export default function Home() {
 
       <motion.div initial="hidden" animate="show" className="home-page">
         <section className="hero-section">
-          <motion.div className="hero-content" variants={stagger}>
-            <motion.h1 variants={fadeUp} custom={0}>
+          <div className="hero-video-bg">
+            <video autoPlay loop muted playsInline className="hero-bg-video">
+              <source src={deliveryVid} type="video/mp4" />
+            </video>
+            <div className="hero-video-overlay"></div>
+          </div>
+
+          <motion.div
+            className="hero-content"
+            variants={stagger}
+            style={{ position: "relative", zIndex: 2 }}
+          >
+            <motion.h1
+              variants={fadeUp.show(0)}
+              initial="hidden"
+              animate="show"
+            >
               {t("welcomeTo")} <span>My Mustang</span>
             </motion.h1>
-            <motion.p variants={fadeUp} custom={0.1}>
+            <motion.p
+              variants={fadeUp.show(0.1)}
+              initial="hidden"
+              animate="show"
+            >
               {t("rentScootersAndBagsInTashkent")}
             </motion.p>
           </motion.div>
 
-          <div className="hero-scroll">
+          <div className="hero-scroll" style={{ zIndex: 2 }}>
             <div className="hero-scroll-line" />
             <span>Scroll</span>
           </div>
@@ -614,6 +633,12 @@ export default function Home() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
+                    /* Добавьте dir для корректного отображения AR и UR */
+                    dir={
+                      i18n.language === "ar" || i18n.language === "ur"
+                        ? "rtl"
+                        : "ltr"
+                    }
                   >
                     {/* Row: first + last */}
                     <div className="form-row">
@@ -625,14 +650,14 @@ export default function Home() {
                         transition={{ duration: 0.45, delay: 0.1 }}
                       >
                         <label className="form-label">
-                          Ismingiz <span>*</span>
+                          {t("firstName")} <span>*</span>
                         </label>
                         <div className="form-input-wrap">
                           <User size={15} className="form-input-icon" />
                           <input
                             type="text"
                             className="form-input"
-                            placeholder="Bobur"
+                            placeholder={t("placeholderName")}
                             value={firstName}
                             onChange={(e) => setFirstName(e.target.value)}
                             autoComplete="given-name"
@@ -647,13 +672,13 @@ export default function Home() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.45, delay: 0.18 }}
                       >
-                        <label className="form-label">Familiya</label>
+                        <label className="form-label">{t("lastName")}</label>
                         <div className="form-input-wrap">
                           <User size={15} className="form-input-icon" />
                           <input
                             type="text"
                             className="form-input"
-                            placeholder="Baxodirovich"
+                            placeholder={t("placeholderSurname")}
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
                             autoComplete="family-name"
@@ -670,7 +695,7 @@ export default function Home() {
                       transition={{ duration: 0.45, delay: 0.25 }}
                     >
                       <label className="form-label">
-                        Telefon Raqamingiz <span>*</span>
+                        {t("phone")} <span>*</span>
                       </label>
                       <div className="form-phone-row">
                         {/* Country selector */}
@@ -679,7 +704,7 @@ export default function Home() {
                             type="button"
                             className="form-country-btn"
                             onClick={() => setShowPicker((v) => !v)}
-                            aria-label="Выбрать страну"
+                            aria-label={t("selectCountry")}
                           >
                             <span>{country.flag}</span>
                             <span className="form-country-label">
@@ -750,7 +775,11 @@ export default function Home() {
                                 }}
                                 style={{
                                   position: "absolute",
-                                  right: 12,
+                                  /* Динамический отступ галочки для RTL */
+                                  [i18n.language === "ar" ||
+                                  i18n.language === "ur"
+                                    ? "left"
+                                    : "right"]: 12,
                                   display: "flex",
                                 }}
                               >
@@ -763,7 +792,9 @@ export default function Home() {
                           </AnimatePresence>
                         </div>
                       </div>
-                      <span className="form-hint">Маска: {country.mask}</span>
+                      <span className="form-hint">
+                        {t("maskHint")}: {country.mask}
+                      </span>
                     </motion.div>
 
                     {/* Message */}
@@ -774,54 +805,17 @@ export default function Home() {
                       viewport={{ once: true }}
                       transition={{ duration: 0.45, delay: 0.32 }}
                     >
-                      <label className="form-label">Savol</label>
+                      <label className="form-label">{t("question")}</label>
                       <div className="form-input-wrap form-input-wrap--ta">
-                        <MessageSquare
-                          size={15}
-                          className="form-input-icon form-input-icon--ta"
-                        />
+                        <MessageSquare size={15} className="form-input-icon" />
                         <textarea
                           className="form-input form-textarea"
-                          placeholder="Savolingiz Bormi?"
                           value={message}
                           onChange={(e) => setMessage(e.target.value)}
-                          rows={4}
+                          rows={3}
                         />
                       </div>
                     </motion.div>
-
-                    {/* Error */}
-                    <AnimatePresence>
-                      {formError && (
-                        <motion.div
-                          className="form-error"
-                          initial={{ opacity: 0, y: -8, height: 0 }}
-                          animate={{ opacity: 1, y: 0, height: "auto" }}
-                          exit={{ opacity: 0, y: -4, height: 0 }}
-                          transition={{ duration: 0.25 }}
-                        >
-                          <AlertCircle size={15} /> {formError}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-
-                    {/* Submit */}
-                    <motion.button
-                      type="submit"
-                      className="form-btn"
-                      disabled={loading}
-                      whileHover={{ scale: loading ? 1 : 1.02 }}
-                      whileTap={{ scale: 0.97 }}
-                      transition={{ duration: 0.15 }}
-                    >
-                      {loading ? (
-                        <span className="form-btn-spinner" />
-                      ) : (
-                        <>
-                          <Send size={16} /> Zayavka Jonatish
-                        </>
-                      )}
-                    </motion.button>
                   </motion.form>
                 )}
               </AnimatePresence>

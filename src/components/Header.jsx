@@ -9,6 +9,7 @@ import {
 } from "framer-motion";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import navLogo from "../assets/images/navLogo.png";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { Menu, X } from "lucide-react";
 import "./UI/Header.css";
@@ -21,7 +22,6 @@ const navLinks = [
   { to: "/bags", key: "bags" },
 ];
 
-/* ── Framer variants ──────────────────────────────────────── */
 const drawerVariants = {
   hidden: {
     x: "100%",
@@ -51,7 +51,6 @@ const linkVariants = {
   }),
 };
 
-/* ── Magnetic hook ────────────────────────────────────────── */
 function useMagnetic(strength = 0.35) {
   const ref = useRef(null);
   const x = useMotionValue(0);
@@ -75,8 +74,6 @@ function useMagnetic(strength = 0.35) {
   }, [x, y]);
   return { ref, sx, sy, onMove, onLeave };
 }
-
-/* ── Custom cursor ────────────────────────────────────────── */
 function CustomCursor() {
   const dotX = useMotionValue(-100);
   const dotY = useMotionValue(-100);
@@ -142,9 +139,6 @@ function CustomCursor() {
   );
 }
 
-/* ════════════════════════════════════════════════════════════
-   HEADER
-════════════════════════════════════════════════════════════ */
 const Header = () => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -152,17 +146,14 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const burger = useMagnetic(0.38);
 
-  /* AOS */
   useEffect(() => {
     AOS.init({ once: true, duration: 700, easing: "ease-out-cubic" });
   }, []);
 
-  /* Close on route change */
   useEffect(() => {
     setOpen(false);
   }, [location.pathname]);
 
-  /* Scrolled flag */
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 8);
     window.addEventListener("scroll", fn, { passive: true });
@@ -194,17 +185,34 @@ const Header = () => {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="header-container">
-          {/* Logo */}
-          <Link
-            to="/"
-            className="logo"
-            data-aos="fade-right"
-            data-aos-delay="80"
-          >
-            My<em>Mustang</em>
+          <Link to="/" className="logo-link">
+            <motion.div
+              className="logo-wrapper"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{
+                scale: 1.03,
+                filter: "drop-shadow(0 0 20px rgba(255, 208, 0, 0.4))",
+              }}
+              whileTap={{ scale: 0.97 }}
+            >
+              <img src={navLogo} alt="My Mustang" className="nav-logo-main" />
+
+              <motion.div
+                className="logo-shimmer"
+                initial={{ x: "-150%" }}
+                animate={{ x: "150%" }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 3,
+                  ease: "linear",
+                  repeatDelay: 2,
+                }}
+              />
+            </motion.div>
           </Link>
 
-          {/* Desktop nav */}
           <nav
             className="nav-desktop"
             data-aos="fade-down"
@@ -220,8 +228,6 @@ const Header = () => {
               </Link>
             ))}
           </nav>
-
-          {/* Right */}
           <div
             className="header-right"
             data-aos="fade-left"

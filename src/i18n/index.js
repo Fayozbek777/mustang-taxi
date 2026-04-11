@@ -1,5 +1,6 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
 
 const resources = {
   uz: {
@@ -13,6 +14,14 @@ const resources = {
       welcomeTo: "Xush kelibsiz",
       myMustang: "My Mustang",
       spec_21speed: "21 tezlik",
+      firstName: "Ismingiz",
+      lastName: "Familiya",
+      phone: "Telefon Raqamingiz",
+      question: "Savol",
+      placeholderName: "Bobur",
+      placeholderSurname: "Baxodirovich",
+      maskHint: "Maska",
+      selectCountry: "Mamlakatni tanlash",
       spec_aluminum: "Alyuminiy ramka",
       spec_discbrakes: "Mexanik disk tormozlari",
       velo_monthly_price: "500 000 so'm / oyiga",
@@ -93,9 +102,15 @@ const resources = {
       spec_aluminum: "Алюминиевая рама",
       spec_discbrakes: "Механические дисковые тормоза",
       rentNow: "Арендовать сейчас",
-
+      firstName: "Ваше имя",
+      lastName: "Фамилия",
+      phone: "Номер телефона",
+      question: "Вопрос",
+      placeholderName: "Иван",
+      placeholderSurname: "Иванович",
+      maskHint: "Маска",
+      selectCountry: "Выбрать страну",
       waterproof: "Водонепроницаемый",
-
       bags: "Сумки",
       bikes: "Велосипеды",
       welcomeTo: "Добро пожаловать в",
@@ -120,7 +135,7 @@ const resources = {
       speed: "Скорость",
       price: "Цена",
       features: "Характеристики",
-      monthly: "в месяц",
+      monthly: "руб",
       daily: "в сутки",
       fromPriceDay: "от 690 руб / сут",
       depositScooter: "Залог: 6283.10 руб",
@@ -161,7 +176,14 @@ const resources = {
       volume_25l: "25 L",
       waterproof: "Waterproof",
       welcomeTo: "Welcome to",
-
+      firstName: "First Name",
+      lastName: "Last Name",
+      phone: "Phone Number",
+      question: "Question",
+      placeholderName: "John",
+      placeholderSurname: "Doe",
+      maskHint: "Mask",
+      selectCountry: "Select country",
       velo_monthly_price: "500,000 UZS / per month",
       velo_monthly_equiv: "≈ $41 / month",
       velo_deposit: "Deposit: passport or 500,000 UZS",
@@ -232,6 +254,14 @@ const resources = {
       rentNow: "ابھی کرائے پر لیں",
       waterproof: "پانی روکنے والا",
       welcomeTo: "خوش آمدید",
+      firstName: "آپ کا نام",
+      lastName: "خاندانی نام",
+      phone: "فون نمبر",
+      question: "سوال",
+      placeholderName: "علی",
+      placeholderSurname: "خان",
+      maskHint: "ماسک",
+      selectCountry: "ملک منتخب کریں",
       myMustang: "میرا مسٹنگ",
       rentScootersAndBagsInTashkent: "تاشقند میں اسکوٹرز اور بیگز کرائے پر لیں",
       aboutUs: "ہمارے بارے میں",
@@ -279,7 +309,6 @@ const resources = {
       bag_yearly_price: "200,000 UZS / वर्ष",
       bag_deposit_note: "जमानत 200,000 UZS (गैर वापसी योग्य)",
       download: "Mustang Pro शर्तनाम डाउनलोड करें",
-
       velo_monthly_price: "5,00,000 UZS / प्रति माह",
       velo_monthly_equiv: "≈ 3,750 ₹ प्रति माह",
       velo_deposit: "जमानत: पासपोर्ट या 5,00,000 UZS",
@@ -288,13 +317,20 @@ const resources = {
       spec_aluminum: "एल्यूमिनियम फ्रेम",
       spec_discbrakes: "मैकेनिकल डिस्क ब्रेक",
       rentNow: "अभी किराए पर लें",
-
       volume_25l: "25 L",
       waterproof: "वाटरप्रूफ",
       welcomeTo: "स्वागत है",
       myMustang: "माय मस्टैंग",
       rentScootersAndBagsInTashkent: "ताशकंद में स्कूटर और बैग किराए पर लें",
       aboutUs: "हमारे बारे में",
+      firstName: "आपका नाम",
+      lastName: "उपनाम",
+      phone: "फ़ोन नंबर",
+      question: "सवाल",
+      placeholderName: "राहुल",
+      placeholderSurname: "कुमार",
+      maskHint: "मास्क",
+      selectCountry: "देश चुनें",
       aboutHeading1: "आपका",
       aboutHeading2: "मुक्त",
       aboutHeading3: "परिवहन",
@@ -329,11 +365,17 @@ const resources = {
   },
 };
 
-i18n.use(initReactI18next).init({
-  resources,
-  lng: "uz",
-  fallbackLng: "ru",
-  interpolation: { escapeValue: false },
-});
+i18n
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    resources,
+    fallbackLng: "uz",
+    detection: {
+      order: ["localStorage", "cookie", "htmlTag"],
+      caches: ["localStorage"],
+    },
+    interpolation: { escapeValue: false },
+  });
 
 export default i18n;

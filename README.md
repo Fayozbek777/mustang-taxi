@@ -1,168 +1,78 @@
 # My Mustang 🛵
 
-**Платформа аренды скутеров, велосипедов и сумок доставки — Ташкент**
+**Luxury-платформа аренды транспорта в Ташкенте**
 
-[![React](https://img.shields.io/badge/React-18-61DAFB?style=flat&logo=react)](https://react.dev)
-[![Vercel](https://img.shields.io/badge/Deployed-Vercel-000?style=flat&logo=vercel)](https://vercel.com)
-[![i18n](https://img.shields.io/badge/i18n-5_languages-c9a84c?style=flat)](https://react.i18next.com)
-[![License](https://img.shields.io/badge/status-sold-red?style=flat)]()
-
----
-
-## О проекте
-
-**My Mustang** — React-приложение для сервиса аренды городского транспорта в Ташкенте. Акцент на luxury UI, плавные анимации, мультиязычность и полную адаптивность.
-
-| Категория | Описание |
-|-----------|----------|
-| 🛴 Электроскутеры | Городские скутеры для быстрых поездок |
-| ⚡ Drongo | Мощные скутеры для дальних маршрутов |
-| 🚲 Велосипеды | Классические и электробайки |
-| 🎒 Сумки | Курьерские сумки в стиле Yandex Go |
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)](https://react.dev)
+[![Supabase](https://img.shields.io/badge/Backend-Supabase-3ECF8E?logo=supabase)](https://supabase.com)
+[![Vercel](https://img.shields.io/badge/Deployed-Vercel-000?logo=vercel)](https://vercel.com)
+[![i18n](https://img.shields.io/badge/i18n-5_langs-c9a84c)](https://react.i18next.com)
 
 ---
 
-## Стек
+### 🚀 Особенности
 
-| Технология | Назначение |
-|-----------|-----------|
-| React 18 | UI-фреймворк |
-| React Router DOM | Клиентский роутинг |
-| Framer Motion | Анимации, transitions, spring |
-| AOS | Анимации при скролле |
-| react-i18next | Мультиязычность (5 языков) |
-| Telegram Bot API | Обработка заявок с формы |
-| Lucide React | Иконки |
-| Vercel Serverless | Проксирование API запросов |
+- **Мультиязычность:** Полная поддержка UZ, RU, EN, HI, UR.
+- **Backend:** Supabase (PostgreSQL + Storage) для управления товарами.
+- **Admin Panel:** Управление контентом, ценами и фото в реальном времени.
+- **Luxury UI:** Анимации Framer Motion, AOS и адаптивный дизайн.
+- **Telegram CRM:** Мгновенные уведомления о новых заявках.
 
 ---
 
-## Языки интерфейса
+### 🛠 Стек
 
-```
-🇺🇿  Ўзбекча   (uz)
-🇷🇺  Русский   (ru)
-🇬🇧  English   (en)
-🇵🇰  اردو      (ur)
-🇮🇳  हिन्दी    (hi)
+- **Frontend:** React 18, Vite, Lucide Icons.
+- **Database:** Supabase (JSONB для мультиязычности).
+- **Animations:** Framer Motion, AOS.
+- **API:** Vercel Serverless (для Telegram Bot API).
+
+---
+
+### 📂 Структура Admin
+
+```text
+src/admin/
+├── UI/              # Стили админ-панели
+├── AdminDashboard   # Статистика и управление
+├── AdminProducts    # Список всех товаров
+└── EditProduct      # Редактор (Мультиязычность + Загрузка фото)
 ```
 
 ---
 
-## Структура проекта
-
-```
-my-mustang/
-├── api/
-│   └── telegram.js          # Vercel Serverless — проксирует запросы к Telegram
-├── src/
-│   ├── assets/images/       # Фото скутеров, велосипедов, сумок
-│   ├── components/
-│   │   ├── UI/              # Card.css, Header.css, Footer.css
-│   │   ├── Card.jsx
-│   │   ├── Header.jsx       # Sticky header + mobile drawer + custom cursor
-│   │   ├── Footer.jsx
-│   │   └── LanguageSwitcher.jsx
-│   ├── pages/
-│   │   ├── Home.jsx         # Hero, About, Map, Contact Form
-│   │   ├── Scooters.jsx
-│   │   ├── Drongo.jsx
-│   │   ├── Bikes.jsx
-│   │   └── Bags.jsx
-│   ├── i18n/index.js        # Конфигурация переводов
-│   ├── App.jsx
-│   └── main.jsx
-├── .env                     # Локальные переменные (не в git)
-├── .env.example
-├── vite.config.js
-└── package.json
-```
-
----
-
-## Telegram Bot
-
-Форма обратной связи отправляет заявки напрямую в Telegram.
-
-**Как работает:**
-- Пользователь заполняет форму (имя, телефон, сообщение)
-- Запрос идёт на `/api/telegram` — Vercel Serverless Function
-- Функция проксирует запрос к Telegram Bot API с серверными переменными
-- CORS отсутствует — токен бота никогда не попадает в браузер
-
-**Переменные окружения:**
+### ⚙️ Настройка (.env)
 
 ```env
-# .env — для локальной разработки (с VITE_ префиксом)
-VITE_BOT_TOKEN=your_bot_token
-VITE_CHAT_ID=your_chat_id
-```
+# Supabase
+VITE_SUPABASE_URL=your_url
+VITE_SUPABASE_ANON_KEY=your_key
 
-```
-# Vercel Dashboard → Settings → Environment Variables (без VITE_)
-BOT_TOKEN=your_bot_token
-CHAT_ID=your_chat_id
+# Telegram Bot
+VITE_BOT_TOKEN=your_token
+VITE_CHAT_ID=your_id
+
+# Admin Access
+VITE_ADMIN_PATH=/your-secret-dashboard-path
+VITE_ADMIN_LOGIN=admin
+VITE_ADMIN_PASSWORD=your_password
 ```
 
 ---
 
-## Запуск локально
+### 🛠 Запуск
 
 ```bash
-# 1. Клонировать
-git clone https://github.com/fayozbek777/my-mustang.git
-cd my-mustang
-
-# 2. Установить зависимости
 npm install
-
-# 3. Создать .env
-cp .env.example .env
-# вставить токен бота и chat_id
-
-# 4. Запустить
 npm run dev
 ```
 
-Откроется на `http://localhost:5173`
-
 ---
 
-## Деплой на Vercel
+### 📍 Контакты
 
-```bash
-# 1. Запушить в GitHub
-git push origin main
+- **Telegram:** [@YandexMustang](https://t.me/YandexMustang)
+- **Адрес:** Ташкент, ул. Глинки 27
 
-# 2. Подключить репозиторий на vercel.com
-# 3. Добавить переменные: Settings → Environment Variables
-#    BOT_TOKEN / CHAT_ID
-# 4. Deploy
 ```
 
----
-
-## Дизайн
-
-- **Палитра:** золото `#c9a84c` · чёрный `#000` · белый `#fff`
-- **Шрифты:** Bebas Neue (заголовки) · Outfit (UI)
-- **Анимации:** Framer Motion (drawer, stagger, spring) · AOS (scroll reveals)
-- **Адаптивность:** mobile / tablet / desktop
-
----
-
-## Планы
-
-- [ ] Авторизация пользователей
-- [ ] Онлайн-оплата (Payme / Click)
-- [ ] Карта скутеров в реальном времени
-- [ ] Личный кабинет
-- [ ] Админ-панель
-
----
-
-## Контакты
-
-**Telegram:** [@YandexMustang](https://t.me/YandexMustang)  
-**Телефон:** +998 99 080 59 99  
-**Адрес:** ул. Глинки 27, Ташкент
+```

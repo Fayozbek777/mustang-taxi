@@ -1,323 +1,240 @@
-/* src/UI/Bags.css */
-
 :root {
-  --bg: #0a0a0f;
-  --box-bg: #111116;
-  --text: #f1f1f6;
-  --muted: #a0a0b0;
+  --bg: #050505;
+  --card-bg: #0f0f0f;
   --accent: #ffd000;
-  --border: #22222a;
-  --radius: 22px;
-  --shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+  --accent-soft: rgba(255, 208, 0, 0.1);
+  --text-main: #ffffff;
+  --text-muted: #888888;
+  --border-color: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --font-main: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .page-wrapper {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 50% -20%, #1a1a1a 0%, transparent 50%),
+    radial-gradient(circle at 0% 100%, #111 0%, transparent 40%);
+  color: var(--text-main);
+  font-family: var(--font-main);
+  padding: 80px 20px;
   min-height: 100vh;
-  background: var(--bg);
-  color: var(--text);
-  padding: 80px 24px 140px;
 }
 
+/* Header */
 .page-header {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin-bottom: 64px;
+  text-align: center;
+  margin-bottom: 80px;
 }
 
 .page-header h1 {
-  font-size: clamp(2.8rem, 7.5vw, 4.8rem);
-  font-weight: 800;
-  margin: 0;
-  letter-spacing: -0.03em;
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  margin-top: 20px;
+  background: linear-gradient(to bottom, #fff 40%, #444 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.icon-accent {
-  color: var(--accent);
-}
-
-/* Главный бокс */
+/* Main Box - Bento Layout */
 .product-box {
-  background: var(--box-bg);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-  padding: 48px 40px;
-  display: grid;
-  grid-template-columns: 140px 1fr 400px;
-  gap: 48px;
-  max-width: 1600px;
+  max-width: 1400px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 100px 1.5fr 1fr;
+  gap: 24px;
+  padding: 24px;
+  background: var(--card-bg);
+  border-radius: 40px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
 }
 
-@media (max-width: 1100px) {
-  .product-box {
-    grid-template-columns: 120px 1fr 360px;
-    gap: 36px;
-    padding: 40px 32px;
-  }
-}
-
-@media (max-width: 900px) {
-  .product-box {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    padding: 32px 24px;
-  }
-}
-
-/* Миниатюры слева */
+/* Thumbnails */
 .thumbnails {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
 }
 
 .thumb-wrapper {
-  border-radius: 16px;
-  overflow: hidden;
-  border: 3px solid transparent;
+  background: #161616;
+  border-radius: 20px;
+  padding: 8px;
+  border: 1px solid var(--border-color);
   cursor: pointer;
-  transition: all 0.35s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.thumb-wrapper:hover,
 .thumb-wrapper.active {
+  background: var(--accent-soft);
   border-color: var(--accent);
-  transform: scale(1.08);
-  box-shadow: 0 12px 32px rgba(255, 208, 0, 0.25);
-}
-
-.thumb-wrapper.active {
-  transform: scale(1.12);
-  box-shadow: 0 16px 48px rgba(255, 208, 0, 0.45);
+  transform: scale(1.05);
 }
 
 .thumbnail {
   width: 100%;
-  height: 130px;
-  object-fit: cover;
-  display: block;
+  aspect-ratio: 1;
+  object-fit: contain;
+  filter: grayscale(1);
+  transition: 0.4s;
 }
 
-/* Большое фото */
+.thumb-wrapper.active .thumbnail,
+.thumb-wrapper:hover .thumbnail {
+  filter: grayscale(0);
+}
+
+/* Main Display */
 .main-photo {
-  background: #0c0c15;
-  border-radius: 20px;
-  overflow: hidden;
+  background: #121212;
+  border-radius: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
-  min-height: 620px;
-  max-height: 80vh;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+}
+
+.main-photo::before {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: var(--accent);
+  filter: blur(120px);
+  opacity: 0.15;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .main-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  transition: transform 0.8s ease;
+  width: 85%;
+  height: auto;
+  z-index: 2;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.main-photo:hover .main-image {
-  transform: scale(1.08);
-}
-
-/* Информация справа */
+/* Product Info */
 .product-info {
+  padding: 40px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 32px;
+  border: 1px solid var(--glass-border);
 }
 
 .product-name {
   font-size: 2.8rem;
-  font-weight: 700;
-  margin: 0;
-  line-height: 1.1;
+  font-weight: 800;
+  margin-bottom: 16px;
+  line-height: 1;
 }
 
 .description {
-  font-size: 1.18rem;
-  line-height: 1.65;
-  color: var(--muted);
-  margin: 0;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 40px;
 }
 
-.specs {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.spec-row {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  font-size: 1.2rem;
-}
-
-.spec-icon {
-  color: var(--accent);
-  flex-shrink: 0;
-}
-
+/* Price Block */
 .price-row {
-  font-size: 1.85rem;
-  font-weight: 800;
-  color: var(--accent);
-  margin-top: 12px;
+  margin-bottom: 40px;
 }
 
 .price {
-  font-weight: 800;
-}
-
-.features {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  font-size: 1.12rem;
-  line-height: 1.85;
-}
-
-.features li {
-  margin-bottom: 12px;
-  position: relative;
-  padding-left: 40px;
-}
-
-.features li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  color: var(--accent);
-  font-size: 1.8rem;
-  font-weight: bold;
-}
-
-/* Кнопка аренды */
-.rent-btn {
-  background: var(--accent);
-  color: #000;
-  border: none;
-  padding: 18px 40px;
-  font-size: 1.2rem;
-  font-weight: 700;
-  border-radius: 16px;
-  cursor: pointer;
-  margin-top: 20px;
-  transition: all 0.35s ease;
-}
-
-.rent-btn:hover {
-  background: #ffdb33;
-  transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(255, 208, 0, 0.4);
-}
-
-/* Переключатель моделей */
-.model-switcher {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 18px;
-  margin-top: 80px;
-}
-
-.model-btn {
-  background: #181820;
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 16px 32px;
-  border-radius: 16px;
-  font-weight: 600;
-  font-size: 1.05rem;
-  cursor: pointer;
-  transition: all 0.35s ease;
-}
-
-.model-btn:hover {
-  border-color: var(--accent);
-  background: rgba(255, 208, 0, 0.08);
-}
-
-.model-btn.active {
-  background: var(--accent);
-  color: #000;
-  border-color: var(--accent);
-}
-
-/* Мобильные адаптации */
-@media (max-width: 600px) {
-  .product-box {
-    padding: 24px;
-    gap: 32px;
-  }
-  .thumbnail {
-    height: 100px;
-  }
-  .main-photo {
-    min-height: 420px;
-    padding: 16px;
-  }
-  .product-name {
-    font-size: 2.2rem;
-  }
-  .price-row {
-    font-size: 1.6rem;
-  }
-  .rent-btn {
-    padding: 16px 32px;
-    font-size: 1.1rem;
-  }
-}
-/* Блок цен с закладом */
-.price-block {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-items: flex-start;
-}
-
-.daily-price {
-  font-size: 1.85rem;
-  font-weight: 800;
-  color: var(--accent);
-}
-
-.yearly-price {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--accent);
-  opacity: 0.9;
+  font-size: 3.5rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
 }
 
 .deposit-note {
-  font-size: 1.05rem;
-  color: #ff6b6b; /* красный/оранжевый акцент на невозвратный залог */
-  font-weight: 500;
-  font-style: italic;
-  margin-top: 4px;
+  font-size: 0.9rem;
+  color: #ff4d4d !important;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 8px;
 }
 
-/* Мобильные корректировки */
-@media (max-width: 600px) {
-  .price-block {
-    gap: 6px;
-  }
+/* Features List */
+.features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 48px;
+  display: grid;
+  gap: 12px;
+}
 
-  .daily-price {
-    font-size: 1.6rem;
-  }
+.features li {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  border: 1px solid transparent;
+  transition: 0.3s;
+}
 
-  .yearly-price {
-    font-size: 1.25rem;
-  }
+.features li:hover {
+  border-color: var(--glass-border);
+  background: rgba(255, 255, 255, 0.05);
+}
 
-  .deposit-note {
-    font-size: 0.98rem;
+.feat-icon {
+  margin-right: 12px;
+  color: var(--accent);
+}
+
+/* Luxury Button */
+.rent-btn {
+  width: 100%;
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 24px;
+  border-radius: 100px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.rent-btn:hover {
+  background: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(255, 208, 0, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .product-box {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+    padding: 16px;
+  }
+  .thumbnails {
+    flex-direction: row;
+    order: 2;
+  }
+  .main-photo {
+    height: 400px;
+    order: 1;
+  }
+  .product-info {
+    order: 3;
+    padding: 24px;
   }
 }

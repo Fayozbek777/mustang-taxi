@@ -1,364 +1,305 @@
-/* src/UI/Scooters.css */
-
 :root {
-  --bg: #0a0a0f;
-  --box-bg: #111116;
-  --text: #f1f1f6;
-  --muted: #a0a0b0;
+  --bg: #050505;
+  --card-bg: #0d0d12;
   --accent: #ffd000;
-  --border: #22222a;
-  --radius: 22px;
-  --shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+  --accent-glow: rgba(255, 208, 0, 0.15);
+  --text-main: #ffffff;
+  --text-muted: #888895;
+  --border-color: rgba(255, 255, 255, 0.05);
+  --glass: rgba(255, 255, 255, 0.02);
+  --font-main: "Inter", -apple-system, sans-serif;
 }
 
 .page-wrapper {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 80% 10%, #1a1a1a 0%, transparent 40%),
+    radial-gradient(circle at 20% 90%, #111 0%, transparent 40%);
+  color: var(--text-main);
+  font-family: var(--font-main);
+  padding: 80px 20px;
   min-height: 100vh;
-  background: var(--bg);
-  color: var(--text);
-  padding: 80px 24px 140px;
 }
 
+/* Header - Электрический вайб */
 .page-header {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 18px;
-  margin-bottom: 64px;
+  margin-bottom: 80px;
 }
 
 .page-header h1 {
-  font-size: clamp(2.8rem, 7.5vw, 4.8rem);
-  font-weight: 800;
-  margin: 0;
-  letter-spacing: -0.03em;
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #fff 40%, #555 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .icon-accent {
   color: var(--accent);
+  filter: drop-shadow(0 0 15px var(--accent));
+  margin-bottom: 10px;
 }
 
-/* Главный контейнер */
+/* Контейнер Bento */
 .product-box {
-  background: var(--box-bg);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-  padding: 48px 40px;
-  display: grid;
-  grid-template-columns: 140px 1fr 400px;
-  gap: 48px;
-  max-width: 1600px;
+  max-width: 1500px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 120px 1.4fr 1.1fr;
+  gap: 30px;
+  padding: 30px;
+  background: var(--card-bg);
+  border-radius: 40px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 50px 100px rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(20px);
 }
 
-@media (max-width: 1100px) {
-  .product-box {
-    grid-template-columns: 120px 1fr 360px;
-    gap: 36px;
-    padding: 40px 32px;
-  }
-}
-
-@media (max-width: 900px) {
-  .product-box {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    padding: 32px 24px;
-  }
-}
-
-/* Миниатюры слева */
+/* Миниатюры */
 .thumbnails {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
 }
 
 .thumb-wrapper {
-  border-radius: 16px;
-  overflow: hidden;
-  border: 3px solid transparent;
+  background: #14141a;
+  border-radius: 24px;
+  padding: 12px;
+  border: 1px solid var(--border-color);
   cursor: pointer;
-  transition: all 0.35s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.thumb-wrapper:hover,
 .thumb-wrapper.active {
   border-color: var(--accent);
-  transform: scale(1.08);
-  box-shadow: 0 12px 32px rgba(255, 208, 0, 0.25);
+  background: var(--accent-glow);
+  transform: scale(1.05) translateX(10px);
 }
 
 .thumbnail {
   width: 100%;
-  height: 130px;
-  object-fit: cover;
-  display: block;
+  aspect-ratio: 1;
+  object-fit: contain;
+  filter: brightness(0.7) grayscale(0.5);
+  transition: 0.4s;
 }
 
-/* Большое фото — стало ОЧЕНЬ большим */
+.thumb-wrapper.active .thumbnail,
+.thumb-wrapper:hover .thumbnail {
+  filter: brightness(1) grayscale(0);
+}
+
+/* Дисплей самоката */
 .main-photo {
-  background: #0c0c15;
-  border-radius: 20px;
-  overflow: hidden;
+  background: radial-gradient(circle at center, #181820 0%, #0d0d12 100%);
+  border-radius: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
-  min-height: 620px; /* большая высота */
-  max-height: 80vh; /* не больше высоты экрана */
+  position: relative;
+  border: 1px solid var(--glass-border);
+  overflow: hidden;
+}
+
+.main-photo::before {
+  content: "H8";
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  font-size: 15rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.02);
+  z-index: 1;
 }
 
 .main-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  transition: transform 0.8s ease;
+  width: 85%;
+  z-index: 2;
+  filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.6));
 }
 
-.main-photo:hover .main-image {
-  transform: scale(1.08);
-}
-
-/* Правая часть */
+/* Инфо-панель */
 .product-info {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
+  padding: 40px;
+  background: var(--glass);
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .product-name {
-  font-size: 2.8rem;
-  font-weight: 700;
-  margin: 0;
-  line-height: 1.1;
+  font-size: 3.8rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  margin-bottom: 10px;
 }
 
 .description {
-  font-size: 1.18rem;
-  line-height: 1.65;
-  color: var(--muted);
-  margin: 0;
+  color: var(--text-muted);
+  font-size: 1.15rem;
+  line-height: 1.6;
+  margin-bottom: 40px;
 }
 
+/* Технические характеристики */
 .specs {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  display: grid;
+  gap: 15px;
+  margin-bottom: 40px;
 }
 
 .spec-row {
   display: flex;
   align-items: center;
-  gap: 18px;
-  font-size: 1.2rem;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 18px 24px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  transition: 0.3s;
+}
+
+.spec-row:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--accent);
 }
 
 .spec-icon {
   color: var(--accent);
-  flex-shrink: 0;
 }
 
+.spec-row span {
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+}
+
+.spec-row b {
+  color: var(--accent);
+  font-weight: 800;
+}
+
+/* Блок цены */
 .price-row {
-  font-size: 1.85rem;
-  font-weight: 800;
-  color: var(--accent);
-  margin-top: 12px;
-}
-
-.price {
-  font-weight: 800;
-}
-
-.features {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  font-size: 1.12rem;
-  line-height: 1.85;
-}
-
-.features li {
-  margin-bottom: 12px;
-  position: relative;
-  padding-left: 40px;
-}
-
-.features li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  color: var(--accent);
-  font-size: 1.8rem;
-  font-weight: bold;
-}
-
-/* Кнопка аренды */
-.rent-btn {
-  background: var(--accent);
-  color: #000;
-  border: none;
-  padding: 18px 40px;
-  font-size: 1.2rem;
-  font-weight: 700;
-  border-radius: 16px;
-  cursor: pointer;
-  margin-top: 20px;
-  transition: all 0.35s ease;
-}
-
-.rent-btn:hover {
-  background: #ffdb33;
-  transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(255, 208, 0, 0.4);
-}
-
-/* Переключатель моделей */
-.model-switcher {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 18px;
-  margin-top: 80px;
-}
-
-.model-btn {
-  background: #181820;
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 16px 32px;
-  border-radius: 16px;
-  font-weight: 600;
-  font-size: 1.05rem;
-  cursor: pointer;
-  transition: all 0.35s ease;
-}
-
-.model-btn:hover {
-  border-color: var(--accent);
-  background: rgba(255, 208, 0, 0.08);
-}
-
-.model-btn.active {
-  background: var(--accent);
-  color: #000;
-  border-color: var(--accent);
-}
-
-/* Мобильные */
-@media (max-width: 600px) {
-  .product-box {
-    padding: 24px;
-    gap: 32px;
-  }
-  .thumbnail {
-    height: 100px;
-  }
-  .main-photo {
-    min-height: 420px;
-    padding: 16px;
-  }
-  .product-name {
-    font-size: 2.2rem;
-  }
-  .price-row {
-    font-size: 1.6rem;
-  }
-  .rent-btn {
-    padding: 16px 32px;
-    font-size: 1.1rem;
-  }
-}
-
-.thumb-wrapper {
-  border-radius: 16px;
-  overflow: hidden;
-  border: 3px solid transparent;
-  cursor: pointer;
-  transition: all 0.35s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-.thumb-wrapper:hover {
-  border-color: var(--accent);
-  transform: scale(1.08);
-  box-shadow: 0 12px 32px rgba(255, 208, 0, 0.25);
-}
-
-.thumb-wrapper.active {
-  border-color: var(--accent);
-  transform: scale(1.12);
-  box-shadow: 0 16px 48px rgba(255, 208, 0, 0.45);
-  position: relative;
-}
-
-.thumb-wrapper.active::after {
-  content: "";
-  position: absolute;
-  inset: -4px;
-  border-radius: 20px;
   background: linear-gradient(
-    45deg,
-    transparent,
-    rgba(255, 208, 0, 0.3),
-    transparent
-  );
-  pointer-events: none;
-  animation: pulse 2s infinite;
+    90deg,
+    var(--accent-glow) 0%,
+    transparent 100%
+  ) !important;
+  border-left: 4px solid var(--accent) !important;
 }
 
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.4;
-  }
-  50% {
-    opacity: 0.8;
-  }
-}
-
-/* Цена с закладом */
 .price-block {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  align-items: flex-start;
 }
 
 .price {
-  font-size: 1.85rem;
-  font-weight: 800;
+  font-size: 3rem;
+  font-weight: 950;
   color: var(--accent);
+  line-height: 1;
 }
 
 .deposit {
-  font-size: 1.15rem;
-  color: #ff6b6b; /* красноватый оттенок для акцента на залоге */
-  font-weight: 600;
-  opacity: 0.9;
+  font-size: 0.95rem;
+  color: #ff4d4d;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 10px;
+  letter-spacing: 0.1em;
 }
 
-/* Если хочешь сделать заклад менее заметным */
-.deposit {
-  font-size: 1.05rem;
-  color: var(--muted);
-  font-weight: 500;
+/* Список фишек */
+.features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 40px;
 }
 
-/* Мобильные корректировки */
-@media (max-width: 600px) {
-  .price-block {
+.features li {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.02);
+  padding: 8px 15px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.features li::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* Кнопка действия */
+.rent-btn {
+  width: 100%;
+  padding: 26px;
+  border-radius: 20px;
+  background: #fff;
+  color: #000;
+  font-weight: 900;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 0 0 rgba(255, 208, 0, 0);
+}
+
+.rent-btn:hover {
+  background: var(--accent);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(255, 208, 0, 0.3);
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+  .product-box {
+    grid-template-columns: 1fr;
+    max-width: 650px;
+  }
+  .thumbnails {
     flex-direction: row;
-    flex-wrap: wrap;
-    gap: 12px;
-    align-items: baseline;
+    order: 2;
+    justify-content: center;
   }
+  .thumb-wrapper {
+    width: 90px;
+    height: 90px;
+  }
+  .main-photo {
+    height: 450px;
+    order: 1;
+  }
+  .product-info {
+    order: 3;
+  }
+}
 
-  .price {
-    font-size: 1.6rem;
+/* Анимация пульсации для активного превью */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 208, 0, 0.4);
   }
+  70% {
+    box-shadow: 0 0 0 15px rgba(255, 208, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 208, 0, 0);
+  }
+}
 
-  .deposit {
-    font-size: 1rem;
-  }
+.thumb-wrapper.active {
+  animation: pulse 2s infinite;
 }

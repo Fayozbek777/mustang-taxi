@@ -1,10 +1,119 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
+:root {
+  --bg-deep: #050505;
+  --bg-surface: #0f0f12;
+  --accent: #ffd000;
+  --accent-glow: rgba(255, 208, 0, 0.3);
+  --text-main: #ffffff;
+  --text-dim: #888888;
+  --text-dark: #444444;
+  --border-thin: rgba(255, 255, 255, 0.06);
+  --glass: rgba(255, 255, 255, 0.02);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition: 0.4s var(--expo);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  font-family:
+    "Inter",
+    -apple-system,
+    sans-serif;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
 .app-wrapper {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #f8f9fa;
+  position: relative;
+}
+
+.app-wrapper::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 999;
 }
 
 .main-content {
   flex: 1;
+  animation: fadeInPage 1s var(--expo);
+}
+
+@keyframes fadeInPage {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #222;
+  border-radius: 10px;
+  border: 2px solid var(--bg-deep);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: -0.03em;
+  font-weight: 800;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+::selection {
+  background: var(--accent);
+  color: #000;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
 }

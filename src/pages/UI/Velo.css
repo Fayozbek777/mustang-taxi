@@ -1,241 +1,267 @@
 :root {
-  --bg: #0a0a0f;
-  --box-bg: #111116;
-  --text: #f1f1f6;
-  --muted: #a0a0b0;
+  --bg: #050505;
+  --card-bg: #0f0f0f;
   --accent: #ffd000;
-  --border: #22222a;
-  --radius: 22px;
-  --shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+  --accent-soft: rgba(255, 208, 0, 0.1);
+  --text-main: #ffffff;
+  --text-muted: #888888;
+  --border-color: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --font-main: "Inter", -apple-system, sans-serif;
 }
 
 .page-wrapper {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 20% 20%, #1a1a1a 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, #111 0%, transparent 40%);
+  color: var(--text-main);
+  font-family: var(--font-main);
+  padding: 80px 20px;
   min-height: 100vh;
-  background: var(--bg);
-  color: var(--text);
-  padding: 80px 24px 140px;
 }
 
+/* Header */
 .page-header {
   display: flex;
   align-items: center;
-  gap: 18px;
-  margin-bottom: 64px;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 80px;
 }
 
 .page-header h1 {
-  font-size: clamp(2.8rem, 7.5vw, 4.8rem);
-  font-weight: 800;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  background: linear-gradient(to bottom, #fff 50%, #666 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin: 0;
-  letter-spacing: -0.03em;
 }
 
-.icon-accent {
-  color: var(--accent);
-}
-
-/* Главный контейнер */
+/* Bento Grid Container */
 .product-box {
-  background: var(--box-bg);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-  padding: 48px 40px;
-  display: grid;
-  grid-template-columns: 140px 1fr 400px;
-  gap: 48px;
-  max-width: 1600px;
+  max-width: 1450px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 100px 1.6fr 1.1fr;
+  gap: 20px;
+  padding: 20px;
+  background: var(--card-bg);
+  border-radius: 40px;
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(20px);
 }
 
-/* Миниатюры слева */
+/* Thumbnails */
 .thumbnails {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
 }
 
 .thumb-wrapper {
-  border-radius: 16px;
-  overflow: hidden;
-  border: 3px solid transparent;
+  background: #161616;
+  border-radius: 20px;
+  padding: 10px;
+  border: 1px solid var(--border-color);
   cursor: pointer;
-  transition: all 0.35s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-.thumb-wrapper:hover {
-  border-color: var(--accent);
-  transform: scale(1.08);
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
 .thumb-wrapper.active {
   border-color: var(--accent);
-  transform: scale(1.12);
-  box-shadow: 0 16px 48px rgba(255, 208, 0, 0.45);
-  position: relative;
-}
-
-/* Анимация пульсации для активного превью */
-.thumb-wrapper.active::after {
-  content: "";
-  position: absolute;
-  inset: -4px;
-  border-radius: 20px;
-  background: linear-gradient(
-    45deg,
-    transparent,
-    rgba(255, 208, 0, 0.3),
-    transparent
-  );
-  pointer-events: none;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.4;
-  }
-  50% {
-    opacity: 0.8;
-  }
+  background: var(--accent-soft);
+  box-shadow: 0 0 20px rgba(255, 208, 0, 0.15);
 }
 
 .thumbnail {
   width: 100%;
-  height: 130px;
-  object-fit: cover;
-  display: block;
+  aspect-ratio: 1;
+  object-fit: contain;
+  filter: grayscale(1) contrast(1.2);
+  transition: 0.5s;
 }
 
-/* Большое фото */
+.thumb-wrapper.active .thumbnail,
+.thumb-wrapper:hover .thumbnail {
+  filter: grayscale(0) contrast(1);
+  transform: scale(1.1);
+}
+
+/* Main Display */
 .main-photo {
-  background: #0c0c15;
-  border-radius: 20px;
-  overflow: hidden;
+  background: #121212;
+  border-radius: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
-  min-height: 620px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  min-height: 500px;
+}
+
+.main-photo::after {
+  content: "";
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: var(--accent);
+  filter: blur(140px);
+  opacity: 0.1;
+  pointer-events: none;
 }
 
 .main-image {
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  max-height: 450px;
   object-fit: contain;
-  transition: transform 0.8s ease;
+  z-index: 2;
+  filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.5));
 }
 
-.main-photo:hover .main-image {
-  transform: scale(1.05);
-}
-
-/* Инфо блок */
+/* Info Panel */
 .product-info {
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 30px;
+  border: 1px solid var(--glass-border);
   display: flex;
   flex-direction: column;
-  gap: 28px;
 }
 
 .product-name {
-  font-size: 2.8rem;
-  font-weight: 700;
-  line-height: 1.1;
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
 }
 
 .description {
-  font-size: 1.18rem;
-  color: var(--muted);
-  line-height: 1.6;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 35px;
 }
 
-/* Блок цены и залога */
-.price-block {
+/* Specs with modern chips */
+.specs {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 20px;
-  background: rgba(255, 208, 0, 0.05);
-  border-radius: 16px;
-  border-left: 4px solid var(--accent);
+  gap: 12px;
+  margin-bottom: 40px;
 }
 
-.price {
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--accent);
-}
-
-.deposit {
-  font-size: 1.1rem;
-  color: #ff6b6b;
-  font-weight: 600;
+.spec-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-}
-
-.features {
-  list-style: none;
-  padding: 0;
-  font-size: 1.1rem;
-}
-
-.features li {
-  margin-bottom: 12px;
-  padding-left: 35px;
-  position: relative;
-}
-
-.features li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  color: var(--accent);
-  font-weight: 900;
-  font-size: 1.4rem;
-}
-
-.rent-btn {
-  background: var(--accent);
-  color: #000;
-  border: none;
-  padding: 20px;
-  font-size: 1.2rem;
-  font-weight: 700;
-  border-radius: 16px;
-  cursor: pointer;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 16px 20px;
+  border-radius: 18px;
+  border: 1px solid transparent;
   transition: 0.3s;
 }
 
+.spec-row:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--glass-border);
+}
+
+.spec-icon {
+  color: var(--accent);
+  font-size: 1.2rem;
+}
+
+/* Dynamic Price Block */
+.price-block {
+  margin-top: auto;
+  padding: 30px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 208, 0, 0.1) 0%,
+    transparent 100%
+  );
+  border-radius: 24px;
+  border: 1px solid rgba(255, 208, 0, 0.2);
+  margin-bottom: 30px;
+}
+
+.price {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+
+.deposit {
+  margin-top: 10px;
+  color: #ff4d4d;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Call to Action Button */
+.rent-btn {
+  width: 100%;
+  padding: 24px;
+  border-radius: 100px;
+  background: #fff;
+  color: #000;
+  font-weight: 800;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: none;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
 .rent-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(255, 208, 0, 0.3);
+  background: var(--accent);
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(255, 208, 0, 0.25);
 }
 
-/* Мобильная адаптация */
-@media (max-width: 1100px) {
-  .product-box {
-    grid-template-columns: 120px 1fr 350px;
-  }
-}
-
-@media (max-width: 900px) {
+/* Adaptive logic */
+@media (max-width: 1200px) {
   .product-box {
     grid-template-columns: 1fr;
+    max-width: 700px;
   }
   .thumbnails {
     flex-direction: row;
-    overflow-x: auto;
-    padding-bottom: 10px;
+    justify-content: center;
+    order: 2;
   }
-  .thumbnail {
-    width: 100px;
-    height: 80px;
+  .thumb-wrapper {
+    width: 80px;
   }
   .main-photo {
-    min-height: 400px;
+    order: 1;
+    min-height: 350px;
+  }
+  .product-info {
+    order: 3;
+  }
+}
+
+@media (max-width: 600px) {
+  .product-name {
+    font-size: 2.5rem;
+  }
+  .price {
+    font-size: 2rem;
+  }
+  .page-header h1 {
+    font-size: 3rem;
   }
 }
