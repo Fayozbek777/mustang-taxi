@@ -18,7 +18,6 @@ export default function Drongo() {
   const [activeModel, setActiveModel] = useState(0);
   const [activePhoto, setActivePhoto] = useState(0);
 
-  // ДАННЫЕ ВНУТРИ КОМПОНЕНТА — это ключ к смене языка
   const drongoData = [
     {
       thumbnails: [d1, d2, d3],

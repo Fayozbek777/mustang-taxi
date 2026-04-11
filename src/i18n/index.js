@@ -200,7 +200,7 @@ const resources = {
       helmetIncluded: "Helmet included",
       chargerIncluded: "Charger included",
       phoneHolder: "Phone holder",
-      freeService: "Free service maintenance",
+      freeService: "Free repairs for the 1st week ",
       scooterXiaomiDesc: "The latest and most reliable model.",
       veloCityDesc: "Comfortable city bike for daily commuting.",
       happyClients: "Happy Clients",
