@@ -1,4 +1,3 @@
-// src/pages/Home.jsx
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
@@ -15,6 +14,7 @@ import { MapPin, ExternalLink, Zap } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import { BsTelegram } from "react-icons/bs";
 import deliveryVid from "../assets/videos/deleviry.mp4";
+import deliveryVideo from "../assets/videos/asd1.mp4";
 import collageImg from "../assets/images/collages.png";
 import "./UI/Home.css";
 
@@ -495,16 +495,21 @@ export default function Home() {
           </div>
         </section>
         <section className="download-section" data-aos="fade-up">
+          <video autoPlay loop muted playsInline className="download-bg-video">
+            <source src={deliveryVideo} type="video/mp4" />
+            Ваш браузер не поддерживает видео.
+          </video>
+          <div className="video-overlay"></div>
           <div className="pattern"></div>
           <div className="shine"></div>
-
-          {/* Floating decorative elements */}
           <div className="floating-element"></div>
           <div className="floating-element"></div>
           <div className="floating-element"></div>
 
           <div className="download-content">
-            <div className="download-badge">⚡ Новая версия доступна</div>
+            <div className="download-badge">
+              ⚡ {t("newVersionAvailable") || "Yangi versiya mavjud"}
+            </div>
 
             <h2 className="download-title">{t("myMustang")}</h2>
 
@@ -537,6 +542,7 @@ export default function Home() {
             </motion.button>
           </div>
         </section>
+
         <section
           className="form-section"
           data-aos="fade-up"
@@ -556,13 +562,13 @@ export default function Home() {
               data-aos-delay="100"
               data-aos-once="true"
             >
-              <p className="form-eyebrow">Admin bilam bog'laning</p>
+              <p className="form-eyebrow">{t("form_eyebrow")}</p>
               <h2 className="form-heading">
-                Zayavka
+                {t("form_heading_part1")}
                 <br />
-                <em>qoldiring</em>
+                <em>{t("form_heading_part2")}</em>
               </h2>
-              <p className="form-desc">Tez orada Bog'lanamiz</p>
+              <p className="form-desc">{t("form_desc")}</p>
               <div className="form-contacts">
                 <a href="tel:+998990805999" className="form-contact-link">
                   <Phone size={16} /> +998 99 080 59 99
@@ -618,7 +624,10 @@ export default function Home() {
                     </motion.div>
                     <h3>Zayavka Jo'natildi</h3>
                     <p>Admin Tez orada Siz bilan bog'lanadi</p>
-                    <button className="form-btn" onClick={() => setSent(false)}>
+                    <button
+                      className="form-btn ml-455"
+                      onClick={() => setSent(false)}
+                    >
                       Yana bir bor Jonatish
                     </button>
                   </motion.div>
