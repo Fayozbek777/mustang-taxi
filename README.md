@@ -25,37 +25,7 @@
 - **Database:** Supabase (JSONB для мультиязычности).
 - **Animations:** Framer Motion, AOS.
 - **API:** Vercel Serverless (для Telegram Bot API).
-
----
-
----
-
-### ⚙️ Настройка (.env)
-
-```env
-# Supabase
-VITE_SUPABASE_URL=your_url
-VITE_SUPABASE_ANON_KEY=your_key
-
-# Telegram Bot
-VITE_BOT_TOKEN=your_token
-VITE_CHAT_ID=your_id
-
-# Admin Access
-VITE_ADMIN_PATH=/your-secret-dashboard-path
-VITE_ADMIN_LOGIN=admin
-VITE_ADMIN_PASSWORD=your_password
-```
-
----
-
-### 🛠 Запуск
-
-```bash
-npm install
-npm run dev
-```
-
+- 
 ---
 
 ### 📍 Контакты
