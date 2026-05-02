@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -6,7 +6,7 @@ import {
   Navigate,
   Outlet,
 } from "react-router-dom";
-import { ReactLenis } from "lenis/react"; // Новый правильный импорт
+import { ReactLenis } from "lenis/react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./App.css";
@@ -17,6 +17,7 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Scooters from "./pages/Scooters";
 import Drongo from "./pages/Drongo";
+import Preview from "./components/Preview";
 import Bags from "./pages/Bags";
 import Velo from "./pages/Velo";
 import AdminLayout from "./admin/AdminLayout";
@@ -42,16 +43,32 @@ const PublicLayout = () => (
 );
 
 function App() {
+  const [showPreview, setShowPreview] = useState(true);
   const SECRET_PATH = import.meta.env.VITE_ADMIN_PATH || "admin-panel";
 
   useEffect(() => {
     AOS.init({ duration: 800, once: true });
-  }, []);
 
+    const timer = setTimeout(() => {
+      setShowPreview(false);
+    }, 2500);
+
+    return () => clearTimeout(timer);
+  }, []);
+  if (showPreview) {
+    return <Preview />;
+  }
   return (
     <ReactLenis root options={{ lerp: 0.1, duration: 1.2, smoothWheel: true }}>
       <Router>
         <Routes>
+          <Route element={<PublicLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/scooters" element={<Scooters />} />
+            <Route path="/drongo" element={<Drongo />} />
+            <Route path="/bags" element={<Bags />} />
+            <Route path="/velo" element={<Velo />} />
+          </Route>
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route element={<ProtectedRoute />}>
             <Route path={`/${SECRET_PATH}`} element={<AdminLayout />}>
@@ -65,15 +82,7 @@ function App() {
             path="/admin"
             element={<Navigate to="/admin/login" replace />}
           />
-
-          <Route element={<PublicLayout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/scooters" element={<Scooters />} />
-            <Route path="/drongo" element={<Drongo />} />
-            <Route path="/bags" element={<Bags />} />
-            <Route path="/velo" element={<Velo />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Route>
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Router>
     </ReactLenis>
