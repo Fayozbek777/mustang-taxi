@@ -11,28 +11,17 @@
 
 ### 🚀 Особенности
 
-- **Мультиязычность:** Полная поддержка UZ, RU, EN, HI, UR.
+- **Мультиязычность:** Полная поддержка 5x.
 - **Backend:** Supabase (PostgreSQL + Storage) для управления товарами.
 - **Admin Panel:** Управление контентом, ценами и фото в реальном времени.
-- **Luxury UI:** Анимации Framer Motion, AOS и адаптивный дизайн.
 - **Telegram CRM:** Мгновенные уведомления о новых заявках.
 
 ---
 
 ### 🛠 Стек
 
-- **Frontend:** React 18, Vite, Lucide Icons.
+- **Frontend:** React 18, Vite.
 - **Database:** Supabase (JSONB для мультиязычности).
-- **Animations:** Framer Motion, AOS.
 - **API:** Vercel Serverless (для Telegram Bot API).
 - 
----
-
-### 📍 Контакты
-
-- **Telegram:** [@YandexMustang](https://t.me/YandexMustang)
-- **Адрес:** Ташкент, ул. Глинки 27
-
-```
-
 ```
