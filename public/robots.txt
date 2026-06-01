@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /         
+Allow: /assets/
+
+Disallow: /admin/
+Disallow: /config/
+Disallow: /private/
+Disallow: /api/
+Disallow: /*?*    
+
+User-agent: Yandex
+Allow: /
+Clean-param: ref 
+

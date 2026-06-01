@@ -1,0 +1,240 @@
+:root {
+  --bg: #050505;
+  --card-bg: #0f0f0f;
+  --accent: #ffd000;
+  --accent-soft: rgba(255, 208, 0, 0.1);
+  --text-main: #ffffff;
+  --text-muted: #888888;
+  --border-color: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --font-main: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.page-wrapper {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 50% -20%, #1a1a1a 0%, transparent 50%),
+    radial-gradient(circle at 0% 100%, #111 0%, transparent 40%);
+  color: var(--text-main);
+  font-family: var(--font-main);
+  padding: 80px 20px;
+  min-height: 100vh;
+}
+
+/* Header */
+.page-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.page-header h1 {
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  margin-top: 20px;
+  background: linear-gradient(to bottom, #fff 40%, #444 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Main Box - Bento Layout */
+.product-box {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 100px 1.5fr 1fr;
+  gap: 24px;
+  padding: 24px;
+  background: var(--card-bg);
+  border-radius: 40px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+}
+
+/* Thumbnails */
+.thumbnails {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.thumb-wrapper {
+  background: #161616;
+  border-radius: 20px;
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.thumb-wrapper.active {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  transform: scale(1.05);
+}
+
+.thumbnail {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  filter: grayscale(1);
+  transition: 0.4s;
+}
+
+.thumb-wrapper.active .thumbnail,
+.thumb-wrapper:hover .thumbnail {
+  filter: grayscale(0);
+}
+
+/* Main Display */
+.main-photo {
+  background: #121212;
+  border-radius: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+}
+
+.main-photo::before {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: var(--accent);
+  filter: blur(120px);
+  opacity: 0.15;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.main-image {
+  width: 85%;
+  height: auto;
+  z-index: 2;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Product Info */
+.product-info {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 32px;
+  border: 1px solid var(--glass-border);
+}
+
+.product-name {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+  line-height: 1;
+}
+
+.description {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+/* Price Block */
+.price-row {
+  margin-bottom: 40px;
+}
+
+.price {
+  font-size: 3.5rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+
+.deposit-note {
+  font-size: 0.9rem;
+  color: #ff4d4d !important;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 8px;
+}
+
+/* Features List */
+.features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 48px;
+  display: grid;
+  gap: 12px;
+}
+
+.features li {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  border: 1px solid transparent;
+  transition: 0.3s;
+}
+
+.features li:hover {
+  border-color: var(--glass-border);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.feat-icon {
+  margin-right: 12px;
+  color: var(--accent);
+}
+
+/* Luxury Button */
+.rent-btn {
+  width: 100%;
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 24px;
+  border-radius: 100px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.rent-btn:hover {
+  background: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(255, 208, 0, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .product-box {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+    padding: 16px;
+  }
+  .thumbnails {
+    flex-direction: row;
+    order: 2;
+  }
+  .main-photo {
+    height: 400px;
+    order: 1;
+  }
+  .product-info {
+    order: 3;
+    padding: 24px;
+  }
+}
