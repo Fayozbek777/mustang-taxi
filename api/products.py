@@ -52,15 +52,22 @@ def get_products_from_github():
 
 
 def save_products(products, sha=None):
-    """Универсальная функция сохранения (локально или в GitHub)"""
+    """Безопасное сохранение данных с учетом ограничений Vercel (Read-only FS)"""
     content_bytes = json.dumps(products, ensure_ascii=False, indent=2).encode("utf-8")
 
-    # 1. Всегда сохраняем локально для надежности
-    os.makedirs(os.path.dirname(LOCAL_FILE), exist_ok=True)
-    with open(LOCAL_FILE, "w", encoding="utf-8") as f:
-        f.write(json.dumps(products, ensure_ascii=False, indent=2))
+    # ПРОВЕРКА: Если мы запущены НЕ на Vercel (например, локально на Kali Linux)
+    if not os.environ.get("VERCEL"):
+        try:
+            os.makedirs(os.path.dirname(LOCAL_FILE), exist_ok=True)
+            with open(LOCAL_FILE, "w", encoding="utf-8") as f:
+                f.write(json.dumps(products, ensure_ascii=False, indent=2))
+            print("Локальный файл успешно обновлен.")
+        except Exception as local_err:
+            print(f"Ошибка локального сохранения: {str(local_err)}")
+    else:
+        print("Запущено на Vercel. Пропускаем запись в Read-only файловую систему.")
 
-    # 2. Если есть токен, пушим коммит в GitHub Repository
+    # Основной цикл сохранения: отправка коммита напрямую в GitHub репозиторий
     if GITHUB_TOKEN:
         url = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/contents/{FILE_PATH}"
         headers = {
@@ -68,22 +75,36 @@ def save_products(products, sha=None):
             "Accept": "application/vnd.github.v3+json",
         }
 
-        # Если SHA не пришел, попробуем его запросить, чтобы избежать 409 Conflict
-        if not sha:
-            _, fetched_sha = get_products_from_github()
-            sha = fetched_sha
+        # Запрашиваем самый свежий SHA файла у GitHub перед записью,
+        # чтобы избежать ошибки 409 Conflict (если файл успел измениться)
+        try:
+            res_get = requests.get(url, headers=headers)
+            if res_get.status_code == 200:
+                sha = res_get.json().get("sha")
+        except Exception as sha_e:
+            print(f"Не удалось получить свежий SHA: {str(sha_e)}")
 
         payload = {
-            "message": "Update products database via Admin Panel",
+            "message": "⚡ Production Database Update via Admin Panel",
             "content": base64.b64encode(content_bytes).decode("utf-8"),
         }
         if sha:
             payload["sha"] = sha
 
         res = requests.put(url, headers=headers, json=payload)
-        if res.status_code not in [200, 201]:
-            print(f"Failed to save to GitHub: {res.status_code} - {res.text}")
+
+        if res.status_code in [200, 201]:
+            print("Данные успешно синхронизированы с GitHub репозиторием!")
+            return True
+        else:
+            print(f"GitHub API Error: {res.status_code} - {res.text}")
             return False
+
+    # Если токена нет и мы на верселе — это проблема
+    if os.environ.get("VERCEL") and not GITHUB_TOKEN:
+        print("ВНИМАНИЕ: GITHUB_TOKEN не найден в переменных окружения Vercel!")
+        return False
+
     return True
 
 
