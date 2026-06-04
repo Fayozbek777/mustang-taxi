@@ -1,38 +1,33 @@
 # My Mustang 🛵
 
-**Luxury-платформа аренды транспорта в Ташкенте**
+> **Lux Modern платформа аренды премиального транспорта в Ташкенте.**
+> Полностью автономная Full-Stack экосистема: без внешних баз данных, на кастомном серверлесс движке.
 
-[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)](https://react.dev)
-[![Supabase](https://img.shields.io/badge/Backend-Supabase-3ECF8E?logo=supabase)](https://supabase.com)
-[![Vercel](https://img.shields.io/badge/Deployed-Vercel-000?logo=vercel)](https://vercel.com)
-[![i18n](https://img.shields.io/badge/i18n-5_langs-c9a84c)](https://react.i18next.com)
+[![React](https://img.shields.io/badge/React_18-61DAFB?logo=react&logoColor=black)](#)
+[![Python](https://img.shields.io/badge/Flask_API-000?logo=flask)](#)
+[![Vercel](https://img.shields.io/badge/Vercel_Serverless-000?logo=vercel)](#)
+[![i18n](https://img.shields.io/badge/i18n-5__Langs-ffd000)](#)
 
 ---
 
-### 🚀 Особенности
+### ⚡ Главные Фичи
 
-- **Мультиязычность:** Полная поддержка UZ, RU, EN, HI, UR.
-- **Backend:** Supabase (PostgreSQL + Storage) для управления товарами.
-- **Admin Panel:** Управление контентом, ценами и фото в реальном времени.
-- **Luxury UI:** Анимации Framer Motion, AOS и адаптивный дизайн.
-- **Telegram CRM:** Мгновенные уведомления о новых заявках.
+- **Python Core & DB:** Собственный бэкенд на Flask + GitHub REST API.
+- **Maintenance Mode:** Тумблер в один клик. При активации публичная часть реактивно блокируется с заглушкой.
+- **Security Path:** Вход в админку скрыт за динамической переменной `${VITE_ADMIN_PATH}` для защиты от брутфорса.
+- **Мультиязычность:** Полная локализация интерфейса и карточек на **UZ, RU, EN, HI, UR**.
 
 ---
 
 ### 🛠 Стек
 
-- **Frontend:** React 18, Vite, Lucide Icons.
-- **Database:** Supabase (JSONB для мультиязычности).
-- **Animations:** Framer Motion, AOS.
-- **API:** Vercel Serverless (для Telegram Bot API).
-- 
+- **Frontend:** React 18, Vite, React Router v6, Lucide Icons.
+- **Backend:** Python 3.11, Flask (Vercel Serverless).
+- **SEO & Performance:** Валидный `robots.txt`, OpenGraph теги, сжатие ассетов.
+
 ---
 
 ### 📍 Контакты
 
 - **Telegram:** [@YandexMustang](https://t.me/YandexMustang)
-- **Адрес:** Ташкент, ул. Глинки 27
-
-```
-
-```
+- **Локация:** Узбекистан, г. Ташкент, ул. Глинки 27
