@@ -5,7 +5,7 @@ import { FaBiking, FaCheckCircle, FaShieldAlt } from "react-icons/fa";
 import { Loader2 } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { supabase } from "../services/supabaseClient";
+import { productService } from "../services/api"; // Подключили новый Full Stack сервис
 import "./UI/Velo.css";
 
 // Под-компонент для одного велосипеда
@@ -13,7 +13,6 @@ const BikeItem = ({ bike, t, i18n }) => {
   const [activeImgIdx, setActiveImgIdx] = useState(0);
   const photos =
     bike.images?.length > 0 ? bike.images : ["https://via.placeholder.com/600"];
-
   const currentLang = i18n.language || "uz";
 
   // Универсальная функция для получения текста на нужном языке
@@ -26,7 +25,6 @@ const BikeItem = ({ bike, t, i18n }) => {
 
   const getVeloPrice = (priceRaw, lang, periodFromDb) => {
     const baseUzS = parseInt(priceRaw?.toString().replace(/\D/g, "")) || 0;
-
     // Перевод периода
     const periods = {
       uz: { kun: "kuniga", oy: "oyiga", yil: "yiliga" },
@@ -36,26 +34,18 @@ const BikeItem = ({ bike, t, i18n }) => {
       ur: { kun: "فی دن", oy: "فی مہینہ", yil: "فی سال" },
       ar: { kun: "في اليوم", oy: "في الشهر", yil: "في السنة" },
     };
-
     const p = periods[lang]?.[periodFromDb || "kun"] || periods["en"]["kun"];
-
     const rates = {
       uz: { val: baseUzS.toLocaleString(), sym: "so'm" },
       ru: { val: Math.round(baseUzS / 135).toLocaleString(), sym: "руб" },
       en: { val: (baseUzS / 12600).toFixed(0), sym: "$" },
       hi: { val: Math.round(baseUzS / 150).toLocaleString(), sym: "₹" },
       ur: { val: Math.round(baseUzS / 45).toLocaleString(), sym: "₨" },
-      ar: { val: (baseUzS / 3400).toFixed(0), sym: "ر.س" },
+      ar: { val: (baseUzS / 3400).toFixed(0), sym: "ر.с" },
     };
-
     const current = rates[lang] || rates["en"];
     return `${current.val} ${current.sym} / ${p}`;
   };
-
-  // В самом JSX вызови её так:
-  <div className="price">
-    {getVeloPrice(bike.price, i18n.language, bike.price_period)}
-  </div>;
 
   return (
     <motion.div
@@ -82,7 +72,6 @@ const BikeItem = ({ bike, t, i18n }) => {
           </motion.div>
         ))}
       </div>
-
       <div className="main-photo">
         <AnimatePresence mode="wait">
           <motion.img
@@ -98,14 +87,9 @@ const BikeItem = ({ bike, t, i18n }) => {
           />
         </AnimatePresence>
       </div>
-
       <div className="product-info">
         <motion.h2 className="product-name">{bike.title}</motion.h2>
-
-        {/* ОПИСАНИЕ (ОБЪЕКТ) */}
         <p className="description">{getLangText(bike.description)}</p>
-
-        {/* ХАРАКТЕРИСТИКИ (МАССИВ ОБЪЕКТОВ) */}
         {bike.features && Array.isArray(bike.features) && (
           <div className="specs">
             {bike.features.map((spec, i) => (
@@ -122,14 +106,15 @@ const BikeItem = ({ bike, t, i18n }) => {
             ))}
           </div>
         )}
-
         <div className="price-block">
-          <div className="price">{getVeloPrice(bike.price, i18n.language)}</div>
+          {/* Исправлен вызов: передан период bike.price_period */}
+          <div className="price">
+            {getVeloPrice(bike.price, i18n.language, bike.price_period)}
+          </div>
           <div className="deposit">
             <FaShieldAlt /> {t("deposit")}: {bike.deposit}
           </div>
         </div>
-
         <a href="tel:+998990805999" style={{ textDecoration: "none" }}>
           <motion.button
             whileHover={{ scale: 1.02 }}
@@ -157,15 +142,13 @@ const Velo = () => {
   const fetchBikes = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from("products")
-        .select("*")
-        .eq("category", "velo")
-        .eq("is_active", true)
-        .order("created_at", { ascending: false });
+      // Получаем массив всех товаров из Python API (файл products.json)
+      const data = await productService.getAll();
 
-      if (error) throw error;
-      setBikes(data || []);
+      // Оставляем только велосипеды
+      const filteredBikes = data.filter((p) => p.category === "velo");
+
+      setBikes(filteredBikes || []);
     } catch (err) {
       console.error("Fetch bikes error:", err);
     } finally {
@@ -179,7 +162,6 @@ const Velo = () => {
         <FaBiking className="icon-accent" size={50} />
         <h1>{t("bikes")}</h1>
       </div>
-
       {loading ? (
         <div
           style={{

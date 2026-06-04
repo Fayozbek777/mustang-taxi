@@ -1,0 +1,112 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
+.not-found-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-deep);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family:
+    "Inter",
+    -apple-system,
+    sans-serif;
+}
+
+.stage-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+#svg {
+  z-index: 3;
+}
+
+/* Стилизация интерактивных шаров */
+.balloon {
+  cursor: pointer;
+  pointer-events: auto;
+  transition: filter var(--transition);
+}
+.balloon:hover {
+  filter: drop-shadow(0 0 12px var(--accent-glow)) brightness(1.2);
+}
+
+/* Центральный блок Glassmorphism строго по твоим переменным */
+.error-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 50px 60px;
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-thin);
+  border-radius: 20px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+  max-width: 520px;
+  width: 90%;
+  transition: border-color var(--transition);
+}
+
+.error-content:hover {
+  border-color: rgba(255, 208, 0, 0.2);
+}
+
+/* Огромный акцентный заголовок 404 */
+.error-content h1 {
+  font-size: 130px;
+  font-weight: 900;
+  margin: 0;
+  line-height: 0.9;
+  letter-spacing: -4px;
+  color: var(--accent);
+  text-shadow: 0 0 40px var(--accent-glow);
+}
+
+.error-content p {
+  color: var(--text-main);
+  font-size: 18px;
+  font-weight: 500;
+  margin: 25px 0 10px 0;
+}
+
+.error-content span {
+  display: block;
+  color: var(--text-dim);
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 35px;
+}
+
+/* Премиальная минималистичная кнопка */
+.btn-home {
+  display: inline-block;
+  padding: 14px 36px;
+  background-color: var(--accent);
+  color: var(--bg-deep);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 8px;
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    background-color var(--transition);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+.btn-home:hover {
+  transform: translateY(-3px);
+  background-color: #ffffff;
+  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.2);
+}

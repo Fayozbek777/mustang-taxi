@@ -1,17 +1,28 @@
 {
   "version": 2,
-  "rewrites": [
+  "builds": [
     {
-      "source": "/api/telegram",
-      "destination": "/api/telegram.js"
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist" }
     },
     {
-      "source": "/api/(.*)",
-      "destination": "/api/index.py"
+      "src": "api/products.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/products",
+      "dest": "/api/products.py"
     },
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "/api/products/(.*)",
+      "dest": "/api/products.py"
+    },
+    {
+      "src": "/((?!api/).*)",
+      "dest": "/index.html"
     }
   ]
 }

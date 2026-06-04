@@ -7,7 +7,7 @@ export default defineConfig({
 
   server: {
     https: true,
-
+    port: 5173,
     proxy: {
       "/api/telegram": {
         target: "https://api.telegram.org",
@@ -18,6 +18,13 @@ export default defineConfig({
             /^\/api\/telegram/,
             `/bot${process.env.BOT_TOKEN}/sendMessage`,
           ),
+      },
+
+      "/api/products": {
+        target: "https://localhost:5000",
+        changeOrigin: true,
+        secure: false, // важно для self-signed cert
+        rewrite: (path) => path.replace(/^\/api\/products/, "/"),
       },
     },
   },

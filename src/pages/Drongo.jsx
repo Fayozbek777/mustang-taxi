@@ -4,8 +4,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { Battery, Gauge, Zap, Loader2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { supabase } from "../services/supabaseClient";
-
+import { productService } from "../services/api"; // Подключили новый Full Stack сервис вместо Supabase
 import "./UI/Drongo.css";
 import { FaCheckCircle } from "react-icons/fa";
 
@@ -16,10 +15,10 @@ const DrongoItem = ({ item, t, i18n }) => {
   const getLangText = (data) => {
     if (!data) return "";
     if (typeof data === "string") return data;
-
     const currentLang = i18n.language || "uz";
     return data[currentLang] || data["ru"] || data["uz"] || "";
   };
+
   const photos =
     item.images?.length > 0 ? item.images : ["https://via.placeholder.com/600"];
 
@@ -27,7 +26,6 @@ const DrongoItem = ({ item, t, i18n }) => {
   const getFormattedPrice = (priceRaw, lang) => {
     // Убираем лишние символы из цены, если они пришли из БД (оставляем только цифры)
     const baseUzS = parseInt(priceRaw?.toString().replace(/\D/g, "")) || 0;
-
     const rates = {
       uz: { val: baseUzS.toLocaleString(), sym: "so'm", period: "kuniga" },
       ru: {
@@ -48,7 +46,6 @@ const DrongoItem = ({ item, t, i18n }) => {
       },
       ar: { val: (baseUzS / 3400).toFixed(1), sym: "ر.с", period: "في اليوم" },
     };
-
     const current = rates[lang] || rates["en"];
     return `${current.val} ${current.sym} / ${current.period}`;
   };
@@ -70,7 +67,6 @@ const DrongoItem = ({ item, t, i18n }) => {
           </div>
         ))}
       </div>
-
       <div className="main-photo">
         <AnimatePresence mode="wait">
           <motion.img
@@ -86,7 +82,6 @@ const DrongoItem = ({ item, t, i18n }) => {
           />
         </AnimatePresence>
       </div>
-
       <div className="product-info">
         <h2 className="product-name">{item.title}</h2>
         <p className="description">
@@ -96,18 +91,19 @@ const DrongoItem = ({ item, t, i18n }) => {
               item.description["uz"]
             : item.description}
         </p>
-
         <div className="specs">
           <div className="spec-row">
             <Battery size={26} className="spec-icon" />
             <span>
-              {t("battery")}: <b>{item.battery}%</b>
+              {" "}
+              {t("battery")}: <b>{item.battery}%</b>{" "}
             </span>
           </div>
           <div className="spec-row">
             <Gauge size={26} className="spec-icon" />
             <span>
-              {t("speed")}: <b>{item.speed} km/h</b>
+              {" "}
+              {t("speed")}: <b>{item.speed} km/h</b>{" "}
             </span>
           </div>
           <div className="spec-row price-row">
@@ -121,16 +117,13 @@ const DrongoItem = ({ item, t, i18n }) => {
             </div>
           </div>
         </div>
-
         {item.features &&
           item.features.map((spec, i) => (
-            <li key={i}>
+            <li key={i} style={{ listStyleType: "none" }}>
               <FaCheckCircle className="spec-icon" />
-              {/* ВМЕСТО {spec} ПИШЕМ: */}
               <span>{getLangText(spec)}</span>
             </li>
           ))}
-
         <a href="tel:+998990805999" className="rent-btn-link">
           <button className="rent-btn">{t("rentNow")}</button>
         </a>
@@ -152,15 +145,13 @@ export default function Drongo() {
   const fetchDrongos = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from("products")
-        .select("*")
-        .eq("category", "drongo")
-        .eq("is_active", true)
-        .order("created_at", { ascending: false });
+      // Запрашиваем все товары с Python API
+      const data = await productService.getAll();
 
-      if (error) throw error;
-      setDrongos(data || []);
+      // Фильтруем массив, оставляя только категорию "drongo"
+      const filteredDrongos = data.filter((p) => p.category === "drongo");
+
+      setDrongos(filteredDrongos || []);
     } catch (err) {
       console.error("Fetch drongos error:", err);
     } finally {
@@ -179,7 +170,6 @@ export default function Drongo() {
         <Zap size={44} className="icon-accent" />
         <h1>{t("drongo")}</h1>
       </header>
-
       {loading ? (
         <div
           style={{

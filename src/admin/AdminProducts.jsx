@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { supabase } from "../services/supabaseClient";
+import { productService } from "../services/api"; // Подключаем новый сервис вместо Supabase
 import { Edit, Trash2, Plus, Package } from "lucide-react";
 
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchParams] = useSearchParams();
-
   const categoryFilter = searchParams.get("cat");
   const SECRET_PATH = import.meta.env.VITE_ADMIN_PATH;
 
@@ -18,18 +17,18 @@ export default function AdminProducts() {
   async function fetchProducts() {
     try {
       setLoading(true);
-      let query = supabase.from("products").select("*");
-      if (categoryFilter) {
-        query = query.eq("category", categoryFilter);
-      }
+      // Запрашиваем все товары из нашего Python API (из файла products.json)
+      const data = await productService.getAll();
 
-      const { data, error } = await query.order("created_at", {
-        ascending: false,
-      });
-      if (error) throw error;
-      setProducts(data || []);
+      // Фильтруем по категории прямо на фронтенде, если фильтр выбран
+      if (categoryFilter) {
+        const filtered = data.filter((p) => p.category === categoryFilter);
+        setProducts(filtered);
+      } else {
+        setProducts(data || []);
+      }
     } catch (e) {
-      console.error(e);
+      console.error("Ошибка при получении товаров:", e);
     } finally {
       setLoading(false);
     }
@@ -37,8 +36,15 @@ export default function AdminProducts() {
 
   async function deleteProduct(id) {
     if (window.confirm("Удалить этот товар?")) {
-      const { error } = await supabase.from("products").delete().eq("id", id);
-      if (!error) fetchProducts();
+      try {
+        // Отправляем DELETE запрос на Python бекенд
+        await productService.delete(id);
+        // Обновляем список на UI
+        fetchProducts();
+      } catch (e) {
+        console.error("Ошибка при удалении товара:", e);
+        alert("Не удалось удалить товар");
+      }
     }
   }
 
@@ -78,7 +84,7 @@ export default function AdminProducts() {
                 <tr key={p.id}>
                   <td>
                     <img
-                      src={p.images?.[0]}
+                      src={p.images?.[0] || p.image}
                       alt=""
                       style={{
                         width: "50px",
@@ -88,7 +94,7 @@ export default function AdminProducts() {
                       }}
                     />
                   </td>
-                  <td>{p.title}</td>
+                  <td>{p.title || p.name}</td>
                   <td>{p.price}</td>
                   <td>
                     <span className="badge">{p.category}</span>

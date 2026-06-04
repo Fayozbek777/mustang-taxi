@@ -16,6 +16,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Scooters from "./pages/Scooters";
+import NotFound from "./pages/NotFound";
 import Drongo from "./pages/Drongo";
 import Preview from "./components/Preview";
 import Bags from "./pages/Bags";
@@ -43,21 +44,30 @@ const PublicLayout = () => (
 );
 
 function App() {
-  const [showPreview, setShowPreview] = useState(true);
+  const [showPreview, setShowPreview] = useState(() => {
+    const hasSeenPreview = localStorage.getItem("hasSeenPreview");
+    return hasSeenPreview !== "true";
+  });
+
   const SECRET_PATH = import.meta.env.VITE_ADMIN_PATH || "admin-panel";
 
   useEffect(() => {
     AOS.init({ duration: 800, once: true });
 
+    if (!showPreview) return;
+
     const timer = setTimeout(() => {
       setShowPreview(false);
+      localStorage.setItem("hasSeenPreview", "true");
     }, 2500);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [showPreview]);
+
   if (showPreview) {
     return <Preview />;
   }
+
   return (
     <ReactLenis root options={{ lerp: 0.1, duration: 1.2, smoothWheel: true }}>
       <Router>
@@ -82,7 +92,7 @@ function App() {
             path="/admin"
             element={<Navigate to="/admin/login" replace />}
           />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </ReactLenis>

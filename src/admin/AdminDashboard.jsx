@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { supabase } from "../services/supabaseClient";
+import { productService } from "../services/api"; // Подключили новый Full Stack сервис вместо Supabase
 import {
   BarChart,
   Bar,
   XAxis,
-  YAxis,
-  CartesianGrid,
   Tooltip,
   ResponsiveContainer,
   Cell,
@@ -57,11 +55,19 @@ export default function AdminDashboard() {
 
   async function fetchStats() {
     try {
-      const { data } = await supabase.from("products").select("category");
-      if (data) {
+      setLoading(true);
+      // Запрашиваем все товары из нашего Python API (из файла products.json)
+      const data = await productService.getAll();
+
+      if (data && Array.isArray(data)) {
         const counts = data.reduce(
           (acc, item) => {
-            acc[item.category] = (acc[item.category] || 0) + 1;
+            const cat = item.category?.toLowerCase();
+            if (cat === "scooters") acc.scooters += 1;
+            else if (cat === "velo" || cat === "bicycles") acc.velo += 1;
+            else if (cat === "bags") acc.bags += 1;
+            else if (cat === "drongo") acc.drongo += 1;
+
             acc.total += 1;
             return acc;
           },
@@ -70,7 +76,7 @@ export default function AdminDashboard() {
         setStats(counts);
       }
     } catch (e) {
-      console.error(e);
+      console.error("Ошибка при получении статистики:", e);
     } finally {
       setLoading(false);
     }
@@ -92,7 +98,7 @@ export default function AdminDashboard() {
         <div className="stat-card">
           <div className="stat-content">
             <p>Всего товаров</p>
-            <h3>{stats.total}</h3>
+            <h3>{loading ? "..." : stats.total}</h3>
           </div>
           <Package color="#3b82f6" />
         </div>

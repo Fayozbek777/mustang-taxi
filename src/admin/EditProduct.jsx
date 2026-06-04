@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
-import { supabase } from "../services/supabaseClient";
-import { Save, ArrowLeft, Upload, X, CheckCircle2 } from "lucide-react";
+import { productService } from "../services/api"; // Переключили на наш локальный API сервис
+import { Save, ArrowLeft, Plus, X, PcCase } from "lucide-react";
 import "./UI/Admin.css";
 
 const EditProduct = () => {
   const { id } = useParams();
+  const fileInputRef = useRef(null);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
   const languages = ["uz", "ru", "en", "hi", "ur"];
   const currentCat = searchParams.get("cat") || "scooters";
+
+  const [imageUrlInput, setImageUrlInput] = useState(""); // Поле для ручного ввода ссылки на фото
 
   const [formData, setFormData] = useState({
     title: "",
@@ -29,8 +31,8 @@ const EditProduct = () => {
         uz: "Dubulg'a to'plamda",
         ru: "Шлем в комплекте",
         en: "Helmet included",
-        hi: "हेलमेट शामिल है",
-        ur: "ہیلمٹ شامل ہے",
+        hi: "हेлмет शामिल है",
+        ur: "ہیلمٹ शामिल है",
       },
       {
         id: 2,
@@ -54,7 +56,7 @@ const EditProduct = () => {
         ru: "Бесплатный ремонт",
         en: "Free repair",
         hi: "मुफ्त मरम्मत",
-        ur: "مفت مرمت",
+        ur: "مفت मरम्मत",
       },
     ],
   });
@@ -64,25 +66,44 @@ const EditProduct = () => {
   }, [id]);
 
   const fetchProduct = async () => {
-    const { data, error } = await supabase
-      .from("products")
-      .select("*")
-      .eq("id", id)
-      .single();
-    if (data) {
-      setFormData({
-        ...data,
-        description: data.description || {
-          uz: "",
-          ru: "",
-          en: "",
-          hi: "",
-          ur: "",
-        },
-        features: data.features || formData.features,
-        price_period: data.price_period || "kun",
-      });
+    try {
+      setLoading(true);
+      const allProducts = await productService.getAll();
+      // Ищем нужный товар по ID из общего JSON-файла бекенда
+      const data = allProducts.find((p) => p.id === parseInt(id));
+
+      if (data) {
+        setFormData({
+          ...data,
+          description: data.description || {
+            uz: "",
+            ru: "",
+            en: "",
+            hi: "",
+            ur: "",
+          },
+          features: data.features || formData.features,
+          price_period: data.price_period || "kun",
+          images: data.images || [],
+        });
+      }
+    } catch (error) {
+      console.error("Ошибка получения товара:", error);
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleAddImageUrl = (e) => {
+    e.preventDefault();
+    if (!imageUrlInput.trim()) return;
+    if (formData.images.length >= 4) return alert("Максимум 4 фотографии");
+
+    setFormData((prev) => ({
+      ...prev,
+      images: [...prev.images, imageUrlInput.trim()],
+    }));
+    setImageUrlInput("");
   };
 
   const handleSubmit = async (e) => {
@@ -91,13 +112,13 @@ const EditProduct = () => {
     const { id: _, created_at: __, ...cleanData } = formData;
 
     try {
-      const query =
-        id && id !== "undefined"
-          ? supabase.from("products").update(cleanData).eq("id", id)
-          : supabase.from("products").insert([cleanData]);
-
-      const { error } = await query;
-      if (error) throw error;
+      if (id && id !== "undefined") {
+        // Вызов метода PUT для обновления существующего товара
+        await productService.update(parseInt(id), cleanData);
+      } else {
+        // Вызов метода POST для создания нового товара
+        await productService.create(cleanData);
+      }
       navigate(-1);
     } catch (error) {
       alert("Ошибка: " + error.message);
@@ -109,10 +130,12 @@ const EditProduct = () => {
   return (
     <div className="admin-container">
       <div className="admin-header">
-        <button onClick={() => navigate(-1)} className="back-btn">
+        <button type="button" onClick={() => navigate(-1)} className="back-btn">
           <ArrowLeft size={20} /> Назад
         </button>
-        <h1>{id ? "Редактировать товар" : "Новый товар"}</h1>
+        <h1>
+          {id && id !== "undefined" ? "Редактировать товар" : "Новый товар"}
+        </h1>
       </div>
 
       <form onSubmit={handleSubmit} className="admin-form">
@@ -127,7 +150,6 @@ const EditProduct = () => {
               required
             />
           </div>
-
           <div className="form-group">
             <label>Категория</label>
             <select
@@ -142,7 +164,6 @@ const EditProduct = () => {
               <option value="drongo">Drongo</option>
             </select>
           </div>
-
           <div className="form-group">
             <label>Цена и период</label>
             <div className="price-row">
@@ -165,7 +186,6 @@ const EditProduct = () => {
               </select>
             </div>
           </div>
-
           <div className="form-group">
             <label>Условия залога</label>
             <input
@@ -177,7 +197,6 @@ const EditProduct = () => {
             />
           </div>
 
-          {/* Показываем доп. поля только для самокатов и Drongo */}
           {(formData.category === "scooters" ||
             formData.category === "drongo") && (
             <div className="tech-specs-row">
@@ -227,77 +246,165 @@ const EditProduct = () => {
             ))}
           </div>
         </section>
-        {/* ФОТОГРАФИИ */}
+
         <section className="images-section">
           <h2>Фотографии товара (до 4-х)</h2>
+
+          {/* Блок ввода ссылки (остался как был, для универсальности) */}
+          <div
+            style={{
+              marginBottom: "15px",
+              display: "flex",
+              gap: "10px",
+              flexWrap: "wrap",
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Вставьте ссылку на фото (например, https://...)"
+              value={imageUrlInput}
+              onChange={(e) => setImageUrlInput(e.target.value)}
+              className="image-url-input"
+              style={{
+                flex: 1,
+                minWidth: "200px",
+                padding: "8px",
+                borderRadius: "6px",
+                border: "1px solid #ccc",
+              }}
+            />
+            <button
+              type="button"
+              onClick={handleAddImageUrl}
+              style={{
+                padding: "8px 15px",
+                background: "#3b82f6",
+                color: "#fff",
+                borderRadius: "6px",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                border: "none",
+              }}
+            >
+              <Plus size={16} style={{ marginRight: "5px" }} /> Ссылка
+            </button>
+
+            {/* СКРЫТЫЙ ИНПУТ ДЛЯ ВЫБОРА ФАЙЛОВ */}
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={async (e) => {
+                const files = Array.from(e.target.files);
+
+                // Проверяем лимит, чтобы суммарно не превысить 4 фотографии
+                if (formData.images.length + files.length > 4) {
+                  alert("Максимум можно добавить 4 фотографии");
+                  return;
+                }
+
+                const base64Promises = files.map((file) => {
+                  return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file); // Конвертируем в Base64 Data URL
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = (error) => reject(error);
+                  });
+                });
+
+                try {
+                  const base64Images = await Promise.all(base64Promises);
+                  setFormData({
+                    ...formData,
+                    images: [...formData.images, ...base64Images],
+                  });
+                } catch (error) {
+                  console.error("Ошибка при чтении файлов:", error);
+                  alert("Не удалось загрузить некоторые файлы");
+                }
+
+                // Очищаем инпут, чтобы можно было загрузить тот же файл повторно
+                e.target.value = "";
+              }}
+            />
+
+            {/* КНОПКА ЗАГРУЗКИ С ПК */}
+            <button
+              type="button"
+              onClick={() =>
+                fileInputRef.current && fileInputRef.current.click()
+              }
+              style={{
+                padding: "8px 15px",
+                background: "#10b981", // Зеленый цвет для отличия
+                color: "#fff",
+                borderRadius: "6px",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                border: "none",
+              }}
+            >
+              <PcCase size={16} style={{ marginRight: "5px" }} /> Загрузить с ПК
+            </button>
+          </div>
+
+          {/* Сетка предпросмотра изображений (осталась без изменений) */}
           <div className="images-upload-grid">
-            {formData.images.map((url, index) => (
-              <div key={index} className="image-preview-item">
-                <img src={url} alt={`preview-${index}`} />
-                <button
-                  type="button"
-                  onClick={() => {
-                    const newImages = formData.images.filter(
-                      (_, i) => i !== index,
-                    );
-                    setFormData({ ...formData, images: newImages });
-                  }}
-                  className="remove-img-btn"
+            {formData.images &&
+              formData.images.map((url, index) => (
+                <div
+                  key={index}
+                  className="image-preview-item"
+                  style={{ position: "relative", display: "inline-block" }}
                 >
-                  <X size={16} />
-                </button>
-              </div>
-            ))}
-
-            {formData.images.length < 4 && (
-              <label className="upload-placeholder">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={async (e) => {
-                    const file = e.target.files[0];
-                    if (!file) return;
-                    setLoading(true);
-                    try {
-                      const fileExt = file.name.split(".").pop();
-                      const fileName = `${Math.random()}.${fileExt}`;
-                      const filePath = `products/${fileName}`;
-
-                      const { error: uploadError } = await supabase.storage
-                        .from("images")
-                        .upload(filePath, file);
-
-                      if (uploadError) throw uploadError;
-
-                      const {
-                        data: { publicUrl },
-                      } = supabase.storage
-                        .from("images")
-                        .getPublicUrl(filePath);
-
-                      setFormData((prev) => ({
-                        ...prev,
-                        images: [...prev.images, publicUrl],
-                      }));
-                    } catch (err) {
-                      alert("Ошибка загрузки: " + err.message);
-                    } finally {
-                      setLoading(false);
-                    }
-                  }}
-                  hidden
-                />
-                <div className="upload-content">
-                  <Upload size={32} />
-                  <span>Загрузить фото</span>
+                  <img
+                    src={url}
+                    alt={`preview-${index}`}
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      objectFit: "cover",
+                      borderRadius: "8px",
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const newImages = formData.images.filter(
+                        (_, i) => i !== index,
+                      );
+                      setFormData({ ...formData, images: newImages });
+                    }}
+                    className="remove-img-btn"
+                    style={{
+                      position: "absolute",
+                      top: "5px",
+                      right: "5px",
+                      background: "rgba(239, 68, 68, 0.9)",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "50%",
+                      width: "24px",
+                      height: "24px",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <X size={16} />
+                  </button>
                 </div>
-              </label>
-            )}
+              ))}
           </div>
         </section>
+
         <section className="features-section">
           <h2>Преимущества при аренде (по языкам)</h2>
-
           <div className="languages-features-container">
             {languages.map((lang) => (
               <div key={lang} className="lang-feature-group">
@@ -324,6 +431,7 @@ const EditProduct = () => {
             ))}
           </div>
         </section>
+
         <button type="submit" className="save-btn" disabled={loading}>
           <Save size={20} /> {loading ? "Сохранение..." : "СОХРАНИТЬ ВСЁ"}
         </button>

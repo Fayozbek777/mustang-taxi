@@ -4,8 +4,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { Battery, Gauge, Zap, Loader2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { supabase } from "../services/supabaseClient";
-
+import { productService } from "../services/api"; // Подключили новый Full Stack сервис вместо Supabase
 import "./UI/Scooters.css";
 import { FaCheckCircle } from "react-icons/fa";
 
@@ -20,10 +19,9 @@ const ScooterItem = ({ scooter, t, i18n }) => {
     return data[currentLang] || data["ru"] || data["uz"] || "";
   };
 
-  // Функция расчета и отображения цены (решаем ошибку ReferenceError)
+  // Функция расчета и отображения цены
   const getVeloPrice = (priceRaw, lang, periodKey) => {
     const baseUzS = parseInt(priceRaw?.toString().replace(/\D/g, "")) || 0;
-
     const periods = {
       uz: { kun: "kuniga", oy: "oyiga", yil: "yiliga" },
       ru: { kun: "в день", oy: "в месяц", yil: "в год" },
@@ -31,7 +29,6 @@ const ScooterItem = ({ scooter, t, i18n }) => {
       hi: { kun: "प्रति दिन", oy: "प्रति माह", yil: "प्रति वर्ष" },
       ur: { kun: "فی دن", oy: "فی مہینہ", yil: "فی سال" },
     };
-
     const rates = {
       uz: { val: baseUzS.toLocaleString(), sym: "so'm" },
       ru: { val: Math.round(baseUzS / 135).toLocaleString(), sym: "руб" },
@@ -39,7 +36,6 @@ const ScooterItem = ({ scooter, t, i18n }) => {
       hi: { val: Math.round(baseUzS / 150).toLocaleString(), sym: "₹" },
       ur: { val: Math.round(baseUzS / 45).toLocaleString(), sym: "₨" },
     };
-
     const p = periods[lang]?.[periodKey || "kun"] || periods["en"]["kun"];
     const current = rates[lang] || rates["en"];
     return `${current.val} ${current.sym} / ${p}`;
@@ -67,7 +63,6 @@ const ScooterItem = ({ scooter, t, i18n }) => {
           </div>
         ))}
       </div>
-
       <div className="main-photo">
         <AnimatePresence mode="wait">
           <motion.img
@@ -82,30 +77,28 @@ const ScooterItem = ({ scooter, t, i18n }) => {
           />
         </AnimatePresence>
       </div>
-
       <div className="product-info">
         <h2 className="product-name">{scooter.title}</h2>
         <p className="description">{getLangText(scooter.description)}</p>
-
         <div className="specs">
           {scooter.battery && (
             <div className="spec-row">
               <Battery size={26} className="spec-icon" />
               <span>
-                {t("battery")}: <b>{scooter.battery}</b>
+                {" "}
+                {t("battery")}: <b>{scooter.battery}</b>{" "}
               </span>
             </div>
           )}
-
           {scooter.speed && (
             <div className="spec-row">
               <Gauge size={26} className="spec-icon" />
               <span>
-                {t("speed")}: <b>{scooter.speed} km/h</b>
+                {" "}
+                {t("speed")}: <b>{scooter.speed} km/h</b>{" "}
               </span>
             </div>
           )}
-
           <div className="spec-row price-row-display">
             <div className="price-block">
               <span className="price">
@@ -128,7 +121,6 @@ const ScooterItem = ({ scooter, t, i18n }) => {
             </div>
           </div>
         </div>
-
         {scooter.features &&
           scooter.features.map((spec, i) => (
             <div key={i} className="spec-row feature-item">
@@ -138,7 +130,6 @@ const ScooterItem = ({ scooter, t, i18n }) => {
               <span>{getLangText(spec)}</span>
             </div>
           ))}
-
         <a href="tel:+998990805999" className="rent-btn-link">
           <button className="rent-btn" style={{ marginTop: "20px" }}>
             {t("rentNow")}
@@ -162,15 +153,11 @@ export default function Scooters() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from("products")
-        .select("*")
-        .eq("category", "scooters")
-        .eq("is_active", true)
-        .order("created_at", { ascending: false });
+      const data = await productService.getAll();
 
-      if (error) throw error;
-      setScooters(data || []);
+      const filteredScooters = data.filter((p) => p.category === "scooters");
+
+      setScooters(filteredScooters || []);
     } catch (err) {
       console.error("Fetch error:", err);
     } finally {
@@ -188,7 +175,6 @@ export default function Scooters() {
         <Zap size={44} className="icon-accent" />
         <h1>{t("scooters")}</h1>
       </header>
-
       {loading ? (
         <div
           className="loader-box"
@@ -208,7 +194,7 @@ export default function Scooters() {
                 key={scooter.id}
                 scooter={scooter}
                 t={t}
-                i18n={i18n} // Передаем i18n
+                i18n={i18n}
               />
             ))
           ) : (

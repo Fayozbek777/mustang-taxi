@@ -4,8 +4,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { ShoppingBag, ChevronRight, Loader2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { supabase } from "../services/supabaseClient";
-
+import { productService } from "../services/api"; // Подключили новый Full Stack сервис
 import "./UI/Bags.css";
 
 const textVariant = {
@@ -21,7 +20,6 @@ const textVariant = {
 const BagItem = ({ bag, t, i18n }) => {
   const [activePhoto, setActivePhoto] = useState(0);
   const currentLang = i18n.language || "uz";
-
   const photos =
     bag.images?.length > 0 ? bag.images : ["https://via.placeholder.com/600"];
 
@@ -35,7 +33,6 @@ const BagItem = ({ bag, t, i18n }) => {
   // Функция для красивого вывода цены с учетом валюты и периода
   const getFormattedPrice = (priceRaw, lang, periodKey) => {
     const baseUzS = parseInt(priceRaw?.toString().replace(/\D/g, "")) || 0;
-
     const periods = {
       uz: { kun: "kuniga", oy: "oyiga", yil: "yiliga" },
       ru: { kun: "в день", oy: "в месяц", yil: "в год" },
@@ -43,7 +40,6 @@ const BagItem = ({ bag, t, i18n }) => {
       hi: { kun: "प्रति दिन", oy: "प्रति माह", yil: "प्रति वर्ष" },
       ur: { kun: "فی دن", oy: "فی مہینہ", yil: "فی سال" },
     };
-
     const rates = {
       uz: { val: baseUzS.toLocaleString(), sym: "so'm" },
       ru: { val: Math.round(baseUzS / 135).toLocaleString(), sym: "руб" },
@@ -51,7 +47,6 @@ const BagItem = ({ bag, t, i18n }) => {
       hi: { val: Math.round(baseUzS / 150).toLocaleString(), sym: "₹" },
       ur: { val: Math.round(baseUzS / 45).toLocaleString(), sym: "₨" },
     };
-
     const p = periods[lang]?.[periodKey || "kun"] || periods["en"]["kun"];
     const current = rates[lang] || rates["en"];
     return `${current.val} ${current.sym} / ${p}`;
@@ -81,7 +76,6 @@ const BagItem = ({ bag, t, i18n }) => {
           </motion.div>
         ))}
       </div>
-
       <div className="main-photo">
         <AnimatePresence mode="wait">
           <motion.img
@@ -96,7 +90,6 @@ const BagItem = ({ bag, t, i18n }) => {
           />
         </AnimatePresence>
       </div>
-
       <div className="product-info">
         <motion.h2
           custom={0}
@@ -107,8 +100,6 @@ const BagItem = ({ bag, t, i18n }) => {
         >
           {bag.title}
         </motion.h2>
-
-        {/* ИСПРАВЛЕННОЕ ОПИСАНИЕ */}
         <motion.p
           custom={1}
           initial="hidden"
@@ -118,7 +109,6 @@ const BagItem = ({ bag, t, i18n }) => {
         >
           {getLangText(bag.description)}
         </motion.p>
-
         <motion.div
           custom={2}
           initial="hidden"
@@ -135,8 +125,6 @@ const BagItem = ({ bag, t, i18n }) => {
             </p>
           </div>
         </motion.div>
-
-        {/* ИСПРАВЛЕННЫЕ ХАРАКТЕРИСТИКИ */}
         {bag.features && Array.isArray(bag.features) && (
           <ul className="features">
             {bag.features.map((feat, i) => (
@@ -153,7 +141,6 @@ const BagItem = ({ bag, t, i18n }) => {
             ))}
           </ul>
         )}
-
         <motion.div
           custom={6}
           initial="hidden"
@@ -198,15 +185,13 @@ export default function Bags() {
   const fetchBags = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from("products")
-        .select("*")
-        .eq("category", "bags")
-        .eq("is_active", true)
-        .order("created_at", { ascending: false });
+      // Тянем все товары с Python API
+      const data = await productService.getAll();
 
-      if (error) throw error;
-      setBags(data || []);
+      // Фильтруем массив, оставляя только товары категории "bags"
+      const filteredBags = data.filter((p) => p.category === "bags");
+
+      setBags(filteredBags || []);
     } catch (err) {
       console.error("Fetch bags error:", err);
     } finally {
@@ -229,7 +214,6 @@ export default function Bags() {
         </motion.div>
         <h1>{t("bags")}</h1>
       </header>
-
       {loading ? (
         <div
           style={{
