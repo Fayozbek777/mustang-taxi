@@ -125,40 +125,50 @@ def handle_single_product(product_id):
     try:
         products, sha = get_products_from_github()
 
-        # Ищем индекс продукта в списке
-        product_index = next(
-            (index for (index, d) in enumerate(products) if d.get("id") == product_id),
-            None,
-        )
+        # Безопасное приведение типов: гарантируем, что сравниваем int с int
+        target_id = int(product_id)
+
+        # Ищем индекс продукта в списке (проверяем строгую валидацию типов)
+        product_index = None
+        for index, p in enumerate(products):
+            p_id = p.get("id")
+            if p_id is not None and int(p_id) == target_id:
+                product_index = index
+                break
 
         if product_index is None:
-            return jsonify({"error": "Product not found"}), 404
+            return jsonify({"error": f"Product with ID {target_id} not found"}), 404
 
         if request.method == "PUT":
             data = request.get_json()
             if not data:
                 return jsonify({"error": "No data to update"}), 400
 
-            # Обновляем данные, сохраняя старый ID
-            data["id"] = product_id
+            # Сохраняем ID и обновляем тело продукта
+            data["id"] = target_id
             products[product_index] = data
 
-            save_products(products, sha)
+            # Сохраняем изменения
+            success = save_products(products, sha)
+            if not success and GITHUB_TOKEN:
+                return jsonify({"error": "Failed to sync with GitHub"}), 500
+
             return jsonify({"success": True, "product": data})
 
         if request.method == "DELETE":
-            # Удаляем продукт из массива
             products.pop(product_index)
 
-            save_products(products, sha)
-            return jsonify(
-                {"success": True, "message": f"Product {product_id} deleted"}
-            )
+            success = save_products(products, sha)
+            if not success and GITHUB_TOKEN:
+                return jsonify({"error": "Failed to sync with GitHub"}), 500
+
+            return jsonify({"success": True, "message": f"Product {target_id} deleted"})
 
     except Exception as e:
-        print(f"ERROR in handle_single_product for ID {product_id}:")
+        # Это запишет точную ошибку в логи Vercel (Vercel Console -> Logs)
+        print(f"🔥 CRITICAL ERROR for product_id {product_id}: {str(e)}")
         traceback.print_exc()
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": str(e), "traceback": traceback.format_exc()}), 500
 
 
 if __name__ == "__main__":
