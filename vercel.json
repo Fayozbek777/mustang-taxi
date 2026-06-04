@@ -21,6 +21,14 @@
       "dest": "/api/products.py"
     },
     {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/favicon.png",
+      "dest": "/favicon.png"
+    },
+    {
       "src": "/((?!api/).*)",
       "dest": "/index.html"
     }
