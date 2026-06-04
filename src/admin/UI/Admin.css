@@ -1938,3 +1938,84 @@ body {
     padding: 30px 20px;
   }
 }
+
+.header-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.maintenance-toggle-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--glass, rgba(255, 255, 255, 0.02));
+  border: 1px solid var(--border-thin, rgba(255, 255, 255, 0.06));
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  user-select: none;
+  transition: border-color var(--transition, 0.3s);
+}
+
+.maintenance-toggle-block:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.maintenance-toggle-block.active {
+  border-color: rgba(255, 208, 0, 0.3);
+  background: rgba(255, 208, 0, 0.02);
+}
+
+.maintenance-toggle-block span {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-dim, #888888);
+  transition: color var(--transition, 0.3s);
+}
+
+.maintenance-toggle-block.active span {
+  color: var(--accent, #ffd000);
+}
+
+.status-icon {
+  color: var(--text-dark, #444444);
+  transition: color var(--transition, 0.3s);
+}
+
+.maintenance-toggle-block.active .status-icon {
+  color: var(--accent, #ffd000);
+}
+
+/* Сам свитч */
+.switch-track {
+  width: 40px;
+  height: 22px;
+  background: #222226;
+  border-radius: 100px;
+  position: relative;
+  transition: background-color var(--transition, 0.3s);
+  border: 1px solid var(--border-thin, rgba(255, 255, 255, 0.06));
+}
+
+.maintenance-toggle-block.active .switch-track {
+  background: var(--accent, #ffd000);
+}
+
+.switch-thumb {
+  width: 16px;
+  height: 16px;
+  background: #888888;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition:
+    transform var(--transition, 0.3s),
+    background-color var(--transition, 0.3s);
+}
+
+.maintenance-toggle-block.active .switch-thumb {
+  transform: translateX(18px);
+  background: var(--bg-deep, #050505);
+}

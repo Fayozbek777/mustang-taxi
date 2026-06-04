@@ -21,27 +21,63 @@ import Drongo from "./pages/Drongo";
 import Preview from "./components/Preview";
 import Bags from "./pages/Bags";
 import Velo from "./pages/Velo";
+import Working from "./pages/Working"; // Заглушка техработ
+
+// Административная панель
 import AdminLayout from "./admin/AdminLayout";
 import AdminProducts from "./admin/AdminProducts";
 import AdminLogin from "./admin/AdminLogin";
 import EditProduct from "./admin/EditProduct";
 import AdminDashboard from "./admin/AdminDashboard";
 
-const ProtectedRoute = () => {
+// Защита админ-роутов
+const ProtectedRoute = ({ secretPath }) => {
   const isAuthenticated =
     localStorage.getItem("isAdminAuthenticated") === "true";
-  return isAuthenticated ? <Outlet /> : <Navigate to="/admin/login" replace />;
+  return isAuthenticated ? (
+    <Outlet />
+  ) : (
+    <Navigate to={`/${secretPath}/login`} replace />
+  );
 };
 
-const PublicLayout = () => (
-  <div className="app-wrapper">
-    <Header />
-    <main className="main-content">
-      <Outlet />
-    </main>
-    <Footer />
-  </div>
-);
+// Публичный слой с реактивным включением техработ
+const PublicLayout = () => {
+  const [isMaintenance, setIsMaintenance] = useState(() => {
+    return localStorage.getItem("isMaintenanceMode") === "true";
+  });
+
+  useEffect(() => {
+    const handleMaintenanceChange = () => {
+      const currentState = localStorage.getItem("isMaintenanceMode") === "true";
+      setIsMaintenance(currentState);
+    };
+
+    // Слушаем кастомный триггер из панели управления и системные изменения хранилища
+    window.addEventListener("maintenanceToggle", handleMaintenanceChange);
+    window.addEventListener("storage", handleMaintenanceChange);
+
+    return () => {
+      window.removeEventListener("maintenanceToggle", handleMaintenanceChange);
+      window.removeEventListener("storage", handleMaintenanceChange);
+    };
+  }, []);
+
+  // Если активирован режим техработ — полностью блокируем публичную часть приложения
+  if (isMaintenance) {
+    return <Working />;
+  }
+
+  return (
+    <div className="app-wrapper">
+      <Header />
+      <main className="main-content">
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
+  );
+};
 
 function App() {
   const [showPreview, setShowPreview] = useState(() => {
@@ -72,6 +108,7 @@ function App() {
     <ReactLenis root options={{ lerp: 0.1, duration: 1.2, smoothWheel: true }}>
       <Router>
         <Routes>
+          {/* Публичные разделы сайта */}
           <Route element={<PublicLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/scooters" element={<Scooters />} />
@@ -79,8 +116,11 @@ function App() {
             <Route path="/bags" element={<Bags />} />
             <Route path="/velo" element={<Velo />} />
           </Route>
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route element={<ProtectedRoute />}>
+
+          {/* Скрытая авторизация и админка по кастомному пути */}
+          <Route path={`/${SECRET_PATH}/login`} element={<AdminLogin />} />
+
+          <Route element={<ProtectedRoute secretPath={SECRET_PATH} />}>
             <Route path={`/${SECRET_PATH}`} element={<AdminLayout />}>
               <Route index element={<AdminDashboard />} />
               <Route path="products" element={<AdminProducts />} />
@@ -88,10 +128,14 @@ function App() {
               <Route path="edit/:id" element={<EditProduct />} />
             </Route>
           </Route>
+
+          {/* Перенаправление со старого статичного адреса на твой динамический */}
           <Route
-            path="/admin"
-            element={<Navigate to="/admin/login" replace />}
+            path="/admin/*"
+            element={<Navigate to={`/${SECRET_PATH}/login`} replace />}
           />
+
+          {/* Страница 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

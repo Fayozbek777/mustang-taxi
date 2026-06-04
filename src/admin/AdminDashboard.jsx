@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { productService } from "../services/api"; // Подключили новый Full Stack сервис вместо Supabase
+import { productService } from "../services/api";
 import {
   BarChart,
   Bar,
@@ -18,8 +18,11 @@ import {
   Bike,
   Zap,
   ShoppingBag,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import "./UI/Admin.css";
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({
@@ -30,6 +33,12 @@ export default function AdminDashboard() {
     drongo: 0,
   });
   const [loading, setLoading] = useState(true);
+
+  // Стейт для выключателя техработ
+  const [maintenance, setMaintenance] = useState(() => {
+    return localStorage.getItem("isMaintenanceMode") === "true";
+  });
+
   const SECRET_PATH = import.meta.env.VITE_ADMIN_PATH;
 
   const chartData = [
@@ -53,10 +62,18 @@ export default function AdminDashboard() {
     fetchStats();
   }, []);
 
+  const handleToggleMaintenance = () => {
+    const nextState = !maintenance;
+    setMaintenance(nextState);
+    localStorage.setItem("isMaintenanceMode", String(nextState));
+
+    const event = new Event("maintenanceToggle");
+    window.dispatchEvent(event);
+  };
+
   async function fetchStats() {
     try {
       setLoading(true);
-      // Запрашиваем все товары из нашего Python API (из файла products.json)
       const data = await productService.getAll();
 
       if (data && Array.isArray(data)) {
@@ -89,9 +106,30 @@ export default function AdminDashboard() {
           <LayoutDashboard className="icon-accent" />
           <h1>Панель управления</h1>
         </div>
-        <Link to={`/${SECRET_PATH}/add`} className="btn-save">
-          <Plus size={20} /> Добавить товар
-        </Link>
+
+        {/* Интегрированный блок управления статусом сайта */}
+        <div className="header-right-actions">
+          <div
+            className={`maintenance-toggle-block ${maintenance ? "active" : ""}`}
+            onClick={handleToggleMaintenance}
+          >
+            {maintenance ? (
+              <EyeOff size={16} className="status-icon" />
+            ) : (
+              <Eye size={16} className="status-icon" />
+            )}
+            <span>
+              {maintenance ? "Сайт скрыт (Техработы)" : "Сайт открыт для всех"}
+            </span>
+            <div className="switch-track">
+              <div className="switch-thumb"></div>
+            </div>
+          </div>
+
+          <Link to={`/${SECRET_PATH}/add`} className="btn-save">
+            <Plus size={20} /> Добавить товар
+          </Link>
+        </div>
       </header>
 
       <div className="stats-grid">
