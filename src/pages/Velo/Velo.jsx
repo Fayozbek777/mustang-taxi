@@ -5,8 +5,8 @@ import { FaBiking, FaCheckCircle, FaShieldAlt } from "react-icons/fa";
 import { Loader2 } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { productService } from "../services/api"; // Подключили новый Full Stack сервис
-import "./UI/Velo.css";
+import { productService } from "../../services/api"; // Подключили новый Full Stack сервис
+import "./Velo.css";
 
 // Под-компонент для одного велосипеда
 const BikeItem = ({ bike, t, i18n }) => {

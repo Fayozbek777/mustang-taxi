@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import "./UI/LanguageSwitcher.css";
+import "./LanguageSwitcher.css";
 
 const languages = [
   { code: "uz", label: "UZ", name: "O'zbek" },

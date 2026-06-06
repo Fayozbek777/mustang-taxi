@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { productService } from "../services/api"; // Подключаем новый сервис вместо Supabase
+import { productService } from "../../services/api"; // Подключаем новый сервис вместо Supabase
 import { Edit, Trash2, Plus, Package } from "lucide-react";
 
 export default function AdminProducts() {

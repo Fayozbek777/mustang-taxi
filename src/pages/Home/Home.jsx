@@ -13,10 +13,10 @@ import {
 import { MapPin, ExternalLink, Zap } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import { BsTelegram } from "react-icons/bs";
-import deliveryVid from "../assets/videos/deleviry.mp4";
-import deliveryVideo from "../assets/videos/asd1.mp4";
-import collageImg from "../assets/images/collages.png";
-import "./UI/Home.css";
+import deliveryVid from "../../assets/videos/deleviry.mp4";
+import deliveryVideo from "../../assets/videos/asd1.mp4";
+import collageImg from "../../assets/images/collages.png";
+import "./Home.css";
 
 const COUNTRIES = [
   {
@@ -140,56 +140,74 @@ export default function Home() {
       toast.custom(
         (toastObj) => (
           <motion.div
-            initial={{ opacity: 0, y: 24, scale: 0.92 }}
+            initial={{ opacity: 0, y: 40, scale: 0.9, filter: "blur(4px)" }}
             animate={
               toastObj.visible
-                ? { opacity: 1, y: 0, scale: 1 }
-                : { opacity: 0, y: 12, scale: 0.95 }
+                ? { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }
+                : { opacity: 0, y: 20, scale: 0.95, filter: "blur(2px)" }
             }
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              type: "spring",
+              stiffness: 260,
+              damping: 24,
+            }}
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "14px",
-              background: "rgba(10, 8, 4, 0.97)",
-              border: "1px solid rgba(201, 168, 76, 0.3)",
-              borderRadius: "14px",
-              padding: "14px 18px",
-              boxShadow:
-                "0 8px 40px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,168,76,0.08)",
-              maxWidth: "320px",
+              gap: "18px",
+              background:
+                "linear-gradient(145deg, rgba(15, 12, 8, 0.98), rgba(8, 6, 4, 0.99))",
+              border: "1px solid rgba(201, 168, 76, 0.45)",
+              borderRadius: "18px",
+              padding: "18px 24px",
+              boxShadow: `
+              0 20px 50px rgba(0, 0, 0, 0.65), 
+              0 0 30px rgba(201, 168, 76, 0.15), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.1)
+            `,
+              maxWidth: "400px",
+              width: "100%",
               cursor: "pointer",
-              backdropFilter: "blur(20px)",
+              backdropFilter: "blur(25px)",
+              WebkitBackdropFilter: "blur(25px)",
             }}
             onClick={() => toast.dismiss(toastObj.id)}
           >
+            {/* Иконка / Эмблема */}
             <div
               style={{
-                width: 40,
-                height: 40,
-                borderRadius: "10px",
-                background: "linear-gradient(135deg, #c9a84c, #e8c96a)",
+                width: "52px",
+                height: "52px",
+                borderRadius: "14px",
+                background: "linear-gradient(135deg, #e8c96a, #c9a84c)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: "1.2rem",
+                fontSize: "1.6rem",
                 flexShrink: 0,
+                boxShadow: "0 4px 15px rgba(201, 168, 76, 0.35)",
               }}
             >
-              🛵
+              🏎️
             </div>
 
+            {/* Текстовый блок */}
             <div
-              style={{ display: "flex", flexDirection: "column", gap: "2px" }}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "4px",
+                width: "100%",
+              }}
             >
               <span
                 style={{
                   fontFamily: "'Montserrat', sans-serif",
-                  fontSize: "0.75rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.08em",
+                  fontSize: "0.85rem",
+                  fontWeight: 800,
+                  letterSpacing: "0.12em",
                   textTransform: "uppercase",
-                  color: "#c9a84c",
+                  color: "#e8c96a",
                 }}
               >
                 My Mustang
@@ -197,10 +215,11 @@ export default function Home() {
               <span
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",
-                  fontSize: "1rem",
-                  fontWeight: 400,
-                  color: "rgba(255,255,255,0.88)",
-                  lineHeight: 1.3,
+                  fontSize: "1.2rem",
+                  fontWeight: 500,
+                  color: "#ffffff",
+                  lineHeight: 1.4,
+                  textShadow: "0 2px 4px rgba(0,0,0,0.5)",
                 }}
               >
                 {t("My Mustang Arendaga oling 🚀") ||
@@ -760,7 +779,6 @@ export default function Home() {
                           </AnimatePresence>
                         </div>
 
-                        {/* Phone input */}
                         <div className="form-input-wrap" style={{ flex: 1 }}>
                           <Phone size={15} className="form-input-icon" />
                           <input
@@ -784,7 +802,6 @@ export default function Home() {
                                 }}
                                 style={{
                                   position: "absolute",
-                                  /* Динамический отступ галочки для RTL */
                                   [i18n.language === "ar" ||
                                   i18n.language === "ur"
                                     ? "left"
@@ -806,7 +823,6 @@ export default function Home() {
                       </span>
                     </motion.div>
 
-                    {/* Message */}
                     <motion.div
                       className="form-field"
                       initial={{ opacity: 0, y: 16 }}

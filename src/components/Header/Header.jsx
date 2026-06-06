@@ -9,10 +9,10 @@ import {
 } from "framer-motion";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import navLogo from "../assets/images/navLogo.png";
-import LanguageSwitcher from "./LanguageSwitcher";
+import navLogo from "../../assets/images/navLogo.png";
+import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 import { Menu, X } from "lucide-react";
-import "./UI/Header.css";
+import "./Header.css";
 
 const navLinks = [
   { to: "/", key: "home" },

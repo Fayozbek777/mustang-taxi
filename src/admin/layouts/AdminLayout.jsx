@@ -10,7 +10,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
-import "./UI/Admin.css";
+import "../Admin.css";
 
 const AdminLayout = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -18,7 +18,6 @@ const AdminLayout = () => {
   const location = useLocation();
   const SECRET_PATH = import.meta.env.VITE_ADMIN_PATH;
 
-  // Закрываем меню при смене страницы (для мобилок)
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location]);
@@ -58,7 +57,6 @@ const AdminLayout = () => {
 
   return (
     <div className="admin-layout">
-      {/* Кнопка открытия меню для мобилок */}
       <button
         className="mobile-menu-toggle"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -66,7 +64,6 @@ const AdminLayout = () => {
         {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
 
-      {/* Оверлей (затемнение) при открытом меню на мобилке */}
       {isMobileMenuOpen && (
         <div
           className="admin-sidebar-overlay"

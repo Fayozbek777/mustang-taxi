@@ -1,83 +1,21 @@
 import React, { useEffect, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-  Outlet,
-} from "react-router-dom";
-import { ReactLenis } from "lenis/react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./App.css";
-import "./i18n";
+import Preview from "./components/Preview/Preview";
+import AppRoutes from "./Router/AppRoutes";
 
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Home from "./pages/Home";
-import Scooters from "./pages/Scooters";
-import NotFound from "./pages/NotFound";
-import Drongo from "./pages/Drongo";
-import Preview from "./components/Preview";
-import Bags from "./pages/Bags";
-import Velo from "./pages/Velo";
-import Working from "./pages/Working"; // Заглушка техработ
+// Импортируем инструменты для работы с темой MUI
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-// Административная панель
-import AdminLayout from "./admin/AdminLayout";
-import AdminProducts from "./admin/AdminProducts";
-import AdminLogin from "./admin/AdminLogin";
-import EditProduct from "./admin/EditProduct";
-import AdminDashboard from "./admin/AdminDashboard";
-
-// Защита админ-роутов
-const ProtectedRoute = ({ secretPath }) => {
-  const isAuthenticated =
-    localStorage.getItem("isAdminAuthenticated") === "true";
-  return isAuthenticated ? (
-    <Outlet />
-  ) : (
-    <Navigate to={`/${secretPath}/login`} replace />
-  );
-};
-
-// Публичный слой с реактивным включением техработ
-const PublicLayout = () => {
-  const [isMaintenance, setIsMaintenance] = useState(() => {
-    return localStorage.getItem("isMaintenanceMode") === "true";
-  });
-
-  useEffect(() => {
-    const handleMaintenanceChange = () => {
-      const currentState = localStorage.getItem("isMaintenanceMode") === "true";
-      setIsMaintenance(currentState);
-    };
-
-    // Слушаем кастомный триггер из панели управления и системные изменения хранилища
-    window.addEventListener("maintenanceToggle", handleMaintenanceChange);
-    window.addEventListener("storage", handleMaintenanceChange);
-
-    return () => {
-      window.removeEventListener("maintenanceToggle", handleMaintenanceChange);
-      window.removeEventListener("storage", handleMaintenanceChange);
-    };
-  }, []);
-
-  // Если активирован режим техработ — полностью блокируем публичную часть приложения
-  if (isMaintenance) {
-    return <Working />;
-  }
-
-  return (
-    <div className="app-wrapper">
-      <Header />
-      <main className="main-content">
-        <Outlet />
-      </main>
-      <Footer />
-    </div>
-  );
-};
+// Создаем тему и указываем ваш основной шрифт Inter
+const theme = createTheme({
+  typography: {
+    fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+  },
+  // Здесь в будущем можно настроить цвета, например:
+  // palette: { primary: { main: '#000000' } }
+});
 
 function App() {
   const [showPreview, setShowPreview] = useState(() => {
@@ -85,7 +23,8 @@ function App() {
     return hasSeenPreview !== "true";
   });
 
-  const SECRET_PATH = import.meta.env.VITE_ADMIN_PATH || "admin-panel";
+  const SECRET_PATH =
+    import.meta.env.VITE_ADMIN_PATH || "dashboard-mustang-private";
 
   useEffect(() => {
     AOS.init({ duration: 800, once: true });
@@ -100,46 +39,20 @@ function App() {
     return () => clearTimeout(timer);
   }, [showPreview]);
 
+  // Если показывается превью, оборачиваем его в тему, чтобы внутри работал MUI
   if (showPreview) {
-    return <Preview />;
+    return (
+      <ThemeProvider theme={theme}>
+        <Preview />
+      </ThemeProvider>
+    );
   }
 
+  // Основной рендеринг приложения с поддержкой темы MUI
   return (
-    <ReactLenis root options={{ lerp: 0.1, duration: 1.2, smoothWheel: true }}>
-      <Router>
-        <Routes>
-          {/* Публичные разделы сайта */}
-          <Route element={<PublicLayout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/scooters" element={<Scooters />} />
-            <Route path="/drongo" element={<Drongo />} />
-            <Route path="/bags" element={<Bags />} />
-            <Route path="/velo" element={<Velo />} />
-          </Route>
-
-          {/* Скрытая авторизация и админка по кастомному пути */}
-          <Route path={`/${SECRET_PATH}/login`} element={<AdminLogin />} />
-
-          <Route element={<ProtectedRoute secretPath={SECRET_PATH} />}>
-            <Route path={`/${SECRET_PATH}`} element={<AdminLayout />}>
-              <Route index element={<AdminDashboard />} />
-              <Route path="products" element={<AdminProducts />} />
-              <Route path="add" element={<EditProduct />} />
-              <Route path="edit/:id" element={<EditProduct />} />
-            </Route>
-          </Route>
-
-          {/* Перенаправление со старого статичного адреса на твой динамический */}
-          <Route
-            path="/admin/*"
-            element={<Navigate to={`/${SECRET_PATH}/login`} replace />}
-          />
-
-          {/* Страница 404 */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Router>
-    </ReactLenis>
+    <ThemeProvider theme={theme}>
+      <AppRoutes secretPath={SECRET_PATH} />
+    </ThemeProvider>
   );
 }
 

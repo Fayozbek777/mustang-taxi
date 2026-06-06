@@ -4,8 +4,8 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { Battery, Gauge, Zap, Loader2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { productService } from "../services/api"; // Подключили новый Full Stack сервис вместо Supabase
-import "./UI/Scooters.css";
+import { productService } from "../../services/api"; // Подключили новый Full Stack сервис вместо Supabase
+import "./Scooters.css";
 import { FaCheckCircle } from "react-icons/fa";
 
 const ScooterItem = ({ scooter, t, i18n }) => {

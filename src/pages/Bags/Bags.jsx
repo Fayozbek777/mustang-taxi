@@ -4,8 +4,8 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { ShoppingBag, ChevronRight, Loader2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { productService } from "../services/api"; // Подключили новый Full Stack сервис
-import "./UI/Bags.css";
+import { productService } from "../../services/api"; // Подключили новый Full Stack сервис
+import "./Bags.css";
 
 const textVariant = {
   hidden: { opacity: 0, x: 20 },

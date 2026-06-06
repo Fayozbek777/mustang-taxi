@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { FaTelegramPlane, FaPhoneAlt } from "react-icons/fa";
-import "./UI/Footer.css";
+import "./Footer.css";
 
 const Footer = () => {
   const { t } = useTranslation();

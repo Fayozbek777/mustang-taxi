@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
-import { productService } from "../services/api"; // Переключили на наш локальный API сервис
+import { productService } from "../../services/api";
 import { Save, ArrowLeft, Plus, X, PcCase } from "lucide-react";
-import "./UI/Admin.css";
+import "../Admin.css";
 
 const EditProduct = () => {
   const { id } = useParams();

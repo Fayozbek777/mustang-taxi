@@ -6,7 +6,7 @@ import {
   useTransform,
   animate,
 } from "framer-motion";
-import "./UI/Preview.css";
+import "./Preview.css";
 
 const EXPO = [0.16, 1, 0.3, 1];
 

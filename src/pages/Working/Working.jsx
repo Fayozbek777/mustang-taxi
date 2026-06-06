@@ -1,6 +1,6 @@
 import React from "react";
 import { Wrench, ShieldAlert } from "lucide-react";
-import "../pages/UI/Working.css"; // Файл стилей
+import "./Working.css"; // Файл стилей
 
 export default function Working() {
   return (

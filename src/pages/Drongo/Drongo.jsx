@@ -4,8 +4,8 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { Battery, Gauge, Zap, Loader2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { productService } from "../services/api"; // Подключили новый Full Stack сервис вместо Supabase
-import "./UI/Drongo.css";
+import { productService } from "../../services/api"; // Подключили новый Full Stack сервис вместо Supabase
+import "./Drongo.css";
 import { FaCheckCircle } from "react-icons/fa";
 
 // Вспомогательный компонент для одного товара Drongo

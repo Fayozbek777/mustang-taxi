@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
-import "./UI/NotFound.css";
+import "./NotFound.css";
 
 // Регистрируем плагин для траекторий шариков
 gsap.registerPlugin(MotionPathPlugin);
