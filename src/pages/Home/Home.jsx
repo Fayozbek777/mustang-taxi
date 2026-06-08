@@ -841,6 +841,13 @@ export default function Home() {
                         />
                       </div>
                     </motion.div>
+                    <button
+                      type="submit"
+                      className="form-btn"
+                      disabled={loading}
+                    >
+                      {loading ? "Yuborilmoqda..." : "Yuborish"}
+                    </button>
                   </motion.form>
                 )}
               </AnimatePresence>

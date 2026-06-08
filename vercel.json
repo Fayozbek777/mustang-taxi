@@ -9,6 +9,10 @@
     {
       "src": "api/products.py",
       "use": "@vercel/python"
+    },
+    {
+      "src": "api/telegram.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [

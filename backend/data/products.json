@@ -1,0 +1,206 @@
+[
+  {
+    "battery": "100%",
+    "category": "scooters",
+    "deposit": "100$",
+    "description": {
+      "en": "The newest and most reliable model. Very convenient for moving around the city.",
+      "hi": "नवीनतम और सबसे विश्वसनीय मॉडल। शहर में घूमने के लिए बहुत सुविधाजनक।",
+      "ru": "Самая новая и надёжная модель. Идеально подходит для города.",
+      "ur": "سب سے نیا اور سب سے زیادہ قابل اعتماد ماڈل۔ شہر میں گھومنے کے لیے بہت آسان۔",
+      "uz": "Eng yangi va ishonchli model. Shahar ichida harakatlanish uchun juda qulay."
+    },
+    "features": [
+      {
+        "en": "Helmet included",
+        "hi": "हेलमेट शामिल है",
+        "ru": "Шлем в комплекте",
+        "ur": "ہیلمٹ شامل ہے",
+        "uz": "Dubulg'a to'plamda"
+      },
+      {
+        "en": "Charging device",
+        "hi": "चार्जिंग डिवाइस",
+        "ru": "Зарядное устройство",
+        "ur": "چارجنگ ڈیوائس",
+        "uz": "Quvvatlantirish qurilmasi"
+      },
+      {
+        "en": "Phone holder",
+        "hi": "फोन होल्डर",
+        "ru": "Держатель для телефона",
+        "ur": "فون ہولڈر",
+        "uz": "Telefon ushlagichi"
+      },
+      {
+        "en": "Free repair",
+        "hi": "मुफ्त मरम्मत",
+        "ru": "Бесплатный ремонт",
+        "ur": "مفت مرمت",
+        "uz": "Bepul ta'mirlash"
+      }
+    ],
+    "images": [
+      "../../src/assets/images/skooter-image2.jpg"
+    ],
+    "is_active": true,
+    "price": "100000",
+    "price_period": "kun",
+    "speed": "70-75",
+    "title": "Skooter H8",
+    "id": 2
+  },
+  {
+    "id": 3,
+    "category": "drongo",
+    "title": "Drongo Model A",
+    "description": {
+      "uz": "Drongo A — zamonaviy dizayn va yaxshi dinamika. Shahar ichida harakatlanish uchun ideal variant.",
+      "ru": "Drongo A — современный дизайн и хорошая динамика. Идеальный вариант для передвижения по городу.",
+      "en": "Drongo A — modern design and good dynamics. An ideal option for moving around the city.",
+      "hi": "Drongo A — आधुनिक डिज़ाइन और अच्छी डायनामिक्स। शहर में घूमने के लिए आदर्श विकल्प।",
+      "ur": "Drongo A — جدید ڈیزائن اور اچھی ڈائنامکس۔ شہر میں گھومنے کے لیے بہترین آپشن۔"
+    },
+    "features": [
+      {
+        "uz": "Dubulg'a to'plamda",
+        "ru": "Шлем в комплекте",
+        "en": "Helmet included",
+        "hi": "हेलमेट शामिल है",
+        "ur": "ہیلمٹ شامل ہے"
+      },
+      {
+        "uz": "Quvvatlantirish qurilmasi",
+        "ru": "Зарядное устройство",
+        "en": "Charging device",
+        "hi": "चार्जिंग डिवाइस",
+        "ur": "چارجنگ ڈیوائس"
+      },
+      {
+        "uz": "Telefon ushlagichi",
+        "ru": "Держатель для телефона",
+        "en": "Phone holder",
+        "hi": "फोन होल्डर",
+        "ur": "فون ہولڈر"
+      },
+      {
+        "uz": "Bepul ta'mirlash",
+        "ru": "Бесплатный ремонт",
+        "en": "Free repair",
+        "hi": "मुफ्त मरम्मत",
+        "ur": "مفت مرمت"
+      }
+    ],
+    "price": "70000",
+    "price_period": "kun",
+    "deposit": "100$",
+    "battery": "100%",
+    "speed": "70",
+    "images": [
+      "https://via.placeholder.com/600x400?text=Drongo+Model+A"
+    ],
+    "is_active": true
+  },
+  {
+    "id": 4,
+    "category": "velo",
+    "title": "Trinx M100",
+    "description": {
+      "uz": "Faol sayohatlar uchun tezlikli tog‘ velosipedi. Eng yaxshi narx va sifat nisbati.",
+      "ru": "Скоростной горный велосипед для активных поездок. Лучшее соотношение цены и качества.",
+      "en": "High-speed mountain bike for active trips. Best price-quality ratio.",
+      "hi": "सक्रिय यात्राओं के लिए हाई-स्पीड माउंटेन बाइक। बेहतरीन मूल्य और गुणवत्ता अनुपात।",
+      "ur": "فعال سفر کے لیے ہائی سپیڈ ماؤنٹین بائیک۔ بہترین قیمت اور معیار کا تناسب۔"
+    },
+    "features": [
+      {
+        "uz": "21 tezlik",
+        "ru": "21 скорость",
+        "en": "21 speeds",
+        "hi": "21 स्पीड",
+        "ur": "21 رفتار"
+      },
+      {
+        "uz": "Alyuminiy ramka",
+        "ru": "Алюминиевая рама",
+        "en": "Aluminum frame",
+        "hi": "एल्यूमिनियम फ्रेम",
+        "ur": "ایلومینیم فریم"
+      },
+      {
+        "uz": "Mexanik disk tormozlari",
+        "ru": "Механические дисковые тормоза",
+        "en": "Mechanical disc brakes",
+        "hi": "मैकेनिकल डिस्क ब्रेक",
+        "ur": "مکینیکل ڈسک بریک"
+      },
+      {
+        "uz": "Birinchi haftada bepul ta'mirlash",
+        "ru": "Бесплатный ремонт в первую неделю",
+        "en": "Free repair during the first week",
+        "hi": "पहले हफ्ते में मुफ्त मरम्मत",
+        "ur": "پہلے ہفتے میں مفت مرمت"
+      }
+    ],
+    "price": "500000",
+    "price_period": "kun",
+    "deposit": "Pasport yoki 500 000 so'm",
+    "battery": null,
+    "speed": "21 tezlik",
+    "images": [
+      "https://via.placeholder.com/600x400?text=Trinx+M100"
+    ],
+    "is_active": true
+  },
+  {
+    "battery": null,
+    "category": "bags",
+    "deposit": "200 000 so'm (qaytarilmaydi)",
+    "description": {
+      "en": "Waterproof city backpack. 25 liters capacity. Ideal for daily use and travel.",
+      "hi": "वाटरप्रूफ शहर का बैकपैक। 25 लीटर क्षमता। रोजमर्रा के उपयोग और यात्रा के लिए आदर्श।",
+      "ru": "Водонепроницаемый городской рюкзак. Объём 25 литров. Идеально для повседневного использования и путешествий.",
+      "ur": "واٹر پروف شہری بیک پیک۔ 25 لیٹر صلاحیت۔ روزمرہ استعمال اور سفر کے لیے بہترین۔",
+      "uz": "Suv o'tkazmaydigan shahar ryukzagi. 25 litr hajm. Kundalik foydalanish va sayohatlar uchun ideal."
+    },
+    "features": [
+      {
+        "en": "Thermal insulation",
+        "hi": "थर्मल इंसुलेशन",
+        "ru": "Термоизоляция",
+        "ur": "تھرمل انسولیشن",
+        "uz": "Termoizolyatsiya"
+      },
+      {
+        "en": "Waterproof",
+        "hi": "वाटरप्रूफ",
+        "ru": "Водонепроницаемость",
+        "ur": "واٹر پروف",
+        "uz": "Suv o‘tkazmaslik"
+      },
+      {
+        "en": "Durable frame",
+        "hi": "मजबूत फ्रेम",
+        "ru": "Прочный каркас",
+        "ur": "مضبوط فریم",
+        "uz": "Mustahkam karkas"
+      },
+      {
+        "en": "Soft shoulder straps",
+        "hi": "नरम कंधे की पट्टियाँ",
+        "ru": "Мягкие плечевые ремни",
+        "ur": "نرم کندھے کی پٹیاں",
+        "uz": "Yumshoq yelkama tasmalar"
+      }
+    ],
+    "images": [
+      "https://via.placeholder.com/600x400?text=Ryukzak"
+    ],
+    "is_active": true,
+    "price": "200000",
+    "price_period": "yil",
+    "speed": null,
+    "title": "Shahar Ryukzagi",
+    "id": 5
+  }
+]
