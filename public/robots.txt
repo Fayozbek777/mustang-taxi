@@ -1,15 +1,19 @@
+# Global Directives for All Search Engines
 User-agent: *
 Allow: /
 Allow: /assets/
-
 Disallow: /admin/
 Disallow: /config/
 Disallow: /private/
 Disallow: /api/
+Disallow: /*?*
+Disallow: /*?cat=
 
-Disallow: /*?* Disallow: /*?cat=
-
+# Specific Directives for Yandex
 User-agent: Yandex
 Allow: /
-Clean-param: ref /            
-Clean-param: cat /            
+Clean-param: ref /
+Clean-param: cat /
+
+# Infrastructure Metadata
+Sitemap: https://mymustang.uz

@@ -1,0 +1,7 @@
+# Official Security Contact Policy
+Contact: https://t.me
+Expires: 2027-06-09T12:00:00.000Z
+Encryption: https://mymustang.uz
+Acknowledgements: https://mymustang.uz
+Preferred-Languages: en, ru, uz
+Policy: https://mymustang.uz
