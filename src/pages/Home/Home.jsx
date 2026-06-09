@@ -526,9 +526,7 @@ export default function Home() {
           <div className="floating-element"></div>
 
           <div className="download-content">
-            <div className="download-badge">
-              ⚡ {t("newVersionAvailable") || "Yangi versiya mavjud"}
-            </div>
+            <div className="download-badge">⚡ Mustang Shartnoma</div>
 
             <h2 className="download-title">{t("myMustang")}</h2>
 

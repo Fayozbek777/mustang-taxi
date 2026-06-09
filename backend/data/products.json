@@ -102,55 +102,53 @@
     "is_active": true
   },
   {
-    "id": 4,
+    "battery": null,
     "category": "velo",
-    "title": "Trinx M100",
+    "deposit": "Pasport yoki 500 000 so'm",
     "description": {
-      "uz": "Faol sayohatlar uchun tezlikli tog‘ velosipedi. Eng yaxshi narx va sifat nisbati.",
-      "ru": "Скоростной горный велосипед для активных поездок. Лучшее соотношение цены и качества.",
       "en": "High-speed mountain bike for active trips. Best price-quality ratio.",
       "hi": "सक्रिय यात्राओं के लिए हाई-स्पीड माउंटेन बाइक। बेहतरीन मूल्य और गुणवत्ता अनुपात।",
-      "ur": "فعال سفر کے لیے ہائی سپیڈ ماؤنٹین بائیک۔ بہترین قیمت اور معیار کا تناسب۔"
+      "ru": "Скоростной горный велосипед для активных поездок. Лучшее соотношение цены и качества.",
+      "ur": "فعال سفر کے لیے ہائی سپیڈ ماؤنٹین بائیک۔ بہترین قیمت اور معیار کا تناسب۔",
+      "uz": "Faol sayohatlar uchun tezlikli tog‘ velosipedi. Eng yaxshi narx va sifat nisbati."
     },
     "features": [
       {
-        "uz": "21 tezlik",
-        "ru": "21 скорость",
         "en": "21 speeds",
         "hi": "21 स्पीड",
-        "ur": "21 رفتار"
+        "ru": "21 скорость",
+        "ur": "21 رفتار",
+        "uz": "21 tezlik"
       },
       {
-        "uz": "Alyuminiy ramka",
-        "ru": "Алюминиевая рама",
         "en": "Aluminum frame",
         "hi": "एल्यूमिनियम फ्रेम",
-        "ur": "ایلومینیم فریم"
+        "ru": "Алюминиевая рама",
+        "ur": "ایلومینیم فریم",
+        "uz": "Alyuminiy ramka"
       },
       {
-        "uz": "Mexanik disk tormozlari",
-        "ru": "Механические дисковые тормоза",
         "en": "Mechanical disc brakes",
         "hi": "मैकेनिकल डिस्क ब्रेक",
-        "ur": "مکینیکل ڈسک بریک"
+        "ru": "Механические дисковые тормоза",
+        "ur": "مکینیکل ڈسک بریک",
+        "uz": "Mexanik disk tormozlari"
       },
       {
-        "uz": "Birinchi haftada bepul ta'mirlash",
-        "ru": "Бесплатный ремонт в первую неделю",
         "en": "Free repair during the first week",
         "hi": "पहले हफ्ते में मुफ्त मरम्मत",
-        "ur": "پہلے ہفتے میں مفت مرمت"
+        "ru": "Бесплатный ремонт в первую неделю",
+        "ur": "پہلے ہفتے میں مفت مرمت",
+        "uz": "Birinchi haftada bepul ta'mirlash"
       }
     ],
+    "images": [],
+    "is_active": true,
     "price": "500000",
     "price_period": "kun",
-    "deposit": "Pasport yoki 500 000 so'm",
-    "battery": null,
     "speed": "21 tezlik",
-    "images": [
-      "https://via.placeholder.com/600x400?text=Trinx+M100"
-    ],
-    "is_active": true
+    "title": "Trinx M100",
+    "id": 4
   },
   {
     "battery": null,

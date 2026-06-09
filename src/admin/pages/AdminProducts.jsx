@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { productService } from "../../services/api"; // Подключаем новый сервис вместо Supabase
+import { productService } from "../../services/api"; // Твой сервис API
 import { Edit, Trash2, Plus, Package } from "lucide-react";
+import { toast } from "react-hot-toast"; // Импортируем тосты
 
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchParams] = useSearchParams();
   const categoryFilter = searchParams.get("cat");
-  const SECRET_PATH = import.meta.env.VITE_ADMIN_PATH;
+  const SECRET_PATH =
+    import.meta.env.VITE_ADMIN_PATH || "dashboard-mustang-private";
 
   useEffect(() => {
     fetchProducts();
@@ -17,10 +19,10 @@ export default function AdminProducts() {
   async function fetchProducts() {
     try {
       setLoading(true);
-      // Запрашиваем все товары из нашего Python API (из файла products.json)
+      // Запрашиваем товары через наш сервис с кэшированием
       const data = await productService.getAll();
 
-      // Фильтруем по категории прямо на фронтенде, если фильтр выбран
+      // Фильтрация на фронтенде по категории
       if (categoryFilter) {
         const filtered = data.filter((p) => p.category === categoryFilter);
         setProducts(filtered);
@@ -29,22 +31,36 @@ export default function AdminProducts() {
       }
     } catch (e) {
       console.error("Ошибка при получении товаров:", e);
+      toast.error("Не удалось загрузить список товаров");
     } finally {
       setLoading(false);
     }
   }
 
   async function deleteProduct(id) {
-    if (window.confirm("Удалить этот товар?")) {
-      try {
-        // Отправляем DELETE запрос на Python бекенд
-        await productService.delete(id);
-        // Обновляем список на UI
-        fetchProducts();
-      } catch (e) {
-        console.error("Ошибка при удалении товара:", e);
-        alert("Не удалось удалить товар");
-      }
+    if (!window.confirm("Вы уверены, что хотите удалить этот товар?")) return;
+
+    // 1. Создаем уникальный тост-лоадер на время отправки запроса в GitHub
+    const toastId = toast.loading("Синхронизация с репозиторием GitHub...");
+
+    // 2. ОПТИМИСТИЧНЫЙ UI: Сохраняем копию данных и удаляем элемент со сцены мгновенно
+    const previousProducts = [...products];
+    setProducts((prev) => prev.filter((p) => p.id !== id));
+
+    try {
+      // 3. Отправляем реальный запрос на удаление во Flask бэкенд
+      await productService.delete(id);
+
+      // Перезаписываем этот же тост на успешный
+      toast.success("Товар успешно удален и стерт из базы Git!", {
+        id: toastId,
+      });
+    } catch (e) {
+      console.error("Ошибка при удалении товара на сервере:", e);
+
+      // Перезаписываем тост на ошибку и возвращаем товар обратно в таблицу
+      toast.error("Ошибка сервера. Не удалось удалить товар.", { id: toastId });
+      setProducts(previousProducts);
     }
   }
 
@@ -66,7 +82,11 @@ export default function AdminProducts() {
       </header>
 
       {loading ? (
-        <p>Загрузка...</p>
+        <p className="loading-text">Загрузка товаров...</p>
+      ) : products.length === 0 ? (
+        <div style={{ textAlign: "center", padding: "40px", color: "#888" }}>
+          Товары в данной категории не найдены.
+        </div>
       ) : (
         <div className="admin-table-container">
           <table className="admin-table">
@@ -86,6 +106,7 @@ export default function AdminProducts() {
                     <img
                       src={p.images?.[0] || p.image}
                       alt=""
+                      loading="lazy" // Оптимизация ленивой загрузки изображений в браузере
                       style={{
                         width: "50px",
                         height: "50px",

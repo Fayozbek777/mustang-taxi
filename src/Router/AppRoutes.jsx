@@ -2,7 +2,6 @@ import React, { useState, useEffect, lazy, Suspense } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
-
 import Home from "../pages/Home/Home";
 import Scooters from "../pages/Scooters/Scooters";
 import Drongo from "../pages/Drongo/Drongo";
@@ -10,7 +9,6 @@ import Bags from "../pages/Bags/Bags";
 import Velo from "../pages/Velo/Velo";
 import Working from "../pages/Working/Working";
 import NotFound from "../pages/NotFound/NotFound";
-
 import ProtectedRoute from "./ProtectedRoute";
 
 const AdminComponents = {
@@ -19,6 +17,7 @@ const AdminComponents = {
   Products: lazy(() => import("../admin/pages/AdminProducts")),
   Login: lazy(() => import("../admin/pages/AdminLogin")),
   EditProduct: lazy(() => import("../admin/pages/EditProduct")),
+  Settings: lazy(() => import("../admin/pages/AdminSettings")), // 🔥 Добавили lazy-loading для вкладки настроек
 };
 
 const PublicLayout = () => {
@@ -33,7 +32,6 @@ const PublicLayout = () => {
     };
     window.addEventListener("maintenanceToggle", handleMaintenanceChange);
     window.addEventListener("storage", handleMaintenanceChange);
-
     return () => {
       window.removeEventListener("maintenanceToggle", handleMaintenanceChange);
       window.removeEventListener("storage", handleMaintenanceChange);
@@ -64,6 +62,7 @@ const AppRoutes = ({ secretPath }) => {
   return (
     <Suspense fallback={null}>
       <Routes>
+        {/* Публичные роуты витрины */}
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/scooters" element={<Scooters />} />
@@ -71,19 +70,29 @@ const AppRoutes = ({ secretPath }) => {
           <Route path="/bags" element={<Bags />} />
           <Route path="/velo" element={<Velo />} />
         </Route>
+
+        {/* Страница логина в админку */}
         <Route
           path={`/${safePath}/login`}
           element={<AdminComponents.Login />}
         />
 
+        {/* Приватные защищенные роуты админки */}
         <Route element={<ProtectedRoute secretPath={safePath} />}>
           <Route path={`/${safePath}`} element={<AdminComponents.Layout />}>
             <Route index element={<AdminComponents.Dashboard />} />
             <Route path="products" element={<AdminComponents.Products />} />
             <Route path="add" element={<AdminComponents.EditProduct />} />
             <Route path="edit/:id" element={<AdminComponents.EditProduct />} />
+            <Route
+              path="settings"
+              element={<AdminComponents.Settings />}
+            />{" "}
+            {/* 🔥 Дочерний роут для настроек */}
           </Route>
         </Route>
+
+        {/* 404 Страница не найдена */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
