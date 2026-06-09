@@ -8,7 +8,7 @@ This document details the technical specifications, security parameters, and com
 
 | Parameter             | Specification / Value                        | Status         |
 | :-------------------- | :------------------------------------------- | :------------- |
-| **Domain Name**       | `mymustang.uz` (or target enterprise domain) | `ACTIVE` 🟢    |
+| **Domain Name**       | `hidden` (or target enterprise domain) | `ACTIVE` 🟢    |
 | **License Class**     | **Commercial Enterprise Domain License**     | `VERIFIED` ✅  |
 | **Primary Registrar** | Vercel Edge / Cloudflare Network             | `MANAGED` 🛠️   |
 | **Routing Protocol**  | Anycast Global Edge Routing                  | `OPTIMIZED` ⚡ |
